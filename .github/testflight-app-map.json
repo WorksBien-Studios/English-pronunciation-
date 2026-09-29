@@ -17,10 +17,10 @@
   "beta_group_id": "5199a6ce-ee5a-4f2d-91ce-992dbe15e3bf",
   "listing_platform": "IOS",
   "marketing_version": "1.0",
-  "xcode_container_type": "project",
-  "xcode_container": "ios/EnglishPronunciationCoach.xcodeproj",
+  "xcode_container_type": "workspace",
+  "xcode_container": "ios/EnglishPronunciationCoach.xcworkspace",
   "scheme": "EnglishPronunciationCoach",
-  "required_check_name": "English Engine Stress",
+  "required_check_name": "iOS build and test",
   "signing_style": "automatic",
   "export_method": "app-store-connect",
   "signing_certificate": "Apple Distribution"
