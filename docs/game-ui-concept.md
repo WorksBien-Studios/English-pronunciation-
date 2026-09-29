@@ -73,7 +73,7 @@ No third-party UI, animation or game libraries are required.
 - **Model audio** is labelled as iOS speech synthesis, not a native-speaker recording.
 - **No social feed, leaderboards or accounts** (spec V1 exclusions). Game Center is not used.
 - **Age rating:** re-answer the questionnaire against the final build; cartoon creatures with no violence are expected to stay 4+.
-- **Assets:** all characters, patterns and diagrams in the mockup are original. Do not copy an existing game's or pronunciation app's creature, UI or diagram. No formal similarity/trademark search has been done; do one before the assets ship.
+- **Assets:** all characters, patterns and diagrams in the mockup are original. Do not copy an existing game's or pronunciation app's creature, UI or diagram. A web-based similarity screen was done on 2026-09-29 (see [`character-similarity-screen.md`](character-similarity-screen.md)); it led to design and name changes but is not legal clearance. A formal trademark search is still required before the assets ship.
 
 ## 6a. Character expression rules (Japanese conventions)
 
@@ -87,7 +87,7 @@ Reviewed 2026-09-29 against common Japanese character-design and emoticon conven
 - **Eyes:** solid dark glossy eyes with two highlights (きらきら), set low and wide with pink cheeks (baby-schema proportions). White-scleral round eyes were rejected because they read as staring or startled.
 - **Joy face:** closed "^ ^" eyes plus a small open smile, the strongest joy signal in Japanese emoticons and character art.
 - **てへぺろ:** the /θ/ creature winks with a small side tongue; without the wink the tongue reads as drooling.
-- **Distinct silhouettes:** each creature has its own top feature so the 図鑑 entries are recognisable as shadows: /r/ curl, /l/ horn, /θ/ round ears, /v/ pointed ears, /f/ leaf, /b/ bubbles.
+- **Distinct silhouettes:** each creature has its own top feature so the 図鑑 entries are recognisable as shadows: /r/ curl, /l/ antenna with a bulb, /θ/ round ears, /v/ pointed ears, /f/ leaf, /b/ bubbles.
 
 ## 6b. Writing rules for all customer-visible Japanese
 
@@ -105,7 +105,7 @@ Reviewed 2026-09-29 against common Japanese character-design and emoticon conven
 ## 8. Open items
 
 1. Final names and polished art for the mascot and creatures (illustrator pass; current SVG art is a mockup).
-2. Similarity/trademark screen of the character set.
+2. Formal trademark/design search for the final names and art (the mockup screen is done; see the similarity screen).
 3. Japanese-language TestFlight validation of tone, difficulty and reward pacing.
 4. Decide the launch creature count (mockup shows 6) and stage count against the launch curriculum.
 5. Sound design (optional): short native `AVAudioPlayer` effects for tap, clear and stamp; respect the silent switch.

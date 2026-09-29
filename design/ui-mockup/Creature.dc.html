@@ -18,7 +18,8 @@ body{margin:0;background:transparent}
 
   <!-- silhouette features (drawn behind the body; also visible on locked entries) -->
   <sc-if value="{{tL}}" hint-placeholder-val="{{ false }}">
-    <path d="M50 26 L44 8 L58 20 Z" fill="{{body}}" stroke="#1B1F5E" stroke-width="3.5" stroke-linejoin="round"/>
+    <path d="M50 26 L50 14" fill="none" stroke="#1B1F5E" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="50" cy="10" r="6.2" fill="{{accent}}" stroke="#1B1F5E" stroke-width="3"/>
   </sc-if>
   <sc-if value="{{tR}}" hint-placeholder-val="{{ true }}">
     <path d="M50 26 C42 12 60 2 62 14 C63 22 54 22 54 16" fill="none" stroke="#1B1F5E" stroke-width="4" stroke-linecap="round"/>
@@ -109,13 +110,14 @@ class Component extends DCLogic {
     const m = this.props.mouth || 'rest';
     const size = Number(this.props.size || 96);
     const locked = this.props.locked === 'yes';
-    const colors = { r: '#FF7A59', l: '#4DA6FF', th: '#C79BFF', v: '#FFB020', f: '#3DDBB3', b: '#FF8FC7' };
+    const colors = { r: '#FF7A59', l: '#54C2F0', th: '#C79BFF', v: '#FFB020', f: '#3DDBB3', b: '#FFF1D0' };
     const rest = !locked && m === 'rest';
     const show = !locked && m === 'show';
     return {
       px: size + 'px',
       body: locked ? '#C9CDE0' : (colors[t] || '#FF7A59'),
       leaf: locked ? '#DDE0EE' : '#A6F3DF',
+      accent: locked ? '#DDE0EE' : '#FF8FA3',
       locked: locked,
       open: !locked,
       tR: t === 'r',
