@@ -160,8 +160,8 @@ Create three authentic Japanese screenshots for both iPhone and iPad. Use the sa
 
 | Position | Role | Caption | Required real screen | Free/paid clarity |
 |---:|---|---|---|---|
-| 1 | Outcome | **苦手な音を、診断で見える化** | Completed assessment showing a restrained weakness map, e.g. R/L and TH; no fabricated percentage claims. | Assessment and weakness map are free. |
-| 2 | Path | **舌・唇・息の使い方を日本語で** | Correction screen showing IPA, target/likely substitution and one concise articulatory instruction. | Use the free personalized starter module. |
+| 1 | Outcome | **苦手な音が、すぐわかる** | Completed assessment showing a restrained weakness map, e.g. R/L and TH; no fabricated percentage claims. | Assessment and weakness map are free. |
+| 2 | Path | **直し方が、日本語でわかる** | Correction screen showing IPA, target/likely substitution and one concise articulatory instruction. | Use the free personalized starter module. |
 | 3 | Proof | **発音を練習して、すぐ再チェック** | Retest screen showing listen → record → feedback → retry, with intelligibility and target sound separated. | Use a free-module example; do not imply every module is free. |
 
 Production rules:
@@ -175,6 +175,15 @@ Production rules:
 - use fictional sample data consistently across all frames;
 - if a visible screen is Pro-only, add a small clear `Pro` label near the relevant feature;
 - keep microphone permission dialogs and paywalls out of the three launch frames.
+
+### Screenshot shell masters
+
+The editable launch shell masters live in `assets/screenshots/shells/`. They are 1320 × 2868 SVGs with a deliberately empty rounded screenshot slot. The slot is replaced with the authentic app capture during screenshot production; do not flatten conceptual UI into the shell.
+
+- `01-diagnosis.svg` — **苦手な音が、すぐわかる**
+- `02-correction.svg` — **直し方が、日本語でわかる**
+- `03-progress.svg` — **練習して、上達を確かめる**
+- `shell-spec.json` — deterministic canvas and replacement-slot coordinates
 
 ### Icon brief
 
