@@ -102,7 +102,7 @@ pe_engine* pe_engine_create(
     }
 
     try {
-        auto model = std::make_unique<pronunciation::OnnxAcousticModel>(model_path);
+        auto model = std::make_unique<pronunciation::OnnxAcousticModel>(model_path, resources_dir);
         return new pe_engine{
             pronunciation::PronunciationEngine(resources_dir, std::move(model))
         };
