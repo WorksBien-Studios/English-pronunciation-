@@ -41,8 +41,9 @@ ios/EnglishPronunciationCoachTests/   unit tests for the pure logic and the cont
 
 - **The production engine is linked.** `EngineFactory` uses the actor-isolated C++/ONNX adapter in Debug and
   Release. CI fetches the locked model, verifies its SHA-256, bundles the complete engine content pack, and checks
-  both resources in the built app. Audio-quality feedback remains available without loading the model. Physical
-  iPhone SE 2020 latency/memory and native-speaker accuracy gates still apply before shipping.
+  both resources in the built app. Audio-quality feedback remains available without loading the model. Latency,
+  memory, offline behaviour and native-speaker accuracy on a physical iPhone are verified by the developer's own
+  hands-on testing.
 - **Subscription group ID is a placeholder** (`StoreConfig.subscriptionGroupID`). Until it is set the paywall
   shows a notice. Product IDs match the listing pack. Prices are always read from StoreKit.
 - **Swift language mode is 5** with the Swift 6 toolchain. The spec targets Swift 6 mode; move over after the
