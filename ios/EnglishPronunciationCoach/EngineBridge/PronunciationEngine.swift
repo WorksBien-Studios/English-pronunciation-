@@ -68,16 +68,26 @@ struct PreviewPronunciationEngine: PronunciationEngine {
     }
 }
 
+/// Owns the C engine pointer and frees it when released. The pointer is only ever used from
+/// `NativePronunciationEngine`, which serialises access, so handing this box across isolation domains is safe.
+private final class EngineHandle: @unchecked Sendable {
+    let pointer: OpaquePointer
+
+    init(_ pointer: OpaquePointer) {
+        self.pointer = pointer
+    }
+
+    deinit {
+        pe_engine_destroy(pointer)
+    }
+}
+
 /// Production adapter for the C++ core and its ONNX Runtime backend. The
 /// actor serializes access to the engine's error-history state and loads the
 /// large model lazily on the first usable recording.
 actor NativePronunciationEngine: PronunciationEngine {
-    private var handle: OpaquePointer?
+    private var handle: EngineHandle?
     private var attemptedInitialization = false
-
-    deinit {
-        if let handle { pe_engine_destroy(handle) }
-    }
 
     func analyze(_ request: EngineRequest) async -> EngineDecision {
         guard request.sampleRate.isFinite,
@@ -148,7 +158,7 @@ actor NativePronunciationEngine: PronunciationEngine {
     }
 
     private func loadEngineIfNeeded() -> OpaquePointer? {
-        if let handle { return handle }
+        if let handle { return handle.pointer }
         guard !attemptedInitialization else { return nil }
         attemptedInitialization = true
 
@@ -168,7 +178,8 @@ actor NativePronunciationEngine: PronunciationEngine {
             }
         }
         if let errorMessage { pe_free_error_message(errorMessage) }
-        handle = created
+        guard let created else { return nil }
+        handle = EngineHandle(created)
         return created
     }
 
