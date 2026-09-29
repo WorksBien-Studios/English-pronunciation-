@@ -60,6 +60,8 @@ jobs:
             null_exercise_id \
             negative_result_index \
             past_end_result_index \
+            null_result_accessors \
+            null_create_paths \
             malformed_logit_buffer \
             out_of_range_expected_phoneme
           do
