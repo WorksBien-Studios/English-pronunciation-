@@ -521,11 +521,23 @@ If sync is added:
 
 ## Reference audio
 
-Prefer pre-recorded licensed/original native-speaker examples bundled with the lesson pack.
+Use Apple's on-device `AVSpeechSynthesizer` as the launch reference-audio engine. Do not make launch dependent on commissioned speakers, paid audio, a remote speech API or a bundled third-party recording corpus.
 
-Avoid runtime TTS as the only authoritative pronunciation model.
+Each exercise stores a manually reviewed display string, expected phoneme sequence and IPA pronunciation. Construct an attributed `AVSpeechUtterance` using `AVSpeechSynthesisIPANotationAttribute` where spelling alone may produce an ambiguous or unsuitable pronunciation.
 
-AVSpeechSynthesizer can be used for convenience or secondary examples, but carefully recorded reference audio is preferable for pronunciation instruction.
+Voice selection:
+
+- request an appropriate installed `en-US` system voice;
+- prefer premium, then enhanced, then the basic on-device voice;
+- never depend on one voice identifier being present on every device;
+- fall back deterministically to the available `en-US` system voice;
+- provide normal and slow instructional playback using separately configured utterances.
+
+Use `AVSpeechSynthesizer.write(_:toBufferCallback:)` only when an audio buffer is needed for a waveform, temporary replay or testing. Do not permanently generate and bundle thousands of audio files.
+
+Reference playback is instructional and must be labelled **model pronunciation**, not a human native-speaker recording. The pronunciation-scoring engine compares learner evidence with the exercise's validated phoneme sequence; it never scores by waveform similarity to the synthetic voice. A change in the installed Apple voice must therefore not change the expected answer or diagnosis.
+
+The model-pronunciation layer has no API key, network dependency, per-use cost or meaningful additional app footprint.
 
 ## Japanese instructional content
 
@@ -549,9 +561,14 @@ Each correction should cover:
 
 Free:
 
-- complete initial pronunciation assessment and weakness map;
-- the R/L foundation lesson;
-- limited daily practice so the learner can verify that the feedback is useful before paying.
+- complete initial pronunciation assessment and weakness map, excluded from the daily quota;
+- the complete sound module selected from the learner's highest-confidence detected weakness;
+- 10 valid scored recordings per local calendar day;
+- unlimited playback of model pronunciation and access to the unlocked IPA and Japanese instructional content;
+- a visible remaining-use counter and exact next-reset time;
+- no accumulation of unused daily recordings.
+
+Only a recording that passes the audio-quality gate and returns a pronunciation result consumes one use. Silence, clipping, interrupted recordings, permission failures and internal scoring failures do not consume the allowance.
 
 Paid:
 
@@ -576,7 +593,7 @@ Reason:
 - the free diagnostic proves recognition quality before the learner subscribes;
 - subscription revenue supports maintenance without adding distracting advertising or selling user data.
 
-Do not require a payment method during onboarding. Let the learner complete the assessment and use the free material first. If an annual free trial is offered, show the exact renewal date and ¥4,800 renewal price on the purchase screen.
+Do not require a payment method during onboarding. Let the learner complete the assessment and use the free product first. Do not add an auto-renewing free trial at launch: the renewable daily allowance is the trial. The free tier must be genuinely useful, while its scoring volume remains insufficient for intensive repetition across minimal pairs, words and sentences.
 
 ### Why advertising is rejected
 
@@ -732,18 +749,14 @@ The material engineering risks are pronunciation-model trustworthiness and the m
 
 Before skinning the application, build a command-line/test-harness version of the engine around a **50-word spike** covering R/L, B/V, F/H, TH substitutions, vowel insertion and final-consonant weakening.
 
-Validation set:
+Launch validation uses reproducible automated corpora, deterministic engine tests and a full manual developer pass on the reference iPhone. A paid speaker study is not a launch dependency. The free tier is the post-launch product-proof layer, but it does not replace pre-release correctness testing.
 
-- 20–30 native Japanese speakers across proficiency levels;
-- multiple genders, ages and supported iPhone microphones;
-- quiet and moderate-noise recordings;
-- correct productions plus intentional Japanese-relevant substitutions;
-- two independent qualified pronunciation raters, with disagreement adjudicated before the clip enters the gold set;
-- speaker-disjoint development and holdout sets.
+The engine may proceed to UI only when all of these are met:
 
-The engine may proceed to UI only when all of these are met on the untouched holdout set:
-
-- no targeted contrast has a specific-error false-positive rate above 5%;
+- every launch prompt has a manually reviewed expected phoneme sequence, IPA form, accepted variants and Japanese-relevant confusion set;
+- the selected acoustic model passes the locked FP32-parity regression over the public UME-ERJ samples and speaker-balanced SpeechOcean762 subset;
+- posterior-level fixtures for every supported substitution, deletion and insertion produce the intended deterministic classification;
+- correct native-English developer recordings across the complete launch curriculum do not produce a high-confidence specific-error diagnosis;
 - unusable/silent/clipped audio is rejected rather than scored at least 95% of the time;
 - low-confidence evidence produces `retry`, never a definitive physical correction;
 - repeated-error history is updated only after the same high-confidence pattern is observed at least twice;
@@ -751,6 +764,8 @@ The engine may proceed to UI only when all of these are met on the untouched hol
 - additional peak resident memory during scoring is at most 650 MiB on the reference device;
 - the entire assessment and practice path works in airplane mode with no attempted remote inference;
 - the selected compressed model passes regression parity and licence/notice checks.
+
+Without a labelled Japanese-speaker holdout study, marketing must not describe the engine as clinically validated or guarantee that every accent error will be detected. Post-launch complaints must be reproducible locally before rule or threshold changes are made, and thresholds must never be relaxed merely to produce more feedback.
 
 If Q4-FP16 misses the remaining gate, do not compensate with UI or relax the threshold after seeing results. Narrow the launch contrast set, distil/fine-tune a smaller commercially permitted model, or block the build.
 
@@ -763,8 +778,8 @@ If Q4-FP16 misses the remaining gate, do not compensate with UI or relax the thr
 5. Implement CTC forced alignment and GOP-style phoneme scoring.
 6. Implement audio-quality and Accelerate/vDSP prosody analysis.
 7. Implement conservative signal fusion and deterministic error classification.
-8. Assemble and independently label the Japanese-speaker validation corpus.
-9. Run the 50-word pre-UI diagnostic gate with the selected Q4-FP16 model.
+8. Assemble the automated public-corpus, posterior-fixture and audio-quality regression suite.
+9. Run the 50-word pre-UI diagnostic gate with the selected Q4-FP16 model, followed by the complete native-English developer pass on the reference iPhone.
 10. Write and validate Japanese corrective content.
 11. Implement assessment and daily-practice state machines.
 12. Add SwiftData persistence and StoreKit 2 entitlements.
