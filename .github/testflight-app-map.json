@@ -20,5 +20,8 @@
   "xcode_container_type": "",
   "xcode_container": "",
   "scheme": "",
-  "required_check_name": "English Engine Stress"
+  "required_check_name": "English Engine Stress",
+  "signing_style": "automatic",
+  "export_method": "app-store-connect",
+  "signing_certificate": "Apple Distribution"
 }
