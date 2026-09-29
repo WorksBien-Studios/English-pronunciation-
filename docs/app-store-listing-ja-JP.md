@@ -25,7 +25,7 @@ The listing deliberately avoids the crowded generic promises “AI英会話,” 
 | Name | **英語発音コーチ｜日本人のための発音矯正** | 30 characters | 19 |
 | Subtitle | **苦手音を診断、日本語で直し方まで解説** | 30 characters | 18 |
 | Promotional text | **採点だけで終わらない発音練習。苦手な音を見つけ、舌・唇・息・声の使い方を日本語で確認。端末上で分析し、毎日10回まで無料で試せます。** | 170 characters | 66 |
-| Keywords | `スピーキング,アクセント,イントネーション,IPA,音素練習,リスニング` | 100 UTF-8 bytes | 92 bytes |
+| Keywords | `スピーキング,アクセント,イントネーション,IPA,音素練習,リスニング,TH,RL` | 100 UTF-8 bytes | 98 bytes |
 
 Do not add competitor names, `AI英会話`, `TOEIC`, `英検`, `IELTS`, `無料`, or `オフライン` to the keyword field merely to chase traffic. The first four are either misleading for this narrow product or unsupported at launch; the latter terms belong in readable copy when truthful.
 
@@ -76,7 +76,7 @@ Copy exactly from this block after confirming build parity and deploying the leg
 
 ```text
 英語の発音を採点されても、
-「何が違うのか」「どう直せばよいのか」が分からなければ、次の一回は変えられません。
+「何が違うのか」「どう直せばよいのか」が分からなければ、同じ間違いを繰り返してしまいます。
 
 英語発音コーチは、日本語を母語とする学習者のための、英語発音の診断・矯正練習アプリです。
 
@@ -86,7 +86,7 @@ Copy exactly from this block after confirming build parity and deploying the leg
 
 ・短い発音診断で、苦手な音とおすすめの練習順を確認
 ・RとL、TH、BとV、FとH、母音の区別、語尾の子音などを集中練習
-・目標の音と、別の音に聞こえた可能性を音素単位で表示
+・目標の音と、聞こえた可能性のある別の音を、音素単位で表示
 ・モデル発音と自分の録音をすぐに聞き比べ
 ・通常速度とゆっくり再生、IPA発音記号に対応
 ・ミニマルペア、単語、文、再テストへ段階的に進行
@@ -134,7 +134,7 @@ Copy exactly from this block after confirming build parity and deploying the leg
 ・発音分析の回数制限を解除
 ・すべての発音レッスン
 ・苦手音の履歴と個別復習リスト
-・ストレス、リズム、リンキングの練習
+・アクセント、リズム、リンキングの練習
 ・追加される新しい練習教材
 
 Proは月間または年間の自動更新サブスクリプションです。購入前にApp Storeが地域に応じた料金と更新期間を表示します。自動更新は現在の期間終了の24時間前までに解約しない限り継続します。管理・解約はApple IDのサブスクリプション設定から行えます。購入の復元にも対応します。
@@ -344,7 +344,7 @@ Current Apple sources reviewed on 2026-09-28:
 
 ### Version metadata and assets
 
-- [ ] Paste the locked name, subtitle, promotional text, description and 92-byte keyword field.
+- [ ] Paste the locked name, subtitle, promotional text, description and 98-byte keyword field.
 - [ ] Capture three authentic Japanese iPhone screenshots at an accepted 6.9-inch size.
 - [ ] Capture three authentic Japanese iPad screenshots at 2064 × 2752 or another current accepted 13-inch size.
 - [ ] Verify no alpha channel, incorrect crop, debug data, personal data or unsupported claim.
