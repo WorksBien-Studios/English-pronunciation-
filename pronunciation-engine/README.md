@@ -31,7 +31,10 @@ Per the locked pipeline in `docs/product-specification.md#model-strategy`:
    deterministic frame log-probabilities for development, tests, and the
    harness. `OnnxAcousticModel` is the wiring point for the locked
    `onnx-community/wav2vec2-lv-60-espeak-cv-ft-ONNX` checkpoint through ONNX
-   Runtime Mobile — see **What's not implemented** below.
+   Runtime 1.30.0. The iOS build pins `onnxruntime-c`, requests Core ML with
+   CPU fallback, resamples microphone PCM to 16 kHz, normalizes it like the
+   checkpoint feature extractor, and maps the 392-label IPA vocabulary through
+   `Resources/acoustic-token-map.json`.
 3. **CTC forced alignment** (`src/CTCAlignment`) — Viterbi forced alignment
    of frame log-probabilities against an exercise's expected phoneme
    sequence, plus a free greedy decode + Levenshtein alignment used
@@ -60,27 +63,17 @@ Per the locked pipeline in `docs/product-specification.md#model-strategy`:
    substitution scenarios (35/35 passing today), and a `run` subcommand for
    ad hoc one-off scripted exercises.
 
-## What's not implemented (and why)
+## Remaining release validation
 
-- **ONNX Runtime Mobile inference is not wired up.** Doing so requires
-  linking ONNX Runtime and bundling the ~197 MB `model_q4f16.onnx` artifact
-  (see `model/model-manifest.json`), both of which belong to the
-  `pronunciation-ios/EngineBridge` integration, not to engine development in
-  this environment. `OnnxAcousticModel::infer()` throws a descriptive error
-  rather than silently mis-scoring; every other module only depends on the
-  `AcousticModel` interface, so wiring the real backend in later does not
-  require touching them.
-- **Content is an engineering draft**, not the "manually reviewed" content
-  the spec's pre-UI gate requires. It is internally consistent (see
-  `ContentValidator` and the `content_pack_passes_structural_validation`
-  test) and covers the spike's priority targets (R/L, TH/DH, B/V, F/H, vowel
-  insertion, final-consonant deletion, schwa), but a native-Japanese
-  linguistic reviewer still needs to sign off on the explanations,
-  articulatory instructions, and phoneme transcriptions before launch.
-- **Accelerate/vDSP is not used.** `src/Prosody` is a portable reference
-  implementation so the engine builds and tests on any host; the iOS target
-  can substitute a vDSP-accelerated implementation behind the same function
-  signature.
+- **Physical-device performance remains open.** The production ONNX backend and
+  model bundle are now wired, but p95 latency/peak RSS still need measurement
+  on the target iPhone SE 2020 before release approval.
+- **Content is an engineering draft.** It is structurally validated and all
+  iOS stage words resolve in the engine, but the Japanese explanations and
+  phoneme transcriptions still require the planned linguistic review.
+- **Accelerate/vDSP is not required for correctness.** The portable prosody
+  implementation remains the reference path; optimization can happen later
+  without changing the engine contract.
 
 ## Pre-UI gate status
 
@@ -95,10 +88,8 @@ Against `docs/product-specification.md#technical-risk-and-mandatory-pre-ui-gate`
 | Unusable/silent/clipped audio rejected ≥95% of the time | ✅ in unit tests against synthetic audio; not yet measured against a real recorded corpus |
 | Low-confidence evidence → retry, never a definitive correction | ✅ — `DecisionRules` never emits `SpecificError` below a pattern's locked `confidenceThreshold` |
 | Repeated-error history updates only after ≥2 high-confidence observations | ✅ — `ErrorHistory` + covering tests |
-| p95 latency ≤2.5s / peak RSS ≤650MiB on iPhone SE 2020 for ≤3s recordings | Not measurable until ONNX Runtime Mobile + the real model are wired into an iOS target |
+| p95 latency ≤2.5s / peak RSS ≤650MiB on iPhone SE 2020 for ≤3s recordings | Backend/model integrated; physical-device measurement still required |
 | Works fully offline | ✅ by construction — no network calls anywhere in this engine |
-| Compressed model passes regression parity and licence/notice checks | Licence notices in place (`THIRD_PARTY_NOTICES.md`); parity regression pending the real runtime |
+| Compressed model passes regression parity and licence/notice checks | Portable parity benchmark passed; signed iOS bundle SHA is now verified in CI; physical-device runtime regression still required |
 
-The remaining rows are blocked on the iOS `EngineBridge` integration (ONNX
-Runtime Mobile + the bundled model) and a linguistic content review — both
-explicitly out of scope for engine development in this environment.
+The remaining open gates are physical-device performance/regression validation and linguistic content review.
