@@ -1,0 +1,180 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "Cast.dc.html": {
+      "h": 760,
+      "title": "キャラクターシート",
+      "w": 1194,
+      "x": 0,
+      "y": 3232
+    },
+    "Challenge.dc.html": {
+      "h": 844,
+      "title": "3 録音チャレンジ",
+      "w": 390,
+      "x": 940,
+      "y": 0
+    },
+    "Clear.dc.html": {
+      "h": 844,
+      "title": "4 ステージクリア",
+      "w": 390,
+      "x": 1410,
+      "y": 0
+    },
+    "Coach.dc.html": {
+      "h": 96,
+      "title": "部品：コーチ",
+      "w": 96,
+      "x": 1450,
+      "y": 3232
+    },
+    "Creature.dc.html": {
+      "h": 96,
+      "title": "部品：音のなかま",
+      "w": 96,
+      "x": 1314,
+      "y": 3232
+    },
+    "Main.dc.html": {
+      "h": 844,
+      "title": "1 冒険マップ",
+      "w": 390,
+      "x": 0,
+      "y": 0
+    },
+    "MouthDiagram.dc.html": {
+      "h": 200,
+      "title": "部品：口の断面図",
+      "w": 320,
+      "x": 1586,
+      "y": 3232
+    },
+    "Omikuji.dc.html": {
+      "h": 844,
+      "title": "6 今日のおみくじ",
+      "w": 390,
+      "x": 2350,
+      "y": 0
+    },
+    "PadTabs.dc.html": {
+      "h": 52,
+      "title": "部品：iPad タブバー",
+      "w": 452,
+      "x": 2376,
+      "y": 3232
+    },
+    "PhoneTabs.dc.html": {
+      "h": 83,
+      "title": "部品：iPhone タブバー",
+      "w": 390,
+      "x": 1946,
+      "y": 3232
+    },
+    "Stage.dc.html": {
+      "h": 844,
+      "title": "2 ステージ詳細",
+      "w": 390,
+      "x": 470,
+      "y": 0
+    },
+    "Zukan.dc.html": {
+      "h": 844,
+      "title": "5 音の図鑑",
+      "w": 390,
+      "x": 1880,
+      "y": 0
+    },
+    "iPadChallenge.dc.html": {
+      "h": 834,
+      "title": "8 iPad 録音チャレンジ（2ペイン）",
+      "w": 1194,
+      "x": 1270,
+      "y": 993
+    },
+    "iPadMap.dc.html": {
+      "h": 834,
+      "title": "7 iPad 冒険マップ＋インスペクタ",
+      "w": 1194,
+      "x": 0,
+      "y": 964
+    },
+    "iPadStage.dc.html": {
+      "h": 1194,
+      "title": "10 iPad 縦 ステージ詳細",
+      "w": 834,
+      "x": 1314,
+      "y": 1918
+    },
+    "iPadZukan.dc.html": {
+      "h": 834,
+      "title": "9 iPad 図鑑＋詳細",
+      "w": 1194,
+      "x": 0,
+      "y": 1918
+    },
+    "Paywall.dc.html": {
+      "h": 844,
+      "title": "7 Pro（購読）",
+      "w": 390,
+      "x": 2820,
+      "y": 0
+    },
+    "iPadPaywall.dc.html": {
+      "h": 834,
+      "title": "11 iPad Pro（購読シート）",
+      "w": 1194,
+      "x": 2228,
+      "y": 1918
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-09-29T14:30:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "s1": {
+      "fill": "orange",
+      "size": 24,
+      "text": "iPad も最初から設計\n・compact = 1カラム / regular = マップ＋インスペクタ\n・タブ: iPhone は下、iPad は上（.sidebarAdaptable）\n・カードは ViewThatFits / adaptive grid で列数が変わる\n・Split View 1/3 は iPhone の並びに自動で切り替え",
+      "w": 520,
+      "x": 2540,
+      "y": 964
+    },
+    "t1": {
+      "kind": "title1",
+      "maxW": 2820,
+      "text": "英語発音コーチ — 音の島（iPhone / iPad）",
+      "w": 240,
+      "x": 0,
+      "y": -260
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Stage.dc.html",
+    "Challenge.dc.html",
+    "Clear.dc.html",
+    "Zukan.dc.html",
+    "Omikuji.dc.html",
+    "iPadMap.dc.html",
+    "iPadChallenge.dc.html",
+    "iPadZukan.dc.html",
+    "iPadStage.dc.html",
+    "Cast.dc.html",
+    "Creature.dc.html",
+    "Coach.dc.html",
+    "MouthDiagram.dc.html",
+    "PhoneTabs.dc.html",
+    "PadTabs.dc.html",
+    "Paywall.dc.html",
+    "iPadPaywall.dc.html"
+  ],
+  "pages": [],
+  "title": "英語発音コーチ UIモックアップ"
+}

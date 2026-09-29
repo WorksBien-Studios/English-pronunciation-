@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>iPad 録音チャレンジ</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;font-family:"Hiragino Maru Gothic ProN","HiraMaruProN-W4","Noto Sans JP",sans-serif;background:#BDEEFF}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
+@keyframes ring{0%{transform:scale(.8);opacity:.6}100%{transform:scale(1.35);opacity:0}}
+</style>
+</helmet>
+<div style="position:relative;width:1194px;height:834px;overflow:hidden;color:#1B1F5E;font-family:'Hiragino Maru Gothic ProN','HiraMaruProN-W4','Noto Sans JP',sans-serif;display:flex;background:#EAF7FF">
+
+  <div style="position:relative;flex:1;overflow:hidden;background:repeating-conic-gradient(from 0deg at 50% 44%,#D9F4FF 0deg 10deg,#C4ECFF 10deg 20deg)">
+    <div style="position:absolute;left:24px;top:24px;right:24px;display:flex;align-items:center;gap:14px">
+      <div style="height:40px;padding:0 18px;border-radius:20px;background:#fff;border:3px solid #1B1F5E;box-shadow:0 3px 0 #9fa6d6;font-size:15px;font-weight:800;display:flex;align-items:center;box-sizing:border-box">やめる</div>
+      <div style="flex:1;display:flex;gap:8px">
+        <div style="flex:1;height:16px;border-radius:8px;background:#FFC933;border:3px solid #1B1F5E;box-sizing:border-box"></div>
+        <div style="flex:1;height:16px;border-radius:8px;background:#FFC933;border:3px solid #1B1F5E;box-sizing:border-box"></div>
+        <div style="flex:1;height:16px;border-radius:8px;background:linear-gradient(90deg,#FFC933 50%,#fff 50%);border:3px solid #1B1F5E;box-sizing:border-box"></div>
+        <div style="flex:1;height:16px;border-radius:8px;background:#fff;border:3px solid #1B1F5E;box-sizing:border-box"></div>
+        <div style="flex:1;height:16px;border-radius:8px;background:#fff;border:3px solid #1B1F5E;box-sizing:border-box"></div></div>
+      <div style="font-size:16px;font-weight:800">3/5</div>
+    </div>
+
+    <div style="position:absolute;left:50%;top:88px;margin-left:-190px;width:380px;height:140px;border-radius:28px;background:#fff;border:3.5px solid #1B1F5E;box-shadow:0 5px 0 #1B1F5E;display:flex;flex-direction:column;align-items:center;justify-content:center">
+      <div style="font-size:13px;font-weight:800;color:#5a608a">この単語を言ってみよう</div>
+      <div style="font-size:64px;line-height:70px;font-weight:800">right</div>
+      <div style="font-size:18px;color:#3a3f7a">/raɪt/</div></div>
+
+    <div style="position:absolute;left:0;right:0;top:256px;display:flex;flex-direction:column;align-items:center">
+      <div style="padding:10px 20px;border-radius:20px;background:#fff;border:3px solid #1B1F5E;font-size:16px;font-weight:800;box-shadow:0 3px 0 #9fa6d6">舌先はつけずに、唇はまるく！</div>
+      <div style="width:0;height:0;border-left:11px solid transparent;border-right:11px solid transparent;border-top:15px solid #1B1F5E;margin-top:-1px"></div>
+      <div style="animation:bob 1.4s ease-in-out infinite"><dc-import name="Creature" type="r" mouth="show" size="230" hint-size="230px,230px"></dc-import></div></div>
+
+    <div style="position:absolute;left:0;right:0;bottom:34px;display:flex;align-items:center;justify-content:center;gap:40px">
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+        <div style="display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;color:#B3261E"><div style="width:11px;height:11px;border-radius:6px;background:#E5372B"></div>録音中 <span style="color:#3a3f7a;font-weight:700">0:02</span></div>
+        <div style="height:56px;display:flex;align-items:center;gap:5px" aria-label="音声の波形">
+          <div style="width:7px;height:16px;border-radius:4px;background:#12B5A4"></div><div style="width:7px;height:30px;border-radius:4px;background:#12B5A4"></div><div style="width:7px;height:46px;border-radius:4px;background:#3D42C9"></div><div style="width:7px;height:54px;border-radius:4px;background:#3D42C9"></div><div style="width:7px;height:34px;border-radius:4px;background:#3D42C9"></div><div style="width:7px;height:50px;border-radius:4px;background:#12B5A4"></div><div style="width:7px;height:38px;border-radius:4px;background:#12B5A4"></div><div style="width:7px;height:22px;border-radius:4px;background:#12B5A4"></div><div style="width:7px;height:10px;border-radius:4px;background:#a9e3dc"></div><div style="width:7px;height:8px;border-radius:4px;background:#a9e3dc"></div></div></div>
+      <div style="position:relative;width:112px;height:112px;display:flex;align-items:center;justify-content:center">
+        <div style="position:absolute;inset:0;border-radius:50%;border:4px solid #E5372B;animation:ring 1.8s ease-out infinite"></div>
+        <div style="position:absolute;inset:0;border-radius:50%;border:4px solid #E5372B;animation:ring 1.8s ease-out .9s infinite"></div>
+        <div style="position:relative;width:98px;height:98px;border-radius:49px;background:linear-gradient(#FF7A6B,#E5372B);border:4px solid #1B1F5E;box-shadow:0 6px 0 #9E1F16;display:flex;align-items:center;justify-content:center;box-sizing:border-box"><div style="width:34px;height:34px;border-radius:8px;background:#fff;border:3px solid #1B1F5E"></div></div></div>
+      <div style="font-size:14px;font-weight:800;width:150px">タップで録音を終了</div>
+    </div>
+  </div>
+
+  <div style="width:420px;box-sizing:border-box;padding:24px 22px;background:#fff;border-left:3.5px solid #1B1F5E;display:flex;flex-direction:column;gap:14px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="height:38px;padding:0 18px;border-radius:19px;background:linear-gradient(#FFE066,#FFC933);border:3px solid #1B1F5E;box-shadow:0 3px 0 #C48A00;display:flex;align-items:center;font-size:16px;font-weight:800;box-sizing:border-box">ヒント</div>
+      <div style="font-size:13px;font-weight:800;color:#4a4f80">ステージ3・Rの森</div></div>
+    <dc-import name="MouthDiagram" w="376" hint-size="376px,235px"></dc-import>
+    <div style="border:3px solid #1B1F5E;border-radius:20px;overflow:hidden">
+      <div style="display:flex;gap:14px;padding:10px 16px;border-bottom:2px dashed #cfd4ee;align-items:center"><div style="width:28px;font-size:16px;font-weight:800;color:#2A2F8C">舌</div><div style="flex:1;font-size:15px;font-weight:700">少し奥に引き、上あごにつけない</div></div>
+      <div style="display:flex;gap:14px;padding:10px 16px;border-bottom:2px dashed #cfd4ee;align-items:center"><div style="width:28px;font-size:16px;font-weight:800;color:#2A2F8C">唇</div><div style="flex:1;font-size:15px;font-weight:700">軽く丸めて前に出す</div></div>
+      <div style="display:flex;gap:14px;padding:10px 16px;border-bottom:2px dashed #cfd4ee;align-items:center"><div style="width:28px;font-size:16px;font-weight:800;color:#2A2F8C">息</div><div style="flex:1;font-size:15px;font-weight:700">止めずに、続けて流す</div></div>
+      <div style="display:flex;gap:14px;padding:10px 16px;align-items:center"><div style="width:28px;font-size:16px;font-weight:800;color:#2A2F8C">声</div><div style="flex:1;font-size:15px;font-weight:700">のどを震わせる（有声音）</div></div></div>
+    <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:20px;background:#E9F7FF;border:3px solid #1B1F5E">
+      <dc-import name="Coach" mood="happy" size="52" hint-size="52px,52px"></dc-import>
+      <div style="font-size:14px;font-weight:800;line-height:20px">ゆっくりで大丈夫。<br>何度でもやり直せるよ！</div></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1194,"height":834}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

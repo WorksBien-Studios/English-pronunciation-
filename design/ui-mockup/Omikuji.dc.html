@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>今日のおみくじ</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;font-family:"Hiragino Maru Gothic ProN","HiraMaruProN-W4","Noto Sans JP",sans-serif;background:#7A1F3A}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+</style>
+</helmet>
+<div style="position:relative;width:390px;height:844px;overflow:hidden;color:#1B1F5E;font-family:'Hiragino Maru Gothic ProN','HiraMaruProN-W4','Noto Sans JP',sans-serif;background:radial-gradient(90% 60% at 50% 30%,#FF8FA3 0%,rgba(255,143,163,0) 70%),linear-gradient(180deg,#B3294D,#7A1F3A)">
+  <div style="position:absolute;left:0;right:0;top:0;padding:52px 12px 0;display:flex;justify-content:flex-end">
+    <a href="Main.dc.html" aria-label="閉じる" style="width:44px;height:44px;border-radius:22px;background:#fff;border:3px solid #1B1F5E;display:flex;align-items:center;justify-content:center;box-sizing:border-box">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1B1F5E" stroke-width="3.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></a></div>
+
+  <div style="position:absolute;left:0;right:0;top:100px;text-align:center;font-size:26px;font-weight:800;color:#fff;-webkit-text-stroke:5px #5A1329;paint-order:stroke fill">今日のおみくじ</div>
+
+  <div style="position:absolute;left:70px;right:70px;top:160px;height:440px;border-radius:14px;background:#FFFDF4;border:4px solid #1B1F5E;box-shadow:0 8px 0 rgba(0,0,0,.25);overflow:hidden">
+    <div style="position:absolute;left:0;right:0;top:0;height:14px;background:repeating-linear-gradient(90deg,#E5372B 0 12px,#fff 12px 24px)"></div>
+    <div style="position:absolute;left:0;right:0;top:40px;text-align:center;font-size:14px;font-weight:800;color:#9E1F16;letter-spacing:6px">発音みくじ</div>
+    <div style="position:absolute;left:0;right:0;top:70px;display:flex;justify-content:center">
+      <div style="font-size:88px;line-height:100px;font-weight:800;color:#E5372B;-webkit-text-stroke:2px #9E1F16;writing-mode:vertical-rl;letter-spacing:6px">大吉</div></div>
+    <div style="position:absolute;left:20px;right:20px;bottom:24px;padding:14px;border-radius:14px;background:#FFF3D6;border:3px dashed #C48A00;text-align:center">
+      <div style="font-size:12px;font-weight:800;color:#7A4B00">きょうのひとこと</div>
+      <div style="font-size:16px;line-height:23px;font-weight:800;margin-top:4px">Rは舌先を<br>つけないのがラッキー！</div></div>
+    <div style="position:absolute;right:14px;top:56px;width:34px;height:34px;border-radius:6px;background:#E5372B;border:2px solid #9E1F16;color:#fff;font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center">音</div>
+  </div>
+
+  <div style="position:absolute;left:22px;bottom:140px;animation:bob 1.8s ease-in-out infinite"><dc-import name="Coach" mood="cheer" size="92" hint-size="92px,92px"></dc-import></div>
+
+  <div style="position:absolute;left:24px;right:24px;bottom:34px;display:flex;flex-direction:column;gap:8px;align-items:center">
+    <a href="Main.dc.html" style="width:100%;display:flex;align-items:center;justify-content:center;height:58px;border-radius:29px;background:linear-gradient(#FFE066,#FFC933);border:3.5px solid #1B1F5E;box-shadow:0 6px 0 #C48A00;font-size:20px;font-weight:800;text-decoration:none;color:#1B1F5E;box-sizing:border-box">とじる</a>
+    <div style="font-size:12px;color:#FFD9E0;text-align:center">1日1回・無料・課金はありません</div>
+  </div>
+  <div style="position:absolute;left:128px;bottom:8px;width:134px;height:5px;border-radius:3px;background:#fff"></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

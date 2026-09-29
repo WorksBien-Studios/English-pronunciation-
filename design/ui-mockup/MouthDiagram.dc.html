@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>口の断面図</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:transparent;font-family:"Hiragino Maru Gothic ProN","HiraMaruProN-W4","Noto Sans JP",sans-serif}
+</style>
+</helmet>
+<div style="width:{{wpx}};height:{{hpx}}">
+<svg viewBox="0 0 320 200" width="100%" height="100%" role="img" aria-label="口の断面図：英語の /r/ は舌先が上あごにつかない。日本語のラ行は舌先が上あごに触れる。">
+  <rect x="1.5" y="1.5" width="317" height="197" rx="22" fill="#E4F6FF" stroke="#1B1F5E" stroke-width="3"/>
+  <rect x="14" y="10" width="136" height="26" rx="13" fill="#12B5A4" stroke="#1B1F5E" stroke-width="2.5"/>
+  <text x="82" y="28" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">英語の/r/：つけない</text>
+  <rect x="160" y="10" width="146" height="26" rx="13" fill="#FFE9E4" stroke="#C8402B" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <text x="233" y="28" text-anchor="middle" font-size="13" font-weight="800" fill="#8A2A18">日本語のラ：触れる</text>
+  <g transform="translate(8 34)">
+    <path d="M252 72 Q246 60 230 64 Q200 42 150 44 Q100 46 78 78 L70 140 Q110 148 170 140 Q212 130 232 116 Q246 112 252 100 Z" fill="#FFF3EE"/>
+    <path d="M252 72 Q246 60 230 64 Q200 42 150 44 Q100 46 78 78 L70 140" fill="none" stroke="#1B1F5E" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M252 100 Q246 112 232 116 Q212 130 170 140 Q110 148 70 140" fill="none" stroke="#1B1F5E" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M252 62 Q270 66 266 82 Q258 88 250 80 Z" fill="#FF9DB5" stroke="#1B1F5E" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M252 96 Q270 98 268 114 Q258 124 248 112 Z" fill="#FF9DB5" stroke="#1B1F5E" stroke-width="2.5" stroke-linejoin="round"/>
+    <rect x="243" y="66" width="7" height="16" rx="2.5" fill="#fff" stroke="#1B1F5E" stroke-width="2"/>
+    <path d="M84 138 C88 108 108 92 136 92 C156 92 176 88 194 90 C206 91 208 100 196 104 C176 112 164 124 158 140 C140 146 104 146 84 138 Z" fill="#12B5A4" stroke="#1B1F5E" stroke-width="3"/>
+    <ellipse cx="128" cy="104" rx="14" ry="5" fill="#fff" fill-opacity="0.35" transform="rotate(-8 128 104)"/>
+    <path d="M84 138 C96 118 130 108 170 96 C196 88 216 74 228 68 C234 72 230 82 218 92 C196 108 176 122 160 140" fill="none" stroke="#E5482D" stroke-width="3" stroke-dasharray="7 5" stroke-linecap="round"/>
+    <circle cx="228" cy="67" r="5.5" fill="#E5482D" stroke="#fff" stroke-width="2"/>
+    <path d="M200 112 l0 22 M194 128 l6 8 6 -8" fill="none" stroke="#1B1F5E" stroke-width="0"/>
+    <text x="126" y="126" text-anchor="middle" font-size="14" font-weight="800" fill="#fff" stroke="#1B1F5E" stroke-width="3" paint-order="stroke">舌</text>
+    <text x="140" y="38" text-anchor="middle" font-size="12" font-weight="800" fill="#1B1F5E">上あご</text>
+  </g>
+</svg>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"w":{"editor":"int","default":320},"$preview":{"width":320,"height":200}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const w = Number(this.props.w || 320);
+    return { wpx: w + 'px', hpx: Math.round(w * 200 / 320) + 'px' };
+  }
+}
+</script>
+</body>
+</html>

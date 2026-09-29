@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>キャラクターシート</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;font-family:"Hiragino Maru Gothic ProN","HiraMaruProN-W4","Noto Sans JP",sans-serif;background:#EAF7FF}
+</style>
+</helmet>
+<div style="width:1194px;height:760px;box-sizing:border-box;padding:24px 32px;background:linear-gradient(180deg,#BDEEFF,#F6FBFF);color:#1B1F5E;font-family:'Hiragino Maru Gothic ProN','HiraMaruProN-W4','Noto Sans JP',sans-serif;display:flex;flex-direction:column;gap:12px">
+  <div><div style="font-size:24px;font-weight:800">キャラクターシート（口の表情）</div><div style="font-size:13px;color:#4a4f80;font-weight:700">既定は小さく閉じた「ω」。口を開けるのは、発音のヒントとお祝いの場面だけ。</div></div>
+
+  <div style="display:grid;grid-template-columns:120px repeat(6, minmax(0, 1fr));gap:10px;align-items:center">
+    <div></div>
+    <div style="text-align:center;font-size:15px;font-weight:800">くるりん /r/</div><div style="text-align:center;font-size:15px;font-weight:800">ぺろ /l/</div><div style="text-align:center;font-size:15px;font-weight:800">べー /θ/</div><div style="text-align:center;font-size:15px;font-weight:800">がぶ /v/</div><div style="text-align:center;font-size:15px;font-weight:800">ふーふー /f/</div><div style="text-align:center;font-size:15px;font-weight:800">ぷっぷ /b/</div>
+
+    <div style="font-size:15px;font-weight:800;line-height:1.35">ふだんの顔<div style="font-size:12px;color:#4a4f80;font-weight:700">既定</div></div>
+    <div style="display:flex;justify-content:center;background:#fff;border:3px solid #1B1F5E;border-radius:20px;box-shadow:0 4px 0 #1B1F5E;padding:8px 0"><dc-import name="Creature" type="r" mouth="rest" size="112" hint-size="112px,112px"></dc-import></div>
+    <div style="display:flex;justify-content:center;background:#fff;border:3px solid #1B1F5E;border-radius:20px;box-shadow:0 4px 0 #1B1F5E;padding:8px 0"><dc-import name="Creature" type="l" mouth="rest" size="112" hint-size="112px,112px"></dc-import></div>
+    <div style="display:flex;justify-content:center;background:#fff;border:3px solid #1B1F5E;border-radius:20px;box-shadow:0 4px 0 #1B1F5E;padding:8px 0"><dc-import name="Creature" type="th" mouth="rest" size="112" hint-size="112px,112px"></dc-import></div>
+    <div style="display:flex;justify-content:center;background:#fff;border:3px solid #1B1F5E;border-radius:20px;box-shadow:0 4px 0 #1B1F5E;padding:8px 0"><dc-import name="Creature" type="v" mouth="rest" size="112" hint-size="112px,112px"></dc-import></div>
+    <div style="display:flex;justify-content:center;background:#fff;border:3px solid #1B1F5E;border-radius:20px;box-shadow:0 4px 0 #1B1F5E;padding:8px 0"><dc-import name="Creature" type="f" mouth="rest" size="112" hint-size="112px,112px"></dc-import></div>
+    <div style="display:flex;justify-content:center;background:#fff;border:3px solid #1B1F5E;border-radius:20px;box-shadow:0 4px 0 #1B1F5E;padding:8px 0"><dc-import name="Creature" type="b" mouth="rest" size="112" hint-size="112px,112px"></dc-import></div>
+
+    <div style="font-size:15px;font-weight:800;line-height:1.35">ヒントの顔<div style="font-size:12px;color:#4a4f80;font-weight:700">口の形を見せる</div></div>
+    <div style="display:flex;justify-content:center;background:#fff;border:3px solid #1B1F5E;border-radius:20px;box-shadow:0 4px 0 #1B1F5E;padding:8px 0"><dc-import name="Creature" type="r" mouth="show" size="112" hint-size="112px,112px"></dc-import></div>
+    <div style="display:flex;justify-content:center;background:#fff;border:3px solid #1B1F5E;border-radius:20px;box-shadow:0 4px 0 #1B1F5E;padding:8px 0"><dc-import name="Creature" type="l" mouth="show" size="112" hint-size="112px,112px"></dc-import></div>
+    <div style="display:flex;justify-content:center;background:#fff;border:3px solid #1B1F5E;border-radius:20px;box-shadow:0 4px 0 #1B1F5E;padding:8px 0"><dc-import name="Creature" type="th" mouth="show" size="112" hint-size="112px,112px"></dc-import></div>
+    <div style="display:flex;justify-content:center;background:#fff;border:3px solid #1B1F5E;border-radius:20px;box-shadow:0 4px 0 #1B1F5E;padding:8px 0"><dc-import name="Creature" type="v" mouth="show" size="112" hint-size="112px,112px"></dc-import></div>
+    <div style="display:flex;justify-content:center;background:#fff;border:3px solid #1B1F5E;border-radius:20px;box-shadow:0 4px 0 #1B1F5E;padding:8px 0"><dc-import name="Creature" type="f" mouth="show" size="112" hint-size="112px,112px"></dc-import></div>
+    <div style="display:flex;justify-content:center;background:#fff;border:3px solid #1B1F5E;border-radius:20px;box-shadow:0 4px 0 #1B1F5E;padding:8px 0"><dc-import name="Creature" type="b" mouth="show" size="112" hint-size="112px,112px"></dc-import></div>
+
+    <div style="font-size:15px;font-weight:800;line-height:1.35">お祝いの顔<div style="font-size:12px;color:#4a4f80;font-weight:700">クリア画面だけ</div></div>
+    <div style="display:flex;justify-content:center;background:#fff;border:3px solid #1B1F5E;border-radius:20px;box-shadow:0 4px 0 #1B1F5E;padding:8px 0"><dc-import name="Creature" type="r" mouth="joy" size="112" hint-size="112px,112px"></dc-import></div>
+    <div style="display:flex;justify-content:center;background:#fff;border:3px solid #1B1F5E;border-radius:20px;box-shadow:0 4px 0 #1B1F5E;padding:8px 0"><dc-import name="Creature" type="l" mouth="joy" size="112" hint-size="112px,112px"></dc-import></div>
+    <div style="display:flex;justify-content:center;background:#fff;border:3px solid #1B1F5E;border-radius:20px;box-shadow:0 4px 0 #1B1F5E;padding:8px 0"><dc-import name="Creature" type="th" mouth="joy" size="112" hint-size="112px,112px"></dc-import></div>
+    <div style="display:flex;justify-content:center;background:#fff;border:3px solid #1B1F5E;border-radius:20px;box-shadow:0 4px 0 #1B1F5E;padding:8px 0"><dc-import name="Creature" type="v" mouth="joy" size="112" hint-size="112px,112px"></dc-import></div>
+    <div style="display:flex;justify-content:center;background:#fff;border:3px solid #1B1F5E;border-radius:20px;box-shadow:0 4px 0 #1B1F5E;padding:8px 0"><dc-import name="Creature" type="f" mouth="joy" size="112" hint-size="112px,112px"></dc-import></div>
+    <div style="display:flex;justify-content:center;background:#fff;border:3px solid #1B1F5E;border-radius:20px;box-shadow:0 4px 0 #1B1F5E;padding:8px 0"><dc-import name="Creature" type="b" mouth="joy" size="112" hint-size="112px,112px"></dc-import></div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:14px">
+    <div style="width:120px;font-size:15px;font-weight:800;line-height:1.35">コーチ<div style="font-size:12px;color:#4a4f80;font-weight:700">案内役</div></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;background:#fff;border:3px solid #1B1F5E;border-radius:20px;box-shadow:0 4px 0 #1B1F5E;padding:8px 40px 8px"><dc-import name="Coach" mood="happy" size="112" hint-size="112px,112px"></dc-import><div style="font-size:13px;font-weight:800">ふだん</div></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;background:#fff;border:3px solid #1B1F5E;border-radius:20px;box-shadow:0 4px 0 #1B1F5E;padding:8px 40px 8px"><dc-import name="Coach" mood="cheer" size="112" hint-size="112px,112px"></dc-import><div style="font-size:13px;font-weight:800">応援・お祝い</div></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1194,"height":760}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
