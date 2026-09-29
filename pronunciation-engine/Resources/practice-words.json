@@ -34,6 +34,23 @@
     { "id": "red", "text": "red", "ipa": "rɛd", "phonemes": ["R", "EH", "D"], "syllables": [{ "phonemes": ["R", "EH", "D"], "stressed": true }], "targetErrorPatternIds": [] },
     { "id": "i", "text": "I", "ipa": "aɪ", "phonemes": ["AY"], "syllables": [{ "phonemes": ["AY"], "stressed": true }], "targetErrorPatternIds": [] },
     { "id": "will", "text": "will", "ipa": "wɪl", "phonemes": ["W", "IH", "L"], "syllables": [{ "phonemes": ["W", "IH", "L"], "stressed": false }], "targetErrorPatternIds": [] },
-    { "id": "ate", "text": "ate", "ipa": "eɪt", "phonemes": ["EY", "T"], "syllables": [{ "phonemes": ["EY", "T"], "stressed": true }], "targetErrorPatternIds": [] }
+    { "id": "ate", "text": "ate", "ipa": "eɪt", "phonemes": ["EY", "T"], "syllables": [{ "phonemes": ["EY", "T"], "stressed": true }], "targetErrorPatternIds": [] },
+    { "id": "road", "text": "road", "ipa": "roʊd", "phonemes": ["R", "OW", "D"], "syllables": [{ "phonemes": ["R", "OW", "D"], "stressed": true }], "targetErrorPatternIds": ["rl-substitution"] },
+    { "id": "load", "text": "load", "ipa": "loʊd", "phonemes": ["L", "OW", "D"], "syllables": [{ "phonemes": ["L", "OW", "D"], "stressed": true }], "targetErrorPatternIds": ["rl-substitution"] },
+    { "id": "grass", "text": "grass", "ipa": "ɡræs", "phonemes": ["G", "R", "AE", "S"], "syllables": [{ "phonemes": ["G", "R", "AE", "S"], "stressed": true }], "targetErrorPatternIds": ["rl-substitution"] },
+    { "id": "thumb", "text": "thumb", "ipa": "θʌm", "phonemes": ["TH", "AH", "M"], "syllables": [{ "phonemes": ["TH", "AH", "M"], "stressed": true }], "targetErrorPatternIds": ["th-voiceless-to-s"] },
+    { "id": "thing", "text": "thing", "ipa": "θɪŋ", "phonemes": ["TH", "IH", "NG"], "syllables": [{ "phonemes": ["TH", "IH", "NG"], "stressed": true }], "targetErrorPatternIds": ["th-voiceless-to-s"] },
+    { "id": "thick", "text": "thick", "ipa": "θɪk", "phonemes": ["TH", "IH", "K"], "syllables": [{ "phonemes": ["TH", "IH", "K"], "stressed": true }], "targetErrorPatternIds": ["th-voiceless-to-s"] },
+    { "id": "math", "text": "math", "ipa": "mæθ", "phonemes": ["M", "AE", "TH"], "syllables": [{ "phonemes": ["M", "AE", "TH"], "stressed": true }], "targetErrorPatternIds": ["th-voiceless-to-s"] },
+    { "id": "mouth", "text": "mouth", "ipa": "maʊθ", "phonemes": ["M", "AW", "TH"], "syllables": [{ "phonemes": ["M", "AW", "TH"], "stressed": true }], "targetErrorPatternIds": ["th-voiceless-to-s"] },
+    { "id": "best", "text": "best", "ipa": "bɛst", "phonemes": ["B", "EH", "S", "T"], "syllables": [{ "phonemes": ["B", "EH", "S", "T"], "stressed": true }], "targetErrorPatternIds": ["b-v-substitution"] },
+    { "id": "vest", "text": "vest", "ipa": "vɛst", "phonemes": ["V", "EH", "S", "T"], "syllables": [{ "phonemes": ["V", "EH", "S", "T"], "stressed": true }], "targetErrorPatternIds": ["b-v-substitution"] },
+    { "id": "ban", "text": "ban", "ipa": "bæn", "phonemes": ["B", "AE", "N"], "syllables": [{ "phonemes": ["B", "AE", "N"], "stressed": true }], "targetErrorPatternIds": ["b-v-substitution"] },
+    { "id": "van", "text": "van", "ipa": "væn", "phonemes": ["V", "AE", "N"], "syllables": [{ "phonemes": ["V", "AE", "N"], "stressed": true }], "targetErrorPatternIds": ["b-v-substitution"] },
+    { "id": "fan", "text": "fan", "ipa": "fæn", "phonemes": ["F", "AE", "N"], "syllables": [{ "phonemes": ["F", "AE", "N"], "stressed": true }], "targetErrorPatternIds": ["f-h-substitution"] },
+    { "id": "fun", "text": "fun", "ipa": "fʌn", "phonemes": ["F", "AH", "N"], "syllables": [{ "phonemes": ["F", "AH", "N"], "stressed": true }], "targetErrorPatternIds": ["f-h-substitution"] },
+    { "id": "fish", "text": "fish", "ipa": "fɪʃ", "phonemes": ["F", "IH", "SH"], "syllables": [{ "phonemes": ["F", "IH", "SH"], "stressed": true }], "targetErrorPatternIds": ["f-h-substitution"] },
+    { "id": "fork", "text": "fork", "ipa": "fɔːrk", "phonemes": ["F", "AO", "R", "K"], "syllables": [{ "phonemes": ["F", "AO", "R", "K"], "stressed": true }], "targetErrorPatternIds": ["f-h-substitution"] },
+    { "id": "leaf", "text": "leaf", "ipa": "liːf", "phonemes": ["L", "IY", "F"], "syllables": [{ "phonemes": ["L", "IY", "F"], "stressed": true }], "targetErrorPatternIds": ["f-h-substitution"] }
   ]
 }

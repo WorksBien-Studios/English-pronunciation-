@@ -14,7 +14,10 @@
         { "text": "light", "ipa": "/laɪt/", "target": "l", "contrast": "r" },
         { "text": "rock", "ipa": "/rɑːk/", "target": "r", "contrast": "l" },
         { "text": "lock", "ipa": "/lɑːk/", "target": "l", "contrast": "r" },
-        { "text": "read", "ipa": "/riːd/", "target": "r", "contrast": "l" }
+        { "text": "read", "ipa": "/riːd/", "target": "r", "contrast": "l" },
+        { "text": "road", "ipa": "/roʊd/", "target": "r", "contrast": "l" },
+        { "text": "load", "ipa": "/loʊd/", "target": "l", "contrast": "r" },
+        { "text": "grass", "ipa": "/ɡræs/", "target": "r", "contrast": "l" }
       ],
       "cues": [
         { "part": "舌", "instruction": "少し奥に引き、上あごにつけない" },
@@ -35,7 +38,12 @@
       "words": [
         { "text": "think", "ipa": "/θɪŋk/", "target": "th", "contrast": null },
         { "text": "thank", "ipa": "/θæŋk/", "target": "th", "contrast": null },
-        { "text": "three", "ipa": "/θriː/", "target": "th", "contrast": null }
+        { "text": "three", "ipa": "/θriː/", "target": "th", "contrast": null },
+        { "text": "thumb", "ipa": "/θʌm/", "target": "th", "contrast": null },
+        { "text": "thing", "ipa": "/θɪŋ/", "target": "th", "contrast": null },
+        { "text": "thick", "ipa": "/θɪk/", "target": "th", "contrast": null },
+        { "text": "math", "ipa": "/mæθ/", "target": "th", "contrast": null },
+        { "text": "mouth", "ipa": "/maʊθ/", "target": "th", "contrast": null }
       ],
       "cues": [
         { "part": "舌", "instruction": "舌先を上下の歯の間に軽くはさむ" },
@@ -57,7 +65,11 @@
         { "text": "berry", "ipa": "/ˈberi/", "target": "b", "contrast": "v" },
         { "text": "very", "ipa": "/ˈveri/", "target": "v", "contrast": "b" },
         { "text": "boat", "ipa": "/boʊt/", "target": "b", "contrast": "v" },
-        { "text": "vote", "ipa": "/voʊt/", "target": "v", "contrast": "b" }
+        { "text": "vote", "ipa": "/voʊt/", "target": "v", "contrast": "b" },
+        { "text": "best", "ipa": "/best/", "target": "b", "contrast": "v" },
+        { "text": "vest", "ipa": "/vest/", "target": "v", "contrast": "b" },
+        { "text": "ban", "ipa": "/bæn/", "target": "b", "contrast": "v" },
+        { "text": "van", "ipa": "/væn/", "target": "v", "contrast": "b" }
       ],
       "cues": [
         { "part": "舌", "instruction": "力を抜いて、口の中で軽く置く" },
@@ -78,7 +90,12 @@
       "words": [
         { "text": "food", "ipa": "/fuːd/", "target": "f", "contrast": null },
         { "text": "fat", "ipa": "/fæt/", "target": "f", "contrast": null },
-        { "text": "fire", "ipa": "/ˈfaɪər/", "target": "f", "contrast": null }
+        { "text": "fire", "ipa": "/ˈfaɪər/", "target": "f", "contrast": null },
+        { "text": "fan", "ipa": "/fæn/", "target": "f", "contrast": null },
+        { "text": "fun", "ipa": "/fʌn/", "target": "f", "contrast": null },
+        { "text": "fish", "ipa": "/fɪʃ/", "target": "f", "contrast": null },
+        { "text": "fork", "ipa": "/fɔːrk/", "target": "f", "contrast": null },
+        { "text": "leaf", "ipa": "/liːf/", "target": "f", "contrast": null }
       ],
       "cues": [
         { "part": "舌", "instruction": "口の中で楽にしておく" },
