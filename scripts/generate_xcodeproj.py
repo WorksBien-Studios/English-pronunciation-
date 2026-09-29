@@ -134,6 +134,8 @@ def render():
     main_group = ident("group", "main")
     package_ref = ident("package", "shell")
     package_dep = ident("packagedep", "shell")
+    engine_package_ref = ident("package", "pronunciation-engine")
+    engine_package_dep = ident("packagedep", "pronunciation-engine")
     project_id = ident("project")
     app_target = ident("target", "app")
     test_target = ident("target", "tests")
@@ -150,8 +152,12 @@ def render():
         build_lines.append(line); test_src_ids.append(f"{bid} /* {name} in Sources */")
     shell_build = ident("buildfile", "shell")
     build_lines.append(f"\t\t{shell_build} /* iOS18Shell in Frameworks */ = {{isa = PBXBuildFile; productRef = {package_dep} /* iOS18Shell */; }};")
+    engine_build = ident("buildfile", "pronunciation-engine")
+    build_lines.append(f"\t\t{engine_build} /* PronunciationEngineCore in Frameworks */ = {{isa = PBXBuildFile; productRef = {engine_package_dep} /* PronunciationEngineCore */; }};")
 
     app_phases = {k: ident("phase", "app", k) for k in ("sources", "frameworks", "resources")}
+    bundle_engine_phase = ident("phase", "app", "bundle-pronunciation-engine")
+    fix_ort_phase = ident("phase", "app", "fix-onnxruntime-minimum-os")
     test_phases = {k: ident("phase", "tests", k) for k in ("sources", "frameworks")}
     proxy = ident("proxy")
     dependency = ident("dependency")
@@ -169,18 +175,22 @@ def render():
         f"\t\t{app_product} /* {APP_NAME}.app */ = {{isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = {APP_NAME}.app; sourceTree = BUILT_PRODUCTS_DIR; }};",
         f"\t\t{test_product} /* {TEST_NAME}.xctest */ = {{isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = {TEST_NAME}.xctest; sourceTree = BUILT_PRODUCTS_DIR; }};"]))
     out.append(section("PBXFrameworksBuildPhase", [
-        f"\t\t{app_phases['frameworks']} /* Frameworks */ = {{isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = ({shell_build} /* iOS18Shell in Frameworks */); runOnlyForDeploymentPostprocessing = 0; }};",
+        f"\t\t{app_phases['frameworks']} /* Frameworks */ = {{isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = ({shell_build} /* iOS18Shell in Frameworks */, {engine_build} /* PronunciationEngineCore in Frameworks */); runOnlyForDeploymentPostprocessing = 0; }};",
         f"\t\t{test_phases['frameworks']} /* Frameworks */ = {{isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; }};"]))
     b.groups.append(f"\t\t{main_group} = {{isa = PBXGroup; children = ({app_group} /* {APP_NAME} */, {test_group} /* {TEST_NAME} */, {products_group} /* Products */); sourceTree = \"<group>\"; }};")
     b.groups.append(f"\t\t{products_group} /* Products */ = {{isa = PBXGroup; children = ({app_product} /* {APP_NAME}.app */, {test_product} /* {TEST_NAME}.xctest */); name = Products; sourceTree = \"<group>\"; }};")
     out.append(section("PBXGroup", sorted(b.groups)))
     out.append(section("PBXNativeTarget", [
-        f"\t\t{app_target} /* {APP_NAME} */ = {{isa = PBXNativeTarget; buildConfigurationList = {lists['app']} /* Build configuration list for PBXNativeTarget \"{APP_NAME}\" */; buildPhases = ({app_phases['sources']} /* Sources */, {app_phases['frameworks']} /* Frameworks */, {app_phases['resources']} /* Resources */); buildRules = (); dependencies = (); name = {APP_NAME}; packageProductDependencies = ({package_dep} /* iOS18Shell */); productName = {APP_NAME}; productReference = {app_product} /* {APP_NAME}.app */; productType = \"com.apple.product-type.application\"; }};",
+        f"\t\t{app_target} /* {APP_NAME} */ = {{isa = PBXNativeTarget; buildConfigurationList = {lists['app']} /* Build configuration list for PBXNativeTarget \"{APP_NAME}\" */; buildPhases = ({app_phases['sources']} /* Sources */, {app_phases['frameworks']} /* Frameworks */, {app_phases['resources']} /* Resources */, {bundle_engine_phase} /* Bundle Pronunciation Engine */, {fix_ort_phase} /* Fix ONNX Runtime MinimumOSVersion */); buildRules = (); dependencies = (); name = {APP_NAME}; packageProductDependencies = ({package_dep} /* iOS18Shell */, {engine_package_dep} /* PronunciationEngineCore */); productName = {APP_NAME}; productReference = {app_product} /* {APP_NAME}.app */; productType = \"com.apple.product-type.application\"; }};",
         f"\t\t{test_target} /* {TEST_NAME} */ = {{isa = PBXNativeTarget; buildConfigurationList = {lists['test']} /* Build configuration list for PBXNativeTarget \"{TEST_NAME}\" */; buildPhases = ({test_phases['sources']} /* Sources */, {test_phases['frameworks']} /* Frameworks */); buildRules = (); dependencies = ({dependency} /* PBXTargetDependency */); name = {TEST_NAME}; productName = {TEST_NAME}; productReference = {test_product} /* {TEST_NAME}.xctest */; productType = \"com.apple.product-type.bundle.unit-test\"; }};"]))
     out.append(section("PBXProject", [
-        f"\t\t{project_id} /* Project object */ = {{isa = PBXProject; attributes = {{BuildIndependentTargetsInParallel = 1; LastUpgradeCheck = 1640; TargetAttributes = {{{app_target} = {{CreatedOnToolsVersion = 16.4; }}; {test_target} = {{CreatedOnToolsVersion = 16.4; TestTargetID = {app_target}; }}; }}; }}; buildConfigurationList = {lists['proj']} /* Build configuration list for PBXProject */; compatibilityVersion = \"Xcode 14.0\"; developmentRegion = ja; hasScannedForEncodings = 0; knownRegions = (ja, en, Base); mainGroup = {main_group}; packageReferences = ({package_ref} /* XCRemoteSwiftPackageReference \"ios-18-shell\" */); productRefGroup = {products_group} /* Products */; projectDirPath = \"\"; projectRoot = \"\"; targets = ({app_target} /* {APP_NAME} */, {test_target} /* {TEST_NAME} */); }};"]))
+        f"\t\t{project_id} /* Project object */ = {{isa = PBXProject; attributes = {{BuildIndependentTargetsInParallel = 1; LastUpgradeCheck = 1640; TargetAttributes = {{{app_target} = {{CreatedOnToolsVersion = 16.4; }}; {test_target} = {{CreatedOnToolsVersion = 16.4; TestTargetID = {app_target}; }}; }}; }}; buildConfigurationList = {lists['proj']} /* Build configuration list for PBXProject */; compatibilityVersion = \"Xcode 14.0\"; developmentRegion = ja; hasScannedForEncodings = 0; knownRegions = (ja, en, Base); mainGroup = {main_group}; packageReferences = ({package_ref} /* XCRemoteSwiftPackageReference \"ios-18-shell\" */, {engine_package_ref} /* XCLocalSwiftPackageReference \"../pronunciation-engine\" */); productRefGroup = {products_group} /* Products */; projectDirPath = \"\"; projectRoot = \"\"; targets = ({app_target} /* {APP_NAME} */, {test_target} /* {TEST_NAME} */); }};"]))
     out.append(section("PBXResourcesBuildPhase", [
         f"\t\t{app_phases['resources']} /* Resources */ = {{isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = ({', '.join(app_res_ids)}); runOnlyForDeploymentPostprocessing = 0; }};"]))
+    out.append(section("PBXShellScriptBuildPhase", [
+        f'\t\t{bundle_engine_phase} /* Bundle Pronunciation Engine */ = {{isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (); inputFileListPaths = (); inputPaths = (); name = "Bundle Pronunciation Engine"; outputFileListPaths = (); outputPaths = (); runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/bash; shellScript = "bash \\\"$SRCROOT/../scripts/bundle_pronunciation_engine.sh\\\""; }};',
+        f'\t\t{fix_ort_phase} /* Fix ONNX Runtime MinimumOSVersion */ = {{isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (); inputFileListPaths = (); inputPaths = (); name = "Fix ONNX Runtime MinimumOSVersion"; outputFileListPaths = (); outputPaths = (); runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/bash; shellScript = "bash \\\"$SRCROOT/../scripts/fix_onnxruntime_minimum_os.sh\\\""; }};',
+    ]))
     out.append(section("PBXSourcesBuildPhase", [
         f"\t\t{app_phases['sources']} /* Sources */ = {{isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = ({', '.join(app_src_ids)}); runOnlyForDeploymentPostprocessing = 0; }};",
         f"\t\t{test_phases['sources']} /* Sources */ = {{isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = ({', '.join(test_src_ids)}); runOnlyForDeploymentPostprocessing = 0; }};"]))
@@ -226,10 +236,14 @@ def render():
         config_list("proj", "PBXProject", "proj-debug", "proj-release"),
         config_list("app", f"PBXNativeTarget \"{APP_NAME}\"", "app-debug", "app-release"),
         config_list("test", f"PBXNativeTarget \"{TEST_NAME}\"", "test-debug", "test-release")]))
+    out.append(section("XCLocalSwiftPackageReference", [
+        f"\t\t{engine_package_ref} /* XCLocalSwiftPackageReference \"../pronunciation-engine\" */ = {{isa = XCLocalSwiftPackageReference; relativePath = ../pronunciation-engine; }};"]))
     out.append(section("XCRemoteSwiftPackageReference", [
         f"\t\t{package_ref} /* XCRemoteSwiftPackageReference \"ios-18-shell\" */ = {{isa = XCRemoteSwiftPackageReference; repositoryURL = \"{SHELL_URL}\"; requirement = {{kind = revision; revision = {SHELL_REVISION}; }}; }};"]))
     out.append(section("XCSwiftPackageProductDependency", [
-        f"\t\t{package_dep} /* iOS18Shell */ = {{isa = XCSwiftPackageProductDependency; package = {package_ref} /* XCRemoteSwiftPackageReference \"ios-18-shell\" */; productName = iOS18Shell; }};"]))
+        f"\t\t{package_dep} /* iOS18Shell */ = {{isa = XCSwiftPackageProductDependency; package = {package_ref} /* XCRemoteSwiftPackageReference \"ios-18-shell\" */; productName = iOS18Shell; }};",
+        f"\t\t{engine_package_dep} /* PronunciationEngineCore */ = {{isa = XCSwiftPackageProductDependency; package = {engine_package_ref} /* XCLocalSwiftPackageReference \"../pronunciation-engine\" */; productName = PronunciationEngineCore; }};",
+    ]))
     out.append("\t};")
     out.append(f"\trootObject = {project_id} /* Project object */;")
     out.append("}")
