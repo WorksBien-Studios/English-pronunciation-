@@ -30,6 +30,9 @@ def file_type(path):
     suffix = path.suffix
     return {
         ".swift": "sourcecode.swift",
+        ".cpp": "sourcecode.cpp.cpp",
+        ".mm": "sourcecode.cpp.objcpp",
+        ".h": "sourcecode.c.h",
         ".json": "text.json",
         ".xcprivacy": "text.xml",
         ".plist": "text.plist.xml",
@@ -90,10 +93,10 @@ class Builder:
                 f"path = {quote(rel.name)}; sourceTree = \"<group>\"; }};"
             )
             children.append(f"{fid} /* {rel.name} */")
-            if rel.suffix == ".swift":
+            if rel.suffix in (".swift", ".cpp", ".mm"):
                 sources.append((fid, rel.name))
-            elif rel.name == "Info.plist":
-                pass  # merged through INFOPLIST_FILE, never copied as a resource
+            elif rel.name == "Info.plist" or rel.suffix in (".h", ".hpp"):
+                pass  # build metadata/headers are not copied as app resources
             else:
                 resources.append((fid, rel.name))
         for name in sorted(subdirs):
@@ -137,6 +140,13 @@ def render():
     project_id = ident("project")
     app_target = ident("target", "app")
     test_target = ident("target", "tests")
+    engine_bundle_ref = ident("file", "engine-bundle")
+    b.file_refs.append(
+        f"\t\t{engine_bundle_ref} /* PronunciationEngine */ = "
+        "{isa = PBXFileReference; lastKnownFileType = folder; "
+        "name = PronunciationEngine; path = Generated/PronunciationEngine; "
+        "sourceTree = SOURCE_ROOT; };"
+    )
 
     build_lines, app_src_ids, app_res_ids, test_src_ids = [], [], [], []
     for fid, name in app_sources:
@@ -148,6 +158,13 @@ def render():
     for fid, name in test_sources:
         bid, line = build_file("TestSources", fid, name)
         build_lines.append(line); test_src_ids.append(f"{bid} /* {name} in Sources */")
+    engine_bundle_build = ident("buildfile", "Resources", engine_bundle_ref)
+    build_lines.append(
+        f"\t\t{engine_bundle_build} /* PronunciationEngine in Resources */ = "
+        f"{{isa = PBXBuildFile; fileRef = {engine_bundle_ref} /* PronunciationEngine */; }};"
+    )
+    app_res_ids.append(f"{engine_bundle_build} /* PronunciationEngine in Resources */")
+
     shell_build = ident("buildfile", "shell")
     build_lines.append(f"\t\t{shell_build} /* iOS18Shell in Frameworks */ = {{isa = PBXBuildFile; productRef = {package_dep} /* iOS18Shell */; }};")
 
@@ -171,7 +188,7 @@ def render():
     out.append(section("PBXFrameworksBuildPhase", [
         f"\t\t{app_phases['frameworks']} /* Frameworks */ = {{isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = ({shell_build} /* iOS18Shell in Frameworks */); runOnlyForDeploymentPostprocessing = 0; }};",
         f"\t\t{test_phases['frameworks']} /* Frameworks */ = {{isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; }};"]))
-    b.groups.append(f"\t\t{main_group} = {{isa = PBXGroup; children = ({app_group} /* {APP_NAME} */, {test_group} /* {TEST_NAME} */, {products_group} /* Products */); sourceTree = \"<group>\"; }};")
+    b.groups.append(f"\t\t{main_group} = {{isa = PBXGroup; children = ({app_group} /* {APP_NAME} */, {test_group} /* {TEST_NAME} */, {engine_bundle_ref} /* PronunciationEngine */, {products_group} /* Products */); sourceTree = \"<group>\"; }};")
     b.groups.append(f"\t\t{products_group} /* Products */ = {{isa = PBXGroup; children = ({app_product} /* {APP_NAME}.app */, {test_product} /* {TEST_NAME}.xctest */); name = Products; sourceTree = \"<group>\"; }};")
     out.append(section("PBXGroup", sorted(b.groups)))
     out.append(section("PBXNativeTarget", [
@@ -187,7 +204,7 @@ def render():
     out.append(section("PBXTargetDependency", [
         f"\t\t{dependency} /* PBXTargetDependency */ = {{isa = PBXTargetDependency; target = {app_target} /* {APP_NAME} */; targetProxy = {proxy} /* PBXContainerItemProxy */; }};"]))
 
-    project_common = "ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; IPHONEOS_DEPLOYMENT_TARGET = 18.0; SDKROOT = iphoneos; SWIFT_VERSION = 5.0; "
+    project_common = "ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; CLANG_CXX_LANGUAGE_STANDARD = \"c++17\"; IPHONEOS_DEPLOYMENT_TARGET = 18.0; SDKROOT = iphoneos; SWIFT_VERSION = 5.0; "
     debug_extra = "DEBUG_INFORMATION_FORMAT = dwarf; ENABLE_TESTABILITY = YES; ONLY_ACTIVE_ARCH = YES; SWIFT_ACTIVE_COMPILATION_CONDITIONS = \"DEBUG $(inherited)\"; SWIFT_OPTIMIZATION_LEVEL = \"-Onone\"; "
     release_extra = "DEBUG_INFORMATION_FORMAT = \"dwarf-with-dsym\"; ENABLE_NS_ASSERTIONS = NO; SWIFT_COMPILATION_MODE = wholemodule; SWIFT_OPTIMIZATION_LEVEL = \"-O\"; VALIDATE_PRODUCT = YES; "
     app_settings = (
@@ -199,6 +216,9 @@ def render():
         "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = \"UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight\"; "
         "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait; "
         f"IPHONEOS_DEPLOYMENT_TARGET = 18.0; MARKETING_VERSION = 1.0; PRODUCT_BUNDLE_IDENTIFIER = {BUNDLE_ID}; PRODUCT_NAME = \"$(TARGET_NAME)\"; "
+        "GCC_PREPROCESSOR_DEFINITIONS = \"$(inherited) PRONUNCIATION_ENGINE_WITH_ONNXRUNTIME=1\"; "
+        "HEADER_SEARCH_PATHS = \"$(inherited) $(SRCROOT)/../pronunciation-engine/third_party\"; "
+        "SWIFT_OBJC_BRIDGING_HEADER = EnglishPronunciationCoach/EngineBridge/PronunciationEngine-Bridging-Header.h; "
         "SUPPORTED_PLATFORMS = \"iphoneos iphonesimulator\"; SUPPORTS_MACCATALYST = NO; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = \"1,2\"; "
     )
     test_settings = (
