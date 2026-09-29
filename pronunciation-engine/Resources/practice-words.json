@@ -1,29 +1,790 @@
 {
   "$schema": "practice-word.v1",
-  "notes": "Engineering draft content for the 50-word pre-UI spike. Requires manual linguistic review. Includes filler words needed to compose full practice-sentence phoneme sequences.",
+  "notes": "Engineering content for the launch curriculum. Stage words and engine word IDs are kept in sync by scripts/validate_engine_bundle.py.",
   "practiceWords": [
-    { "id": "right", "text": "right", "ipa": "raɪt", "phonemes": ["R", "AY", "T"], "syllables": [{ "phonemes": ["R", "AY", "T"], "stressed": true }], "targetErrorPatternIds": ["rl-substitution"] },
-    { "id": "light", "text": "light", "ipa": "laɪt", "phonemes": ["L", "AY", "T"], "syllables": [{ "phonemes": ["L", "AY", "T"], "stressed": true }], "targetErrorPatternIds": ["rl-substitution"] },
-    { "id": "correct", "text": "correct", "ipa": "kəˈrɛkt", "phonemes": ["K", "AX", "R", "EH", "K", "T"], "syllables": [{ "phonemes": ["K", "AX"], "stressed": false }, { "phonemes": ["R", "EH", "K", "T"], "stressed": true }], "targetErrorPatternIds": ["rl-substitution", "schwa-reduction"] },
-    { "id": "think", "text": "think", "ipa": "θɪŋk", "phonemes": ["TH", "IH", "NG", "K"], "syllables": [{ "phonemes": ["TH", "IH", "NG", "K"], "stressed": true }], "targetErrorPatternIds": ["th-voiceless-to-s"] },
-    { "id": "then", "text": "then", "ipa": "ðɛn", "phonemes": ["DH", "EH", "N"], "syllables": [{ "phonemes": ["DH", "EH", "N"], "stressed": true }], "targetErrorPatternIds": ["dh-voiced-to-z-d"] },
-    { "id": "berry", "text": "berry", "ipa": "ˈbɛri", "phonemes": ["B", "EH", "R", "IY"], "syllables": [{ "phonemes": ["B", "EH"], "stressed": true }, { "phonemes": ["R", "IY"], "stressed": false }], "targetErrorPatternIds": ["b-v-substitution"] },
-    { "id": "very", "text": "very", "ipa": "ˈvɛri", "phonemes": ["V", "EH", "R", "IY"], "syllables": [{ "phonemes": ["V", "EH"], "stressed": true }, { "phonemes": ["R", "IY"], "stressed": false }], "targetErrorPatternIds": ["b-v-substitution"] },
-    { "id": "fight", "text": "fight", "ipa": "faɪt", "phonemes": ["F", "AY", "T"], "syllables": [{ "phonemes": ["F", "AY", "T"], "stressed": true }], "targetErrorPatternIds": ["f-h-substitution"] },
-    { "id": "height", "text": "height", "ipa": "haɪt", "phonemes": ["HH", "AY", "T"], "syllables": [{ "phonemes": ["HH", "AY", "T"], "stressed": true }], "targetErrorPatternIds": ["f-h-substitution"] },
-    { "id": "cat", "text": "cat", "ipa": "kæt", "phonemes": ["K", "AE", "T"], "syllables": [{ "phonemes": ["K", "AE", "T"], "stressed": true }], "targetErrorPatternIds": ["vowel-insertion-after-consonant", "final-consonant-deletion"] },
-    { "id": "book", "text": "book", "ipa": "bʊk", "phonemes": ["B", "UH", "K"], "syllables": [{ "phonemes": ["B", "UH", "K"], "stressed": true }], "targetErrorPatternIds": ["vowel-insertion-after-consonant", "final-consonant-deletion"] },
-    { "id": "milk", "text": "milk", "ipa": "mɪlk", "phonemes": ["M", "IH", "L", "K"], "syllables": [{ "phonemes": ["M", "IH", "L", "K"], "stressed": true }], "targetErrorPatternIds": ["vowel-insertion-after-consonant", "final-consonant-deletion"] },
-    { "id": "test", "text": "test", "ipa": "tɛst", "phonemes": ["T", "EH", "S", "T"], "syllables": [{ "phonemes": ["T", "EH", "S", "T"], "stressed": true }], "targetErrorPatternIds": ["vowel-insertion-after-consonant", "final-consonant-deletion"] },
-    { "id": "stop", "text": "stop", "ipa": "stɑp", "phonemes": ["S", "T", "AA", "P"], "syllables": [{ "phonemes": ["S", "T", "AA", "P"], "stressed": true }], "targetErrorPatternIds": ["vowel-insertion-after-consonant", "final-consonant-deletion"] },
-    { "id": "big", "text": "big", "ipa": "bɪg", "phonemes": ["B", "IH", "G"], "syllables": [{ "phonemes": ["B", "IH", "G"], "stressed": true }], "targetErrorPatternIds": ["final-consonant-deletion"] },
-    { "id": "dog", "text": "dog", "ipa": "dɔg", "phonemes": ["D", "AO", "G"], "syllables": [{ "phonemes": ["D", "AO", "G"], "stressed": true }], "targetErrorPatternIds": ["final-consonant-deletion"] },
-    { "id": "strike", "text": "strike", "ipa": "straɪk", "phonemes": ["S", "T", "R", "AY", "K"], "syllables": [{ "phonemes": ["S", "T", "R", "AY", "K"], "stressed": true }], "targetErrorPatternIds": ["vowel-insertion-after-consonant"] },
-    { "id": "the", "text": "the", "ipa": "ðə", "phonemes": ["DH", "AX"], "syllables": [{ "phonemes": ["DH", "AX"], "stressed": false }], "targetErrorPatternIds": [] },
-    { "id": "is", "text": "is", "ipa": "ɪz", "phonemes": ["IH", "Z"], "syllables": [{ "phonemes": ["IH", "Z"], "stressed": false }], "targetErrorPatternIds": [] },
-    { "id": "red", "text": "red", "ipa": "rɛd", "phonemes": ["R", "EH", "D"], "syllables": [{ "phonemes": ["R", "EH", "D"], "stressed": true }], "targetErrorPatternIds": [] },
-    { "id": "i", "text": "I", "ipa": "aɪ", "phonemes": ["AY"], "syllables": [{ "phonemes": ["AY"], "stressed": true }], "targetErrorPatternIds": [] },
-    { "id": "will", "text": "will", "ipa": "wɪl", "phonemes": ["W", "IH", "L"], "syllables": [{ "phonemes": ["W", "IH", "L"], "stressed": false }], "targetErrorPatternIds": [] },
-    { "id": "ate", "text": "ate", "ipa": "eɪt", "phonemes": ["EY", "T"], "syllables": [{ "phonemes": ["EY", "T"], "stressed": true }], "targetErrorPatternIds": [] }
+    {
+      "id": "right",
+      "text": "right",
+      "ipa": "raɪt",
+      "phonemes": [
+        "R",
+        "AY",
+        "T"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "R",
+            "AY",
+            "T"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "rl-substitution"
+      ]
+    },
+    {
+      "id": "light",
+      "text": "light",
+      "ipa": "laɪt",
+      "phonemes": [
+        "L",
+        "AY",
+        "T"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "L",
+            "AY",
+            "T"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "rl-substitution"
+      ]
+    },
+    {
+      "id": "correct",
+      "text": "correct",
+      "ipa": "kəˈrɛkt",
+      "phonemes": [
+        "K",
+        "AX",
+        "R",
+        "EH",
+        "K",
+        "T"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "K",
+            "AX"
+          ],
+          "stressed": false
+        },
+        {
+          "phonemes": [
+            "R",
+            "EH",
+            "K",
+            "T"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "rl-substitution",
+        "schwa-reduction"
+      ]
+    },
+    {
+      "id": "think",
+      "text": "think",
+      "ipa": "θɪŋk",
+      "phonemes": [
+        "TH",
+        "IH",
+        "NG",
+        "K"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "TH",
+            "IH",
+            "NG",
+            "K"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "th-voiceless-to-s"
+      ]
+    },
+    {
+      "id": "then",
+      "text": "then",
+      "ipa": "ðɛn",
+      "phonemes": [
+        "DH",
+        "EH",
+        "N"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "DH",
+            "EH",
+            "N"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "dh-voiced-to-z-d"
+      ]
+    },
+    {
+      "id": "berry",
+      "text": "berry",
+      "ipa": "ˈbɛri",
+      "phonemes": [
+        "B",
+        "EH",
+        "R",
+        "IY"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "B",
+            "EH"
+          ],
+          "stressed": true
+        },
+        {
+          "phonemes": [
+            "R",
+            "IY"
+          ],
+          "stressed": false
+        }
+      ],
+      "targetErrorPatternIds": [
+        "b-v-substitution"
+      ]
+    },
+    {
+      "id": "very",
+      "text": "very",
+      "ipa": "ˈvɛri",
+      "phonemes": [
+        "V",
+        "EH",
+        "R",
+        "IY"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "V",
+            "EH"
+          ],
+          "stressed": true
+        },
+        {
+          "phonemes": [
+            "R",
+            "IY"
+          ],
+          "stressed": false
+        }
+      ],
+      "targetErrorPatternIds": [
+        "b-v-substitution"
+      ]
+    },
+    {
+      "id": "fight",
+      "text": "fight",
+      "ipa": "faɪt",
+      "phonemes": [
+        "F",
+        "AY",
+        "T"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "F",
+            "AY",
+            "T"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "f-h-substitution"
+      ]
+    },
+    {
+      "id": "height",
+      "text": "height",
+      "ipa": "haɪt",
+      "phonemes": [
+        "HH",
+        "AY",
+        "T"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "HH",
+            "AY",
+            "T"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "f-h-substitution"
+      ]
+    },
+    {
+      "id": "cat",
+      "text": "cat",
+      "ipa": "kæt",
+      "phonemes": [
+        "K",
+        "AE",
+        "T"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "K",
+            "AE",
+            "T"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "vowel-insertion-after-consonant",
+        "final-consonant-deletion"
+      ]
+    },
+    {
+      "id": "book",
+      "text": "book",
+      "ipa": "bʊk",
+      "phonemes": [
+        "B",
+        "UH",
+        "K"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "B",
+            "UH",
+            "K"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "vowel-insertion-after-consonant",
+        "final-consonant-deletion"
+      ]
+    },
+    {
+      "id": "milk",
+      "text": "milk",
+      "ipa": "mɪlk",
+      "phonemes": [
+        "M",
+        "IH",
+        "L",
+        "K"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "M",
+            "IH",
+            "L",
+            "K"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "vowel-insertion-after-consonant",
+        "final-consonant-deletion"
+      ]
+    },
+    {
+      "id": "test",
+      "text": "test",
+      "ipa": "tɛst",
+      "phonemes": [
+        "T",
+        "EH",
+        "S",
+        "T"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "T",
+            "EH",
+            "S",
+            "T"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "vowel-insertion-after-consonant",
+        "final-consonant-deletion"
+      ]
+    },
+    {
+      "id": "stop",
+      "text": "stop",
+      "ipa": "stɑp",
+      "phonemes": [
+        "S",
+        "T",
+        "AA",
+        "P"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "S",
+            "T",
+            "AA",
+            "P"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "vowel-insertion-after-consonant",
+        "final-consonant-deletion"
+      ]
+    },
+    {
+      "id": "big",
+      "text": "big",
+      "ipa": "bɪg",
+      "phonemes": [
+        "B",
+        "IH",
+        "G"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "B",
+            "IH",
+            "G"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "final-consonant-deletion"
+      ]
+    },
+    {
+      "id": "dog",
+      "text": "dog",
+      "ipa": "dɔg",
+      "phonemes": [
+        "D",
+        "AO",
+        "G"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "D",
+            "AO",
+            "G"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "final-consonant-deletion"
+      ]
+    },
+    {
+      "id": "strike",
+      "text": "strike",
+      "ipa": "straɪk",
+      "phonemes": [
+        "S",
+        "T",
+        "R",
+        "AY",
+        "K"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "S",
+            "T",
+            "R",
+            "AY",
+            "K"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "vowel-insertion-after-consonant"
+      ]
+    },
+    {
+      "id": "the",
+      "text": "the",
+      "ipa": "ðə",
+      "phonemes": [
+        "DH",
+        "AX"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "DH",
+            "AX"
+          ],
+          "stressed": false
+        }
+      ],
+      "targetErrorPatternIds": []
+    },
+    {
+      "id": "is",
+      "text": "is",
+      "ipa": "ɪz",
+      "phonemes": [
+        "IH",
+        "Z"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "IH",
+            "Z"
+          ],
+          "stressed": false
+        }
+      ],
+      "targetErrorPatternIds": []
+    },
+    {
+      "id": "red",
+      "text": "red",
+      "ipa": "rɛd",
+      "phonemes": [
+        "R",
+        "EH",
+        "D"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "R",
+            "EH",
+            "D"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": []
+    },
+    {
+      "id": "i",
+      "text": "I",
+      "ipa": "aɪ",
+      "phonemes": [
+        "AY"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "AY"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": []
+    },
+    {
+      "id": "will",
+      "text": "will",
+      "ipa": "wɪl",
+      "phonemes": [
+        "W",
+        "IH",
+        "L"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "W",
+            "IH",
+            "L"
+          ],
+          "stressed": false
+        }
+      ],
+      "targetErrorPatternIds": []
+    },
+    {
+      "id": "ate",
+      "text": "ate",
+      "ipa": "eɪt",
+      "phonemes": [
+        "EY",
+        "T"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "EY",
+            "T"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": []
+    },
+    {
+      "id": "rock",
+      "text": "rock",
+      "ipa": "rɑːk",
+      "phonemes": [
+        "R",
+        "AA",
+        "K"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "R",
+            "AA",
+            "K"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "rl-substitution"
+      ]
+    },
+    {
+      "id": "lock",
+      "text": "lock",
+      "ipa": "lɑːk",
+      "phonemes": [
+        "L",
+        "AA",
+        "K"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "L",
+            "AA",
+            "K"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "rl-substitution"
+      ]
+    },
+    {
+      "id": "read",
+      "text": "read",
+      "ipa": "riːd",
+      "phonemes": [
+        "R",
+        "IY",
+        "D"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "R",
+            "IY",
+            "D"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "rl-substitution"
+      ]
+    },
+    {
+      "id": "thank",
+      "text": "thank",
+      "ipa": "θæŋk",
+      "phonemes": [
+        "TH",
+        "AE",
+        "NG",
+        "K"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "TH",
+            "AE",
+            "NG",
+            "K"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "th-voiceless-to-s"
+      ]
+    },
+    {
+      "id": "three",
+      "text": "three",
+      "ipa": "θriː",
+      "phonemes": [
+        "TH",
+        "R",
+        "IY"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "TH",
+            "R",
+            "IY"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "th-voiceless-to-s"
+      ]
+    },
+    {
+      "id": "boat",
+      "text": "boat",
+      "ipa": "boʊt",
+      "phonemes": [
+        "B",
+        "OW",
+        "T"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "B",
+            "OW",
+            "T"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "b-v-substitution"
+      ]
+    },
+    {
+      "id": "vote",
+      "text": "vote",
+      "ipa": "voʊt",
+      "phonemes": [
+        "V",
+        "OW",
+        "T"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "V",
+            "OW",
+            "T"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "b-v-substitution"
+      ]
+    },
+    {
+      "id": "food",
+      "text": "food",
+      "ipa": "fuːd",
+      "phonemes": [
+        "F",
+        "UW",
+        "D"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "F",
+            "UW",
+            "D"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "f-h-substitution"
+      ]
+    },
+    {
+      "id": "fat",
+      "text": "fat",
+      "ipa": "fæt",
+      "phonemes": [
+        "F",
+        "AE",
+        "T"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "F",
+            "AE",
+            "T"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "f-h-substitution"
+      ]
+    },
+    {
+      "id": "fire",
+      "text": "fire",
+      "ipa": "ˈfaɪər",
+      "phonemes": [
+        "F",
+        "AY",
+        "AX",
+        "R"
+      ],
+      "syllables": [
+        {
+          "phonemes": [
+            "F",
+            "AY",
+            "AX",
+            "R"
+          ],
+          "stressed": true
+        }
+      ],
+      "targetErrorPatternIds": [
+        "f-h-substitution"
+      ]
+    }
   ]
 }
