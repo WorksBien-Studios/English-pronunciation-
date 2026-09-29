@@ -199,6 +199,20 @@ jobs:
         with:
           ref: ${{ inputs.validated_sha }}
 
+      - name: Cache locked pronunciation model
+        uses: actions/cache@v4
+        with:
+          path: pronunciation-engine/model/model_q4f16.onnx
+          key: pronunciation-model-q4f16-9978e7cba1bf7216
+
+      - name: Fetch and verify locked pronunciation model
+        run: python3 scripts/fetch_pronunciation_model.py
+
+      - name: Validate content and regenerate Xcode project
+        run: |
+          python3 scripts/validate_stage_engine_content.py
+          python3 scripts/generate_xcodeproj.py
+
       - name: Select Xcode and prepare credentials
         shell: bash
         run: |
