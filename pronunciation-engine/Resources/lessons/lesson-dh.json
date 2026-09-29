@@ -1,0 +1,11 @@
+{
+  "$schema": "lesson.v1",
+  "id": "lesson-dh",
+  "errorPatternId": "dh-voiced-to-z-d",
+  "title": "有声 TH（/ð/）と /z/・/d/ の区別",
+  "order": 3,
+  "minimalPairIds": ["then-zen", "breathe-breeze"],
+  "practiceWordIds": ["then"],
+  "practiceSentenceIds": [],
+  "successThreshold": 0.62
+}

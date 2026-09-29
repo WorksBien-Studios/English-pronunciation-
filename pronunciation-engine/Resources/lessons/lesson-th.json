@@ -1,0 +1,11 @@
+{
+  "$schema": "lesson.v1",
+  "id": "lesson-th",
+  "errorPatternId": "th-voiceless-to-s",
+  "title": "無声 TH（/θ/）と /s/ の区別",
+  "order": 2,
+  "minimalPairIds": ["think-sink", "thank-sank"],
+  "practiceWordIds": ["think"],
+  "practiceSentenceIds": ["i-think-the-book-is-big"],
+  "successThreshold": 0.62
+}

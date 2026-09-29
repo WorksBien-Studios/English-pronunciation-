@@ -1,0 +1,11 @@
+{
+  "$schema": "lesson.v1",
+  "id": "lesson-rl",
+  "errorPatternId": "rl-substitution",
+  "title": "/r/ と /l/ の区別",
+  "order": 1,
+  "minimalPairIds": ["right-light", "rice-lice", "correct-collect"],
+  "practiceWordIds": ["right", "light", "correct"],
+  "practiceSentenceIds": ["the-right-light-is-red"],
+  "successThreshold": 0.62
+}

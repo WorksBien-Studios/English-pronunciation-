@@ -1,0 +1,31 @@
+{
+  "$schema": "model-manifest.v1",
+  "status": "locked-not-yet-bundled",
+  "notes": "docs/product-specification.md#runtime-inference locks this checkpoint after the 2026-09-28 portable benchmark (see docs/model-benchmark-2026-09-28.md). The artifact itself is not vendored into this repository: it is ~197 MB, is fetched once into the iOS target's model resources during EngineBridge integration, and its checksum is recorded here at that time. src/Acoustic/OnnxAcousticModel.h is the wiring point; until then, engine development and tests run entirely against MockAcousticModel.",
+  "source": {
+    "repository": "onnx-community/wav2vec2-lv-60-espeak-cv-ft-ONNX",
+    "url": "https://huggingface.co/onnx-community/wav2vec2-lv-60-espeak-cv-ft-ONNX",
+    "license": "Apache-2.0"
+  },
+  "selectedArtifact": {
+    "file": "model_q4f16.onnx",
+    "sizeBytes": 206467072,
+    "quantization": "Q4-FP16"
+  },
+  "rejectedArtifact": {
+    "file": "model_int8.onnx",
+    "sizeBytes": 333097370,
+    "quantization": "INT8",
+    "rejectedBecause": "38.0% larger, 20.3% more portable peak process RSS, 15.7% slower median / 23.9% slower p95 inference, and lower FP32-parity accuracy than Q4-FP16 in the 2026-09-28 benchmark"
+  },
+  "runtime": {
+    "engine": "ONNX Runtime Mobile",
+    "license": "MIT",
+    "executionProviders": ["CoreML", "CPU"]
+  },
+  "checksum": {
+    "algorithm": "sha256",
+    "value": null,
+    "note": "populate once model_q4f16.onnx is fetched into pronunciation-ios's model resources; see checksums.txt"
+  }
+}

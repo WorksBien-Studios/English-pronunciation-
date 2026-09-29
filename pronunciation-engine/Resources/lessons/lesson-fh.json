@@ -1,0 +1,11 @@
+{
+  "$schema": "lesson.v1",
+  "id": "lesson-fh",
+  "errorPatternId": "f-h-substitution",
+  "title": "/f/ と /h/ の区別",
+  "order": 5,
+  "minimalPairIds": ["fight-height", "few-hue"],
+  "practiceWordIds": ["fight", "height"],
+  "practiceSentenceIds": [],
+  "successThreshold": 0.6
+}

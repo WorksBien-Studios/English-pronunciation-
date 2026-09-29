@@ -1,0 +1,134 @@
+{
+  "$schema": "japanese-error-pattern.v1",
+  "notes": "Engineering draft content for the 50-word pre-UI spike (docs/product-specification.md#technical-risk-and-mandatory-pre-ui-gate). Requires manual linguistic review before it may count toward the launch content-review gate.",
+  "errorPatterns": [
+    {
+      "id": "rl-substitution",
+      "type": "substitution",
+      "expectedPhoneme": "R",
+      "confusablePhonemes": ["L"],
+      "confidenceThreshold": 0.62,
+      "repeatsRequiredToConfirm": 2,
+      "correctionGuide": {
+        "whatUserLikelyDidJa": "「ら行」に近い音で代用し、舌先を歯茎にはじきつけている可能性があります。",
+        "whyJapaneseSpeakersJa": "日本語の「ら」は舌先が歯茎に軽く触れるはじき音（フラップ）です。英語の /r/ にはこの動きがなく、混同が起きやすい音です。",
+        "articulatoryCorrectionJa": "舌先はどこにも触れさせません。舌の中央を軽く丸め、舌先を口の中で浮かせたまま、喉の奥から声を出します。唇も少しすぼめます。",
+        "analogyJa": "犬が低く唸る「グルルル」の口の構えに近いイメージです。舌が歯や歯茎に触れたら失敗のサインです。",
+        "contrastSound": "L"
+      },
+      "minimalPairIds": ["right-light", "rice-lice", "correct-collect"]
+    },
+    {
+      "id": "th-voiceless-to-s",
+      "type": "substitution",
+      "expectedPhoneme": "TH",
+      "confusablePhonemes": ["S"],
+      "confidenceThreshold": 0.62,
+      "repeatsRequiredToConfirm": 2,
+      "correctionGuide": {
+        "whatUserLikelyDidJa": "舌を歯の裏側にとどめたまま「S」の音で代用している可能性があります。",
+        "whyJapaneseSpeakersJa": "日本語には歯の間に舌を挟んで出す摩擦音が存在しないため、近い響きを持つ「S」に置き換えがちです。",
+        "articulatoryCorrectionJa": "舌先を上下の前歯の間に軽く挟み、隙間から息を摩擦させて出します。声帯は震わせません。",
+        "analogyJa": "舌を軽く噛んだまま「スー」と息を漏らす感覚です。",
+        "contrastSound": "S"
+      },
+      "minimalPairIds": ["think-sink", "thank-sank"]
+    },
+    {
+      "id": "dh-voiced-to-z-d",
+      "type": "substitution",
+      "expectedPhoneme": "DH",
+      "confusablePhonemes": ["Z", "D"],
+      "confidenceThreshold": 0.62,
+      "repeatsRequiredToConfirm": 2,
+      "correctionGuide": {
+        "whatUserLikelyDidJa": "舌先を歯の裏に当てたまま「Z」または「D」に近い音で代用している可能性があります。",
+        "whyJapaneseSpeakersJa": "有声の歯間摩擦音は日本語に存在しないため、調音位置が近い「Z」や「D」に置き換わりやすい音です。",
+        "articulatoryCorrectionJa": "舌先を上下の前歯の間に軽く挟み、声帯を震わせながら隙間から息を出します。舌を歯茎につけてはじいてはいけません。",
+        "analogyJa": "TH（無声）と同じ舌の形のまま、喉を震わせて「ズー」に近い響きを出す感覚です。",
+        "contrastSound": "Z"
+      },
+      "minimalPairIds": ["this-zis"]
+    },
+    {
+      "id": "b-v-substitution",
+      "type": "substitution",
+      "expectedPhoneme": "V",
+      "confusablePhonemes": ["B"],
+      "confidenceThreshold": 0.6,
+      "repeatsRequiredToConfirm": 2,
+      "correctionGuide": {
+        "whatUserLikelyDidJa": "上下の唇を完全に閉じて「B」に近い破裂音で代用している可能性があります。",
+        "whyJapaneseSpeakersJa": "日本語のバ行は両唇を完全に閉じる破裂音のため、唇を閉じずに摩擦させる /v/ との区別が難しくなります。",
+        "articulatoryCorrectionJa": "上の前歯を下唇に軽く当て、唇を完全には閉じずに隙間から息を摩擦させながら声を出します。",
+        "analogyJa": "掃除機の音のように唇の隙間から震えながら息が漏れる感覚です。",
+        "contrastSound": "B"
+      },
+      "minimalPairIds": ["berry-very", "boat-vote"]
+    },
+    {
+      "id": "f-h-substitution",
+      "type": "substitution",
+      "expectedPhoneme": "F",
+      "confusablePhonemes": ["HH"],
+      "confidenceThreshold": 0.6,
+      "repeatsRequiredToConfirm": 2,
+      "correctionGuide": {
+        "whatUserLikelyDidJa": "上の前歯を下唇に当てずに、喉から息を出す「H」に近い音で代用している可能性があります。",
+        "whyJapaneseSpeakersJa": "日本語の「フ」は両唇の隙間から出す摩擦音で、英語の /f/ のように上の前歯を下唇に当てません。",
+        "articulatoryCorrectionJa": "上の前歯を下唇にしっかり当て、その隙間から息だけを出します。喉は使いません。",
+        "analogyJa": "ろうそくの火を消すときの「フー」を、下唇に前歯を当てたまま行う感覚です。",
+        "contrastSound": "HH"
+      },
+      "minimalPairIds": ["fight-height", "few-hue"]
+    },
+    {
+      "id": "vowel-insertion-after-consonant",
+      "type": "insertion",
+      "expectedPhoneme": null,
+      "confusablePhonemes": ["AX", "UW", "OW"],
+      "confidenceThreshold": 0.55,
+      "repeatsRequiredToConfirm": 2,
+      "correctionGuide": {
+        "whatUserLikelyDidJa": "語末や子音の後に余分な母音を挿入している可能性があります（例：cat →「キャット」のように）。",
+        "whyJapaneseSpeakersJa": "日本語の音節はほぼ必ず母音で終わるため、英語の子音だけで終わる音にも無意識に母音を足してしまいます。",
+        "articulatoryCorrectionJa": "最後の子音を出したら、母音を足さずにそこで息を止めます。口の形だけ作って音を止める練習をします。",
+        "analogyJa": "「キャット」ではなく「キャッ」で止めるイメージです。",
+        "contrastSound": null
+      },
+      "minimalPairIds": []
+    },
+    {
+      "id": "final-consonant-deletion",
+      "type": "deletion",
+      "expectedPhoneme": null,
+      "confusablePhonemes": [],
+      "confidenceThreshold": 0.6,
+      "repeatsRequiredToConfirm": 2,
+      "correctionGuide": {
+        "whatUserLikelyDidJa": "語末の子音が弱くなり、聞こえないほど脱落している可能性があります。",
+        "whyJapaneseSpeakersJa": "日本語では語末の子音単独の発音に慣れておらず、力が抜けて脱落しやすくなります。",
+        "articulatoryCorrectionJa": "語末の子音の口の形をはっきり作り、破裂や摩擦を感じるまでしっかり息を出し切ります。",
+        "analogyJa": "最後の音を飲み込まず、もう一段はっきり発音するイメージです。",
+        "contrastSound": null
+      },
+      "minimalPairIds": []
+    },
+    {
+      "id": "schwa-reduction",
+      "type": "substitution",
+      "expectedPhoneme": "AX",
+      "confusablePhonemes": ["AA", "AH", "EH", "OW"],
+      "confidenceThreshold": 0.55,
+      "repeatsRequiredToConfirm": 2,
+      "correctionGuide": {
+        "whatUserLikelyDidJa": "弱く短くなるはずの曖昧母音（シュワ）を、日本語のローマ字読みに近いはっきりした母音で代用している可能性があります。",
+        "whyJapaneseSpeakersJa": "日本語の母音は基本的に弱化せず一定の長さで発音されるため、英語の強勢のない音節にも同じ強さの母音を当てはめがちです。",
+        "articulatoryCorrectionJa": "強勢のない音節では、口をほとんど動かさず、力を抜いた短いあいまいな音にします。はっきりした母音を作ろうとしないことがポイントです。",
+        "analogyJa": "「ア」と「ウ」の中間のような、力の抜けた短い音のイメージです。",
+        "contrastSound": null
+      },
+      "minimalPairIds": []
+    }
+  ]
+}

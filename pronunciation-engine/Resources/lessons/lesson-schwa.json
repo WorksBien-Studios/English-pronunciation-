@@ -1,0 +1,11 @@
+{
+  "$schema": "lesson.v1",
+  "id": "lesson-schwa",
+  "errorPatternId": "schwa-reduction",
+  "title": "あいまい母音（シュワ）を弱く保つ",
+  "order": 8,
+  "minimalPairIds": [],
+  "practiceWordIds": ["correct", "the"],
+  "practiceSentenceIds": [],
+  "successThreshold": 0.55
+}

@@ -718,15 +718,15 @@ If Q4-FP16 misses the remaining gate, do not compensate with UI or relax the thr
 
 ## Recommended implementation order
 
-1. Define phoneme inventory and Japanese confusion map.
-2. Build JSON content schema.
-3. Build the plain C++ engine harness.
+1. ~~Define phoneme inventory and Japanese confusion map.~~ **Complete (draft):** `pronunciation-engine/Resources/phonemes.json` and `japanese-error-patterns.json`; not yet linguistically reviewed.
+2. ~~Build JSON content schema.~~ **Complete (draft):** `pronunciation-engine/Resources/*.json` + `src/Content`; covers the 50-word spike's priority targets. Not yet linguistically reviewed.
+3. ~~Build the plain C++ engine harness.~~ **Complete:** `pronunciation-engine/Harness/main.cpp` (`gate` and `run` subcommands); see `pronunciation-engine/README.md`.
 4. ~~Benchmark Q4-FP16 and INT8.~~ **Complete:** Q4-FP16 selected; INT8 rejected by the 2026-09-28 portable benchmark.
-5. Implement CTC forced alignment and GOP-style phoneme scoring.
-6. Implement audio-quality and Accelerate/vDSP prosody analysis.
-7. Implement conservative signal fusion and deterministic error classification.
-8. Assemble the automated public-corpus, posterior-fixture and audio-quality regression suite.
-9. Run the 50-word pre-UI diagnostic gate with the selected Q4-FP16 model, followed by the complete native-English developer pass on the reference iPhone.
+5. ~~Implement CTC forced alignment and GOP-style phoneme scoring.~~ **Complete:** `pronunciation-engine/src/CTCAlignment`, `src/PhonemeScoring`.
+6. ~~Implement audio-quality and Accelerate/vDSP prosody analysis.~~ **Complete (portable reference; vDSP substitution pending iOS target):** `pronunciation-engine/src/AudioQuality`, `src/Prosody`.
+7. ~~Implement conservative signal fusion and deterministic error classification.~~ **Complete:** `pronunciation-engine/src/DecisionRules`.
+8. ~~Assemble the automated posterior-fixture and audio-quality regression suite.~~ **Complete against synthetic/mock evidence:** `pronunciation-engine/Tests/Unit` (31 tests) + `pronunciation-harness gate` (35/35 scenarios). The public-corpus (UME-ERJ / SpeechOcean762) regression still requires the real ONNX Runtime Mobile backend below.
+9. **Blocked on iOS integration:** run the 50-word pre-UI diagnostic gate with the selected Q4-FP16 model through ONNX Runtime Mobile (`src/Acoustic/OnnxAcousticModel.h` is the wiring point — not implemented yet, see `pronunciation-engine/README.md`), followed by the complete native-English developer pass on the reference iPhone.
 10. Write and validate Japanese corrective content.
 11. Implement assessment and daily-practice state machines.
 12. Add SwiftData persistence and StoreKit 2 entitlements.
