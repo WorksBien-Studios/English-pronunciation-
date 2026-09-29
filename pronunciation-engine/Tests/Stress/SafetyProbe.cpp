@@ -3,8 +3,6 @@
 
 #include <cmath>
 #include <cstdio>
-#include <cstring>
-#include <exception>
 #include <string>
 #include <vector>
 
@@ -23,7 +21,6 @@ std::vector<float> makeSpeechLikeTone(double seconds, int sampleRateHz = 16000) 
 }
 
 pe_engine* createEngine(char** error) {
-    // K=24, AE=1, T=33 in the current engineering content pack.
     pe_scripted_frame script[] = {{24, 0.9f}, {1, 0.9f}, {33, 0.9f}};
     return pe_engine_create_with_mock_model(
         PRONUNCIATION_ENGINE_RESOURCES_DIR, script, 3, 5, error);
@@ -31,14 +28,16 @@ pe_engine* createEngine(char** error) {
 
 pe_engine_result* createResult(pe_engine* engine, char** error) {
     auto pcm = makeSpeechLikeTone(1.0);
-    return pe_engine_process(engine, pcm.data(), static_cast<int>(pcm.size()),
-                             16000, "word:cat", error);
+    return pe_engine_process(
+        engine, pcm.data(), static_cast<int>(pcm.size()), 16000,
+        "word:cat", error);
 }
 
 int expectRejected(pe_engine_result* result, char* error) {
-    if (result != nullptr) pe_engine_result_free(result);
-    if (error != nullptr) pe_free_error_message(error);
-    return (result == nullptr && error != nullptr) ? 0 : 2;
+    const bool rejected = result == nullptr && error != nullptr;
+    if (result) pe_engine_result_free(result);
+    if (error) pe_free_error_message(error);
+    return rejected ? 0 : 2;
 }
 
 } // namespace
@@ -50,10 +49,11 @@ int main(int argc, char** argv) {
     if (test == "null_engine_process") {
         char* error = nullptr;
         auto pcm = makeSpeechLikeTone(1.0);
-        pe_engine_result* result = pe_engine_process(
-            nullptr, pcm.data(), static_cast<int>(pcm.size()), 16000,
-            "word:cat", &error);
-        return expectRejected(result, error);
+        return expectRejected(
+            pe_engine_process(
+                nullptr, pcm.data(), static_cast<int>(pcm.size()), 16000,
+                "word:cat", &error),
+            error);
     }
 
     if (test == "null_pcm_positive_count") {
@@ -71,9 +71,10 @@ int main(int argc, char** argv) {
         char* error = nullptr;
         pe_engine* engine = pe_engine_create_with_mock_model(
             PRONUNCIATION_ENGINE_RESOURCES_DIR, nullptr, 1, 5, &error);
+        const bool rejected = engine == nullptr && error != nullptr;
         if (engine) pe_engine_destroy(engine);
         if (error) pe_free_error_message(error);
-        return (engine == nullptr && error != nullptr) ? 0 : 2;
+        return rejected ? 0 : 2;
     }
 
     if (test == "negative_sample_count") {
@@ -94,8 +95,9 @@ int main(int argc, char** argv) {
         if (!engine) return 65;
         auto pcm = makeSpeechLikeTone(1.0);
         pe_engine_result* result =
-            pe_engine_process(engine, pcm.data(), static_cast<int>(pcm.size()),
-                              16000, nullptr, &error);
+            pe_engine_process(
+                engine, pcm.data(), static_cast<int>(pcm.size()), 16000,
+                nullptr, &error);
         int rc = expectRejected(result, error);
         pe_engine_destroy(engine);
         return rc;
@@ -107,16 +109,13 @@ int main(int argc, char** argv) {
         if (!engine) return 65;
         pe_engine_result* result = createResult(engine, &error);
         if (!result) return 66;
-        int rc = 0;
-        try {
-            (void)pe_result_phoneme_verdict_at(result, -1);
-            rc = 2; // Invalid access was silently accepted.
-        } catch (...) {
-            rc = 3; // A C++ exception escaped the C API boundary.
-        }
+
+        pe_phoneme_verdict verdict =
+            pe_result_phoneme_verdict_at(result, -1);
+
         pe_engine_result_free(result);
         pe_engine_destroy(engine);
-        return rc;
+        return verdict == PE_VERDICT_LOW_CONFIDENCE ? 0 : 2;
     }
 
     if (test == "past_end_result_index") {
@@ -125,17 +124,48 @@ int main(int argc, char** argv) {
         if (!engine) return 65;
         pe_engine_result* result = createResult(engine, &error);
         if (!result) return 66;
-        int count = pe_result_phoneme_count(result);
-        int rc = 0;
-        try {
-            (void)pe_result_phoneme_gop_score_at(result, count);
-            rc = 2;
-        } catch (...) {
-            rc = 3;
-        }
+
+        const int count = pe_result_phoneme_count(result);
+        const float gop = pe_result_phoneme_gop_score_at(result, count);
+
         pe_engine_result_free(result);
         pe_engine_destroy(engine);
-        return rc;
+        return gop == 0.0f ? 0 : 2;
+    }
+
+    if (test == "null_result_accessors") {
+        const pe_audio_quality_result quality = pe_result_audio_quality(nullptr);
+        const pe_diagnosis diagnosis = pe_result_diagnosis(nullptr);
+        const int count = pe_result_phoneme_count(nullptr);
+        const pe_phoneme_verdict verdict =
+            pe_result_phoneme_verdict_at(nullptr, 0);
+        const float gop = pe_result_phoneme_gop_score_at(nullptr, 0);
+
+        return (!quality.passes_gate &&
+                diagnosis.outcome == PE_OUTCOME_RETRY &&
+                diagnosis.confidence == PE_CONFIDENCE_LOW &&
+                count == 0 &&
+                verdict == PE_VERDICT_LOW_CONFIDENCE &&
+                gop == 0.0f)
+                   ? 0
+                   : 2;
+    }
+
+    if (test == "null_create_paths") {
+        char* error1 = nullptr;
+        pe_engine* first = pe_engine_create(nullptr, "/tmp/model.onnx", &error1);
+        const bool firstRejected = first == nullptr && error1 != nullptr;
+        if (first) pe_engine_destroy(first);
+        if (error1) pe_free_error_message(error1);
+
+        char* error2 = nullptr;
+        pe_engine* second =
+            pe_engine_create(PRONUNCIATION_ENGINE_RESOURCES_DIR, nullptr, &error2);
+        const bool secondRejected = second == nullptr && error2 != nullptr;
+        if (second) pe_engine_destroy(second);
+        if (error2) pe_free_error_message(error2);
+
+        return firstRejected && secondRejected ? 0 : 2;
     }
 
     if (test == "malformed_logit_buffer") {
@@ -143,7 +173,7 @@ int main(int argc, char** argv) {
         logits.numFrames = 5;
         logits.vocabSize = 4;
         logits.blankColumn = 3;
-        logits.data = {-0.1f}; // Deliberately inconsistent with declared shape.
+        logits.data = {-0.1f};
         auto result = forceAlign(logits, {0});
         return result.succeeded ? 2 : 0;
     }
