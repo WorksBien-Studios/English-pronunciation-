@@ -217,7 +217,7 @@ def render():
     out.append(section("PBXResourcesBuildPhase", [
         f"\t\t{app_phases['resources']} /* Resources */ = {{isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = ({', '.join(app_res_ids)}); runOnlyForDeploymentPostprocessing = 0; }};"]))
     out.append(section("PBXShellScriptBuildPhase", [
-        f"\t\t{app_phases['normalize-resources']} /* Normalize bundle resource permissions */ = {{isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (); inputPaths = (); name = \"Normalize bundle resource permissions\"; outputPaths = (); runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/sh; shellScript = \"find \\\"$TARGET_BUILD_DIR/$WRAPPER_NAME\\\" -maxdepth 1 -type f -name \\\"*.png\\\" -exec chmod 0644 {{}} +\"; }};"]))
+        f"\t\t{app_phases['normalize-resources']} /* Normalize bundle resource permissions */ = {{isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (); inputPaths = (); name = \"Normalize bundle resource permissions\"; outputPaths = (); runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/sh; shellScript = \"xattr -cr \\\"$TARGET_BUILD_DIR/$WRAPPER_NAME\\\"; find \\\"$TARGET_BUILD_DIR/$WRAPPER_NAME\\\" -maxdepth 1 -type f -name \\\"*.png\\\" -exec chmod 0644 {{}} +\"; }};"]))
     out.append(section("PBXSourcesBuildPhase", [
         f"\t\t{app_phases['sources']} /* Sources */ = {{isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = ({', '.join(app_src_ids)}); runOnlyForDeploymentPostprocessing = 0; }};",
         f"\t\t{test_phases['sources']} /* Sources */ = {{isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = ({', '.join(test_src_ids)}); runOnlyForDeploymentPostprocessing = 0; }};"]))
