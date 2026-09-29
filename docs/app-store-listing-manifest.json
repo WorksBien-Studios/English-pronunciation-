@@ -133,7 +133,8 @@
       "claims_supported": true,
       "paid_feature_disclosed_if_needed": true,
       "no_other_platform_imagery": false,
-      "search_result_legibility_checked": false
+      "search_result_legibility_checked": false,
+      "shell_path": "assets/screenshots/shells/01-diagnosis.svg"
     },
     {
       "locale": "ja-JP",
@@ -150,7 +151,8 @@
       "claims_supported": true,
       "paid_feature_disclosed_if_needed": true,
       "no_other_platform_imagery": false,
-      "search_result_legibility_checked": false
+      "search_result_legibility_checked": false,
+      "shell_path": "assets/screenshots/shells/02-correction.svg"
     },
     {
       "locale": "ja-JP",
@@ -167,7 +169,8 @@
       "claims_supported": true,
       "paid_feature_disclosed_if_needed": true,
       "no_other_platform_imagery": false,
-      "search_result_legibility_checked": false
+      "search_result_legibility_checked": false,
+      "shell_path": "assets/screenshots/shells/03-progress.svg"
     },
     {
       "locale": "ja-JP",
@@ -184,7 +187,8 @@
       "claims_supported": true,
       "paid_feature_disclosed_if_needed": true,
       "no_other_platform_imagery": false,
-      "search_result_legibility_checked": false
+      "search_result_legibility_checked": false,
+      "shell_path": "assets/screenshots/shells/ipad-01-diagnosis.svg"
     },
     {
       "locale": "ja-JP",
@@ -201,7 +205,8 @@
       "claims_supported": true,
       "paid_feature_disclosed_if_needed": true,
       "no_other_platform_imagery": false,
-      "search_result_legibility_checked": false
+      "search_result_legibility_checked": false,
+      "shell_path": "assets/screenshots/shells/ipad-02-correction.svg"
     },
     {
       "locale": "ja-JP",
@@ -218,7 +223,8 @@
       "claims_supported": true,
       "paid_feature_disclosed_if_needed": true,
       "no_other_platform_imagery": false,
-      "search_result_legibility_checked": false
+      "search_result_legibility_checked": false,
+      "shell_path": "assets/screenshots/shells/ipad-03-progress.svg"
     }
   ],
   "visual_disclosure": {
