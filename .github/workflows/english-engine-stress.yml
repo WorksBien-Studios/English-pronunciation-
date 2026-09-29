@@ -1,0 +1,86 @@
+name: English Engine Stress
+
+on:
+  push:
+    branches:
+      - "stress/english-engine-2026-09-29"
+  workflow_dispatch:
+
+jobs:
+  stress:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: pronunciation-engine
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure with ASan and UBSan
+        run: >
+          cmake -S . -B build
+          -DCMAKE_BUILD_TYPE=Debug
+          -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer"
+          -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined"
+
+      - name: Build
+        run: cmake --build build -j2
+
+      - name: Unit and deterministic stress suite
+        id: unit
+        continue-on-error: true
+        env:
+          ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
+          UBSAN_OPTIONS: print_stacktrace=1:halt_on_error=1
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Existing full content gate
+        id: gate
+        continue-on-error: true
+        env:
+          ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
+          UBSAN_OPTIONS: print_stacktrace=1:halt_on_error=1
+        run: ./build/pronunciation-harness Resources gate
+
+      - name: Isolated crash-boundary probes
+        id: safety
+        continue-on-error: true
+        env:
+          ASAN_OPTIONS: detect_leaks=1:halt_on_error=1:abort_on_error=1
+          UBSAN_OPTIONS: print_stacktrace=1:halt_on_error=1
+        run: |
+          set +e
+          failed=0
+          for probe in \
+            null_engine_process \
+            null_pcm_positive_count \
+            null_script_positive_count \
+            negative_sample_count \
+            null_exercise_id \
+            negative_result_index \
+            past_end_result_index \
+            malformed_logit_buffer \
+            out_of_range_expected_phoneme
+          do
+            echo "===== $probe ====="
+            ./build/pronunciation_engine_safety_probe "$probe"
+            rc=$?
+            echo "probe=$probe exit=$rc"
+            if [ "$rc" -ne 0 ]; then
+              failed=1
+            fi
+          done
+          exit "$failed"
+
+      - name: Stress verdict
+        if: always()
+        run: |
+          echo "unit=${{ steps.unit.outcome }}"
+          echo "gate=${{ steps.gate.outcome }}"
+          echo "safety=${{ steps.safety.outcome }}"
+          if [ "${{ steps.unit.outcome }}" != "success" ] || \
+             [ "${{ steps.gate.outcome }}" != "success" ] || \
+             [ "${{ steps.safety.outcome }}" != "success" ]; then
+            exit 1
+          fi
