@@ -1,27 +1,21 @@
 #pragma once
 
+#include <memory>
 #include <string>
 
 #include "AcousticModel.h"
 
 namespace pronunciation {
 
-// Production backend wiring point for the locked model
-// (onnx-community/wav2vec2-lv-60-espeak-cv-ft-ONNX, model_q4f16.onnx —
-// see model/model-manifest.json) run through ONNX Runtime Mobile with the
-// Core ML execution provider (docs/product-specification.md#runtime-inference).
+// Production acoustic backend for the locked Q4-FP16 Wav2Vec2 phoneme model.
+// The upstream model exposes 392 eSpeak/IPA CTC labels. This adapter projects
+// them into the engine's fixed 40-phoneme inventory plus one blank/unsupported
+// bucket before any alignment or GOP scoring happens.
 //
-// This class is intentionally NOT implemented yet: it requires linking
-// ONNX Runtime and bundling the ~197 MB model artifact, both of which
-// belong to the iOS target build (pronunciation-ios/EngineBridge), not to
-// engine development in this environment. Every other module in this
-// engine (AudioQuality, CTCAlignment, PhonemeScoring, Prosody,
-// DecisionRules, ContentValidation) only depends on the AcousticModel
-// interface, so wiring this in later does not require touching them.
-//
-// Build with -DPRONUNCIATION_ENGINE_WITH_ONNXRUNTIME=ON and provide
-// onnxruntime's headers/libs to enable the real implementation; otherwise
-// infer() throws so the mistake is loud rather than silently mis-scoring.
+// Unsupported upstream labels are deliberately folded into blank rather than
+// guessed into a nearby English phoneme. That makes inference conservative:
+// evidence the engine does not understand causes retry/deletion pressure, not
+// a fabricated high-confidence pronunciation result.
 class OnnxAcousticModel : public AcousticModel {
 public:
     explicit OnnxAcousticModel(std::string modelPath);
@@ -32,7 +26,10 @@ public:
     int blankColumn() const override;
 
 private:
+    struct Impl;
+
     std::string modelPath_;
+    std::unique_ptr<Impl> impl_;
 };
 
 } // namespace pronunciation
