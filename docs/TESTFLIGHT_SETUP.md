@@ -53,3 +53,7 @@ The first accepted upload must use the full lane. Dispatch **English Pronunciati
 - `validated_sha`: the full immutable commit SHA already carrying the successful `English Engine Stress` check and the final iOS project.
 
 After the first build is processed, tester-delivered and listing-attached, record the successful run as the baseline before adding an express lane. Until then, no express claim is valid.
+
+## Review-artifact invariant
+
+The `Internal QA` group contains both designated tester accounts (2 testers; 0 builds at provisioning). The release lane archives, signs, exports, and uploads exactly once, then attaches that same Apple-processed build to the matching editable App Store version. App Review must use that attached build without rebuilding or re-signing. This proves build readiness only; listing metadata, screenshots, privacy, compliance, agreements, and review information remain separate submission gates.
