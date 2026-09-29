@@ -17,8 +17,8 @@
   <rect width="1320" height="2868" fill="url(#bg)"/>
   <path d="M-120 1500 C260 1160 520 1420 880 1180 C1100 1030 1230 930 1440 820 L1440 1250 C1190 1350 1050 1480 820 1600 C430 1800 200 1680 -120 1900Z" fill="#1f7fa5" opacity=".28"/>
   <path d="M-160 2390 C260 2050 560 2230 880 2020 C1110 1870 1250 1760 1450 1660 L1450 2130 C1200 2280 980 2430 760 2560 C380 2780 90 2700 -160 2868Z" fill="#14b8c7" opacity=".46"/>
-  <text x="82" y="180" fill="#fff" font-size="96" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic',sans-serif">苦手な音が、</text>
-  <text x="82" y="300" fill="#fff" font-size="96" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic',sans-serif">すぐわかる</text>
+  <text x="82" y="180" fill="#fff" font-size="96" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic',sans-serif">ゲーム感覚で、</text>
+  <text x="82" y="300" fill="#fff" font-size="96" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic',sans-serif">苦手な音を練習</text>
   <rect x="82" y="350" width="356" height="88" rx="44" fill="url(#pill)"/>
   <text x="260" y="410" text-anchor="middle" fill="#fff" font-size="42" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic',sans-serif">日本語話者向け</text>
   <g transform="translate(1005 104)" fill="#20d0ce">

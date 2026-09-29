@@ -6,7 +6,7 @@ Editable Japanese App Store screenshot-shell masters are provided for **both sup
 
 ### iPhone — 1320 × 2868
 
-1. **01-diagnosis.svg** — 苦手な音が、すぐわかる
+1. **01-map.svg** — ゲーム感覚で、苦手な音を練習
 2. **02-correction.svg** — 直し方が、日本語でわかる
 3. **03-progress.svg** — 発音を練習して、すぐ再チェック
 
@@ -16,8 +16,8 @@ Replacement slot: x=116, y=692, width=1088, height=1980, radius=78.
 
 **Capture requirement: use the real two-column iPad `NavigationSplitView` state. Do not use the compact/single-column iPhone-like state for App Store screenshots.**
 
-1. **ipad-01-diagnosis.svg** — 苦手な音が、すぐわかる  
-   Left: diagnosed weak sounds / recommended order. Right: selected diagnosis/result detail.
+1. **ipad-01-map.svg** — ゲーム感覚で、苦手な音を練習  
+   Left: stage map (Stage 1 available, later stages marked Pro). Right: selected stage detail.
 2. **ipad-02-correction.svg** — 直し方が、日本語でわかる  
    Left: lesson / target-sound list. Right: selected correction lesson with IPA and articulatory guidance.
 3. **ipad-03-progress.svg** — 発音を練習して、すぐ再チェック  

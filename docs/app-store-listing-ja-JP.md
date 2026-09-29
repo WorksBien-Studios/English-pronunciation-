@@ -10,30 +10,32 @@
 
 This is the complete launch-copy and App Store Connect decision pack. It is not a submission authorization. Build-dependent controls are explicitly marked pending.
 
+> **Revision 2 (2026-09-29, owner decision):** the initial assessment and weakness map are deferred beyond release 1.0. All copy, screenshots and review notes below describe only what the 1.0 build does: a stage map, per-word recording with sound-level Japanese feedback and retry, stars and a creature collection, a progress tab, and a free Stage 1 with ten valid recordings a day. Promises the binary does not keep were removed: assessment, minimal-pair/sentence practice, own-recording playback, review lists, accent/rhythm/linking practice and vowel or final-consonant modules.
+
 ## 1. Listing decision
 
 ### Locked positioning
 
 > 日本人が苦手な英語の音を見つけ、なぜ違うのか、舌・唇・息・声をどう使えばよいかまで日本語で示す、オフライン発音コーチ。
 
-The listing deliberately avoids the crowded generic promises “AI英会話,” “ネイティブのように,” and “必ず上達.” It leads with the evidenced gap: sound-level diagnosis plus actionable Japanese correction.
+The listing deliberately avoids the crowded generic promises “AI英会話,” “ネイティブのように,” and “必ず上達.” It leads with the evidenced gap: sound-level feedback plus actionable Japanese correction.
 
 ### Locked metadata
 
 | Field | Final Japanese copy | Limit | Count |
 |---|---|---:|---:|
 | Name | **英語発音コーチ｜日本人向け発音矯正・練習** | 30 characters | 20 |
-| Subtitle | **RとL・THなど苦手な音を診断、直し方まで日本語で** | 30 characters | 25 |
-| Promotional text | **採点だけで終わらない発音練習。苦手な音を見つけ、舌・唇・息・声の使い方を日本語で確認。端末内で分析し、1日10回まで無料で試せます。** | 170 characters | 66 |
-| Keywords | `カタカナ英語,発音記号,アクセント,スピーキング,リンキング,子音,母音` | 100 UTF-8 bytes | 96 bytes |
+| Subtitle | **RとL・THなどの発音を、直し方まで日本語で練習** | 30 characters | 24 |
+| Promotional text | **点数だけで終わらない発音練習。どの音が違って聞こえたかを示し、舌・唇・息・声の使い方を日本語で説明。端末内で分析し、1日10回まで無料で試せます。** | 170 characters | 73 |
+| Keywords | `カタカナ英語,発音記号,スピーキング,子音` | 100 UTF-8 bytes | 57 bytes |
 
-Keyword-field changes in the 2026-09-29 copy review: removed `音素練習` (not a real search term), `リスニング` (the app does not teach listening comprehension, a 2.3.7 relevance risk), `RL` (does not match how learners type the pair), `イントネーション` (not supported by any listed feature) and `TH` (already in the subtitle, so it only wasted bytes); added `カタカナ英語`, `発音記号`, `リンキング`, `子音` and `母音`, each tied to a feature the description states. Web spot-checks on 2026-09-29 (no Apple keyword-popularity or Japan search-volume data was available) showed `発音記号`, `スピーキング` and `アクセント` in live competitor titles, and `カタカナ英語` used by learners to describe the problem this app solves. Treat the field as a hypothesis and review it against App Store Connect search-term analytics after launch.
+Revision 2 (owner decision to defer the assessment): removed `アクセント`, `リンキング` and `母音` because the 1.0 build does not teach accent, linking or vowel contrasts (a 2.3.7 relevance risk); the field now holds only terms the build supports. Keyword-field changes in the earlier 2026-09-29 copy review: removed `音素練習` (not a real search term), `リスニング` (the app does not teach listening comprehension, a 2.3.7 relevance risk), `RL` (does not match how learners type the pair), `イントネーション` (not supported by any listed feature) and `TH` (already in the subtitle, so it only wasted bytes); added `カタカナ英語`, `発音記号`, `リンキング`, `子音` and `母音`, each tied to a feature the description states. Web spot-checks on 2026-09-29 (no Apple keyword-popularity or Japan search-volume data was available) showed `発音記号`, `スピーキング` and `アクセント` in live competitor titles, and `カタカナ英語` used by learners to describe the problem this app solves. Treat the field as a hypothesis and review it against App Store Connect search-term analytics after launch.
 
 Do not add competitor names, `AI英会話`, `TOEIC`, `英検`, `IELTS`, `無料`, or `オフライン` to the keyword field merely to chase traffic. The first four are either misleading for this narrow product or unsupported at launch; the latter terms belong in readable copy when truthful.
 
 ### ASO and web-SEO status — 2026-09-29
 
-The indexed App Store fields now cover the primary intent (`英語発音`), correction intent (`発音矯正`), practice intent (`練習`), Japanese-speaker focus, diagnostic differentiation, and supported secondary vocabulary without duplicating title or subtitle terms in the keyword field. The added `練習` term is supported by the high-traction `英語発音トレーニング` lane already recorded below. This is the strongest evidence-backed launch hypothesis available without private Apple Search Popularity data; validate it after launch using App Store Connect search impressions and conversion data.
+The indexed App Store fields now cover the primary intent (`英語発音`), correction intent (`発音矯正`), practice intent (`練習`), Japanese-speaker focus, sound-level correction differentiation, and supported secondary vocabulary without duplicating title or subtitle terms in the keyword field. The added `練習` term is supported by the high-traction `英語発音トレーニング` lane already recorded below. This is the strongest evidence-backed launch hypothesis available without private Apple Search Popularity data; validate it after launch using App Store Connect search impressions and conversion data.
 
 Search-result conversion ASO remains pending until the finished icon and authentic screenshots are checked at small/search-result size. Public-web SEO for the marketing URL is a separate HTML audit—page title, meta description, headings, canonical URL, indexability and structured data are not attested by this App Store listing file.
 
@@ -64,7 +66,7 @@ Current Japan App Store listings and visible reviews were checked on 2026-09-28.
 ### Review-derived promises the listing may make
 
 - Japanese explanations for what to change physically.
-- A sound-level weakness map and progressive practice.
+- Sound-level feedback in Japanese and progressive, stage-based practice.
 - Normal and slow model pronunciation.
 - IPA display.
 - Conservative feedback that can return `retry` when evidence is weak.
@@ -86,19 +88,17 @@ Copy exactly from this block after confirming build parity and deploying the leg
 英語の発音を採点されても、
 「何が違うのか」「どう直せばよいのか」が分からなければ、同じ間違いを繰り返してしまいます。
 
-英語発音コーチは、日本語話者のための、英語発音の診断・矯正練習アプリです。
+英語発音コーチは、日本語話者のための、英語発音の矯正練習アプリです。
 
-録音した声を音ごとに確認し、苦手な音、よくある間違い方、直し方を日本語で示します。舌・唇・あご・息・声の使い方を確かめ、ミニマルペア（RとLなど、1音だけ違う単語の組）、単語、文の順で練習できます。
+録音した声を確認し、目標の音を出せたか、近く聞こえた別の音の候補、直し方を日本語で示します。舌・唇・息・声の使い方を確かめながら、単語ごとに練習できます。
 
-【診断から復習まで】
+【練習の流れ】
 
-・短い発音診断で、苦手な音とおすすめの練習順を確認
-・RとL、TH、BとV、FとH、母音の区別、語尾の子音などを集中練習
-・お手本の音と、実際に聞こえた音の候補を1音ずつ表示
-・お手本音声（iOS標準の音声合成）と自分の録音をすぐに聞き比べ
-・通常速度とゆっくり再生、IPA発音記号に対応
-・ミニマルペア、単語、文、再テストへ段階的に進行
-・繰り返し現れる苦手な音を記録し、復習候補を整理
+・RとL、TH、BとV、Fの音を、ステージ形式で集中練習
+・目標の音を出せたかと、近く聞こえた音の候補を表示
+・お手本音声（iOS標準の音声合成）を通常速度とゆっくり再生で確認、IPA発音記号に対応
+・ステージをクリアしてスターや図鑑を集め、毎日の練習を継続
+・繰り返し見つかった苦手な音を記録し、進捗タブで確認
 
 【日本語だから、直し方が分かる】
 
@@ -115,7 +115,6 @@ Copy exactly from this block after confirming build parity and deploying the leg
 
 ・相手に伝わる可能性
 ・目標の音を出せた可能性
-・リズムやアクセントを整えるための改善点
 
 を分けて確認できます。分析の確信度が低い場合は、無理に正誤を断定せず、録音環境の確認や再試行をご案内します。
 
@@ -130,20 +129,16 @@ Copy exactly from this block after confirming build parity and deploying the leg
 
 【無料で使える内容】
 
-・初回発音診断と苦手な音マップ
-・診断で見つかった最優先の音の基礎レッスン
+・ステージ1「Rの森」（RとL）のすべての練習
 ・1日10回の有効な発音分析
-・利用できる教材のお手本音声、IPA、日本語解説
+・お手本音声、IPA、日本語解説
 
 無音、音割れ、録音中断などで結果が返らなかった場合は、無料回数を消費しません。未使用回数の翌日への繰り越しはありません。
 
 【Proでできること】
 
 ・発音分析の回数制限を解除
-・すべての発音レッスン
-・苦手な音の履歴と個別復習リスト
-・アクセント、リズム、リンキングの練習
-・追加される新しい練習教材
+・すべてのステージ（TH、BとV、F）の練習
 
 Proは月額または年額の自動更新サブスクリプションです。購入確定時にApple IDアカウントに請求されます。購入前にApp Storeが地域に応じた料金と更新期間を表示します。自動更新は現在の期間終了の24時間前までに解約しない限り継続します。管理・解約はApple IDのサブスクリプション設定から行えます。購入の復元にも対応します。
 
@@ -160,8 +155,8 @@ Create three authentic Japanese screenshots for both iPhone and iPad. Use the sa
 
 | Position | Role | Caption | Required real screen | Free/paid clarity |
 |---:|---|---|---|---|
-| 1 | Outcome | **苦手な音が、すぐわかる** | Completed assessment showing a restrained weakness map, e.g. R/L and TH; no fabricated percentage claims. | Assessment and weakness map are free. |
-| 2 | Path | **直し方が、日本語でわかる** | Correction screen showing IPA, target/likely substitution and one concise articulatory instruction. | Use the free personalized starter module. |
+| 1 | Path | **ゲーム感覚で、苦手な音を練習** | Stage map (冒険 tab) showing Stage 1 available and later stages marked Pro; on iPad the two-column layout with the stage detail. | Stage 1 is free; later stages carry a visible `Pro` label. |
+| 2 | Path | **直し方が、日本語でわかる** | Correction screen showing IPA, target/likely substitution and one concise articulatory instruction. | Use the free Stage 1 (R/L) module. |
 | 3 | Proof | **発音を練習して、すぐ再チェック** | Retest screen showing listen → record → feedback → retry, with intelligibility and target sound separated. | Use a free-module example; do not imply every module is free. |
 
 Production rules:
@@ -181,12 +176,12 @@ Production rules:
 The editable launch shell masters live in `assets/screenshots/shells/` and cover **both supported device classes**. The rounded slot is replaced with an authentic capture from the matching device during screenshot production; do not put iPhone captures into the iPad shell or vice versa.
 
 **iPhone — 1320 × 2868**
-- `01-diagnosis.svg` — **苦手な音が、すぐわかる**
+- `01-map.svg` — **ゲーム感覚で、苦手な音を練習**
 - `02-correction.svg` — **直し方が、日本語でわかる**
 - `03-progress.svg` — **発音を練習して、すぐ再チェック**
 
 **iPad — 2064 × 2752**
-- `ipad-01-diagnosis.svg` — **苦手な音が、すぐわかる**
+- `ipad-01-map.svg` — **ゲーム感覚で、苦手な音を練習**
 - `ipad-02-correction.svg` — **直し方が、日本語でわかる**
 - `ipad-03-progress.svg` — **発音を練習して、すぐ再チェック**
 
@@ -238,7 +233,7 @@ Proposed identifiers must be checked for availability before they become final.
 | Product ID | `com.worksbienstudios.englishpronunciationcoach.pro.monthly` | `com.worksbienstudios.englishpronunciationcoach.pro.annual` |
 | Reference name | English Pronunciation Coach Pro Monthly | English Pronunciation Coach Pro Annual |
 | Japanese display name | Pro（月額） | Pro（年額） |
-| Japanese description | 発音分析の回数制限を解除し、すべてのレッスンと復習機能を利用 | 発音分析の回数制限を解除し、すべてのレッスンと復習機能を利用 |
+| Japanese description | 発音分析の回数制限を解除し、すべてのステージを利用 | 発音分析の回数制限を解除し、すべてのステージを利用 |
 | Duration | 1 month | 1 year |
 | Japan launch price | ¥600 | ¥4,800 |
 | App Store promotion | Do not promote separately at launch | Do not promote separately at launch |
@@ -265,7 +260,7 @@ Microphone purpose string (`NSMicrophoneUsageDescription`):
 
 > 発音を録音し、端末上で音ごとのフィードバックを表示するためにマイクを使用します。録音は分析のために外部サーバーへ送信されません。
 
-Request microphone access only when the learner begins the assessment or first recording—not at launch.
+Request microphone access only when the learner first records—not at launch.
 
 ## 8. Content, legal and technical declarations
 
@@ -296,21 +291,19 @@ Use English for operational clarity:
 This is a Japanese-language, offline English-pronunciation training app for Japanese speakers. No account is required.
 
 Core review path:
-1. Launch the app and select “診断を始める”.
-2. Grant microphone access when prompted.
-3. Complete the short pronunciation assessment.
-4. The result screen shows a weakness map and unlocks one recommended sound module.
-5. Open that module to play model pronunciation, record a response, view sound-level feedback in Japanese, and retry.
+1. Launch the app. The stage map (冒険 tab) opens with Stage 1 “Rの森” available; later stages are marked Pro.
+2. Open Stage 1 and start a recording. Grant microphone access when prompted.
+3. Say the shown word. The result screen gives sound-level feedback in Japanese (whether the target sound was produced, a likely substituted sound, and one articulation tip) and offers a retry.
+4. Continue through the stage's words to earn stars; a cleared stage unlocks the next one.
 
 Free access:
-- The initial assessment does not consume the daily allowance.
-- One personalized starter module is included.
+- Stage 1 (R/L) is free.
 - Ten valid scored recordings are available per local calendar day.
 - Silence, clipping, interrupted recordings, permission failures, and internal scoring failures do not consume the allowance.
 
 Pro access:
-- Open Settings > Pro, or attempt to open a locked module.
-- Monthly and annual auto-renewable subscriptions unlock unlimited scoring, all modules, complete weakness history, and the personalized review queue.
+- Open Settings > Pro, or tap a locked stage.
+- Monthly and annual auto-renewable subscriptions unlock unlimited scoring and all stages.
 - Restore Purchases and Manage Subscription are available from Settings > Pro.
 
 Audio and privacy:
@@ -348,7 +341,7 @@ Current Apple sources reviewed on 2026-09-29:
 | 2.4.2 Resource Use | The 197 MB model must not cause excessive memory, heat or battery use. | Physical iPhone SE 2020 latency/memory/thermal test. |
 | 3.1.1 In-App Purchase | Digital Pro features use StoreKit subscriptions. | Products attached to submission; transaction verification and lifecycle tests. |
 | 3.1.2 Subscriptions | Ongoing value, duration, renewal and full price must be clear. | Paywall, Terms, Privacy, Restore and Manage Subscription screenshots/tests. |
-| 4.0 Design | The app must provide lasting educational utility, not a thin TTS wrapper. | Complete assessment, lessons, feedback, history and practice workflow. |
+| 4.0 Design | The app must provide lasting educational utility, not a thin TTS wrapper. | Lessons, sound-level feedback, progress history and practice workflow. |
 | 4.2 Minimum Functionality | The custom on-device scoring and correction engine is the core value. | Working engine, not static reference content alone. |
 | 5.1.1 Data Collection and Storage | Microphone permission and local-only data claims must be accurate. | Purpose string, privacy manifest, SDK/network inventory. |
 | 5.2 Intellectual Property | Model/runtime licences and original lesson rights must be documented. | Apache-2.0/MIT notices and content-rights ledger. |
