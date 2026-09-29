@@ -62,6 +62,14 @@ typedef struct {
 
 // All creation/processing functions trap C++ exceptions and report failure
 // through out_error_message. On success, *out_error_message is cleared to NULL.
+// Runs the shared audio-quality gate without constructing/loading the acoustic
+// model. This keeps silence/clipping/too-short feedback available even when
+// model initialization fails.
+pe_audio_quality_result pe_audio_quality_evaluate(
+    const float* pcm_samples,
+    int sample_count,
+    int sample_rate_hz);
+
 pe_engine* pe_engine_create(
     const char* resources_dir,
     const char* model_path,
