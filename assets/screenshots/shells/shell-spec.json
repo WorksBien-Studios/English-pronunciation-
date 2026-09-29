@@ -18,8 +18,8 @@
       "frames": [
         {
           "position": 1,
-          "file": "01-diagnosis.svg",
-          "caption": "苦手な音が、すぐわかる",
+          "file": "01-map.svg",
+          "caption": "ゲーム感覚で、苦手な音を練習",
           "pill": "日本語話者向け"
         },
         {
@@ -52,12 +52,12 @@
       "frames": [
         {
           "position": 1,
-          "file": "ipad-01-diagnosis.svg",
-          "caption": "苦手な音が、すぐわかる",
+          "file": "ipad-01-map.svg",
+          "caption": "ゲーム感覚で、苦手な音を練習",
           "pill": "日本語話者向け",
           "capture_state": {
-            "left_column": "diagnosed weak sounds / recommended order",
-            "right_column": "selected diagnosis/result detail"
+            "left_column": "stage map with Stage 1 available and later stages marked Pro",
+            "right_column": "selected stage detail (words, articulation cues)"
           }
         },
         {

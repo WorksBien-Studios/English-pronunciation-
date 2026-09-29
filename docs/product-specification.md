@@ -138,6 +138,8 @@ The first release should stay narrow. Accuracy on a small set of high-value Japa
 
 ### 1. Initial assessment
 
+> **Deferred beyond release 1.0 (owner decision, 2026-09-29).** Release 1.0 opens on the stage map with Stage 1 free; the design below is retained for a later release. Building it first needs decisions on lessons that have no stage module, a personalised versus fixed free module, and a non-consuming recording path.
+
 The learner records a short diagnostic set specifically designed to expose common Japanese-speaker English errors.
 
 Output:
@@ -213,7 +215,7 @@ Do not require iOS 26 for the core product.
 
 Use native SwiftUI components for:
 
-- assessment flow;
+- assessment flow (deferred beyond release 1.0);
 - lessons;
 - recording states;
 - feedback;
@@ -510,8 +512,7 @@ Each correction should cover:
 
 Free:
 
-- complete initial pronunciation assessment and weakness map, excluded from the daily quota;
-- the complete sound module selected from the learner's highest-confidence detected weakness;
+- the complete Stage 1 (R/L) sound module (release 1.0; a later release may replace this with the assessment and a personalised starter module, excluded from the daily quota);
 - 10 valid scored recordings per local calendar day;
 - unlimited playback of model pronunciation and access to the unlocked IPA and Japanese instructional content;
 - a visible remaining-use counter and exact next-reset time;
@@ -539,10 +540,10 @@ Reason:
 - personalized error history and daily training provide continuing value rather than a single-use utility;
 - transparent pricing directly answers a major complaint across Speak, ELSA and Say It;
 - ¥4,800/year remains materially below the ¥19,000–¥29,800 annual speaking products;
-- the free diagnostic proves recognition quality before the learner subscribes;
+- the free Stage 1 module and daily allowance prove recognition quality before the learner subscribes;
 - subscription revenue supports maintenance without adding distracting advertising or selling user data.
 
-Do not require a payment method during onboarding. Let the learner complete the assessment and use the free product first. Do not add an auto-renewing free trial at launch: the renewable daily allowance is the trial. The free tier must be genuinely useful, while its scoring volume remains insufficient for intensive repetition across minimal pairs, words and sentences.
+Do not require a payment method during onboarding. Let the learner use the free Stage 1 module first. Do not add an auto-renewing free trial at launch: the renewable daily allowance is the trial. The free tier must be genuinely useful, while its scoring volume remains insufficient for intensive repetition across minimal pairs, words and sentences.
 
 ### Why advertising is rejected
 
@@ -723,7 +724,7 @@ If Q4-FP16 misses the remaining gate, do not compensate with UI or relax the thr
 8. ~~Assemble the automated posterior-fixture and audio-quality regression suite.~~ **Complete against synthetic/mock evidence:** `pronunciation-engine/Tests/Unit` (45 tests, including a 200-sample synthetic audio-rejection sweep) + `pronunciation-harness gate` (45/45 scenarios). The public-corpus (UME-ERJ / SpeechOcean762) regression still needs to be repeated through the bundled Apple runtime.
 9. ~~Wire the selected Q4-FP16 model into iOS.~~ **Complete:** ONNX Runtime 1.30.0, checksum-verified model bundling, 392-label model-output projection, C++/Swift bridge and Release engine factory are connected. Latency, memory, offline behaviour and the native-English pass on a physical iPhone are verified by the developer's own hands-on testing, not by a specification gate.
 10. Write and validate Japanese corrective content.
-11. Implement assessment and daily-practice state machines.
+11. ~~Implement daily-practice state (allowance, streak).~~ **Complete.** The initial-assessment state machine is deferred beyond release 1.0 (owner decision).
 12. Add SwiftData persistence and StoreKit 2 entitlements.
 13. Apply the native iOS 18 adaptive shell.
 14. TestFlight with Japanese-language reviewers.

@@ -39,8 +39,6 @@ struct PaywallView: View {
             VStack(alignment: .leading, spacing: 10) {
                 benefit("発音分析の回数制限をなくす", symbol: "infinity")
                 benefit("すべてのステージ・発音レッスン", symbol: "flag.fill")
-                benefit("苦手な音の履歴と復習リスト", symbol: "chart.bar.fill")
-                benefit("アクセント・リズム・リンキングの練習", symbol: "waveform")
             }
             Text("Proでなくても、1日10回まで無料でチャレンジできます。")
                 .font(.footnote)
