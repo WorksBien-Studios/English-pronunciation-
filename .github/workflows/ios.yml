@@ -48,8 +48,8 @@ jobs:
       - name: Fetch and verify locked pronunciation model
         run: python3 scripts/fetch_pronunciation_model.py
 
-      - name: Generate Xcode project
-        run: python3 scripts/generate_xcodeproj.py
+      - name: Xcode project matches the source tree
+        run: python3 scripts/generate_xcodeproj.py --check
 
       - name: Toolchain
         run: |
