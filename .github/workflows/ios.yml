@@ -76,7 +76,7 @@ jobs:
           xcodebuild -project ios/EnglishPronunciationCoach.xcodeproj -scheme EnglishPronunciationCoach \
             -destination "platform=iOS Simulator,id=$IPHONE_SIMULATOR" \
             -derivedDataPath "$RUNNER_TEMP/DerivedData" \
-            -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO \
+            -parallel-testing-enabled NO \
             build-for-testing 2>&1 | tee "$RUNNER_TEMP/iphone-build.log"
 
       - name: Validate simulator app metadata
@@ -94,7 +94,7 @@ jobs:
           xcodebuild -project ios/EnglishPronunciationCoach.xcodeproj -scheme EnglishPronunciationCoach \
             -destination "platform=iOS Simulator,id=$IPHONE_SIMULATOR" \
             -derivedDataPath "$RUNNER_TEMP/DerivedData" \
-            -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO \
+            -parallel-testing-enabled NO \
             test-without-building 2>&1 | tee "$RUNNER_TEMP/iphone.log"
 
       - name: Test on iPad
@@ -103,7 +103,7 @@ jobs:
           xcodebuild -project ios/EnglishPronunciationCoach.xcodeproj -scheme EnglishPronunciationCoach \
             -destination "platform=iOS Simulator,id=$IPAD_SIMULATOR" \
             -derivedDataPath "$RUNNER_TEMP/DerivedData" \
-            -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO \
+            -parallel-testing-enabled NO \
             test-without-building 2>&1 | tee "$RUNNER_TEMP/ipad.log"
 
       - name: Release build (Release configuration, generic iOS device, unsigned)
