@@ -32,6 +32,8 @@ These are design hypotheses, not evidence of market fit. Validate with Japanese-
 - **おみくじ:** once-daily free fortune containing a short pronunciation tip.
 - **Free/Pro:** the 10 valid analyses per day appear as マイクパワー 7/10. Paywall lists exactly the Pro benefits in the listing pack.
 
+**Creature names** are generic sound labels (Rくん, Lくん, THくん, Vくん, Fくん, Bくん); the guide is コーチ. This avoids brand-name collisions (see [`trademark-search-worksheet.md`](trademark-search-worksheet.md)).
+
 ## 3. Screens in the mockup
 
 iPhone: 冒険マップ · ステージ詳細 · 録音チャレンジ · ステージクリア · 音の図鑑 · 今日のおみくじ · Pro（購読）  

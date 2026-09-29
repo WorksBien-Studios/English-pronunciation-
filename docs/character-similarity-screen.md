@@ -5,6 +5,10 @@
 **Method:** visual comparison against well-known Japanese characters plus targeted web searches (Dragon Quest Slime, Kirby, existing English-learning creature apps, chat-bubble mascots).  
 **This is a screening step, not legal clearance.** It did not include a trademark-database search (J-PlatPat / JPO, USPTO, EUIPO), a design-registration search or an app-store character search, and no lawyer reviewed it.
 
+## Update — generic names (2026-09-29)
+
+Decision (product owner): creature names are generic sound labels, not brand-like names: **Rくん, Lくん, THくん, Vくん, Fくん, Bくん**. Names that merely state the sound taught cannot be owned as a brand, which removes the name-collision risk found below (くるりん, がぶ) and the need to clear the onomatopoeic replacements (くるん, ぺろ, べー, はむ, ふーふー, ぷっぷ). The artwork changes below still stand. Table rows below use the names in use when the screen was run.
+
 ## Findings and actions
 
 | Item | Risk found | Action taken |
@@ -27,7 +31,7 @@
 
 ## Still required before the art ships
 
-1. A trademark and design-registration search (J-PlatPat / JPO first; USPTO and EUIPO if distributing outside Japan) for the final character names: くるん, ぺろ, べー, はむ, ふーふー, ぷっぷ, and for the guide (currently unnamed).
+1. A trademark search for the app name and 音の島 (see [`trademark-search-worksheet.md`](trademark-search-worksheet.md)); the creature names are now generic sound labels. The guide (コーチ) is a generic role word.
 2. An illustrator's original final artwork; the current SVG art is a mockup and should not be treated as final.
 3. A repeat similarity review of the final art, since the screen above compares the mockup only.
 4. Keep the exclusions in Apple guideline 5.2 in mind: do not use any third-party character, name or likeness, including "inspired by" work that is recognisably the same.
