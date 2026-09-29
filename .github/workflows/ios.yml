@@ -45,23 +45,29 @@ jobs:
         run: |
           xcrun simctl list devices available
           xcrun simctl list devices available -j > "$RUNNER_TEMP/simulators.json"
-          python3 - "$RUNNER_TEMP/simulators.json" >> "$GITHUB_ENV" <<'PY'
+          xcrun --sdk iphonesimulator --show-sdk-version > "$RUNNER_TEMP/simulator-sdk-version"
+          python3 - "$RUNNER_TEMP/simulators.json" "$RUNNER_TEMP/simulator-sdk-version" >> "$GITHUB_ENV" <<'PY'
           import json, re, sys
           devices = json.load(open(sys.argv[1]))["devices"]
+          sdk_version = tuple(map(int, open(sys.argv[2]).read().strip().split(".")[:2]))
           def version(runtime):
               m = re.search(r"iOS-(\d+)-(\d+)", runtime)
               return (int(m.group(1)), int(m.group(2))) if m else (0, 0)
           for family, key in (("iPhone", "IPHONE_SIMULATOR"), ("iPad", "IPAD_SIMULATOR")):
               candidates = []
               for runtime, entries in devices.items():
-                  if version(runtime)[0] < 18:
+                  runtime_version = version(runtime)
+                  if runtime_version != sdk_version:
                       continue
                   for device in entries:
                       if device["name"].startswith(family) and device.get("isAvailable", True):
-                          candidates.append((version(runtime), device["name"], device["udid"]))
+                          candidates.append((device["name"], device["udid"]))
               if not candidates:
-                  raise SystemExit(f"No available {family} simulator on iOS 18 or later")
-              print(f"{key}={sorted(candidates)[-1][2]}")
+                  raise SystemExit(
+                      f"No available {family} simulator matching active SDK iOS "
+                      f"{sdk_version[0]}.{sdk_version[1]}"
+                  )
+              print(f"{key}={sorted(candidates)[-1][1]}")
           PY
 
       - name: Build and test on iPhone
