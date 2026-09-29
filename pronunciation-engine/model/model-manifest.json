@@ -1,7 +1,7 @@
 {
   "$schema": "model-manifest.v1",
-  "status": "locked-not-yet-bundled",
-  "notes": "docs/product-specification.md#runtime-inference locks this checkpoint after the 2026-09-28 portable benchmark (see docs/model-benchmark-2026-09-28.md). The artifact itself is not vendored into this repository: it is ~197 MB, is fetched once into the iOS target's model resources during EngineBridge integration, and its checksum is recorded here at that time. src/Acoustic/OnnxAcousticModel.h is the wiring point; until then, engine development and tests run entirely against MockAcousticModel.",
+  "status": "locked-build-fetched",
+  "notes": "The selected Q4-FP16 artifact is fetched deterministically by scripts/fetch_pronunciation_model.py, verified by size and SHA-256, and copied into the iOS bundle at build time. It is intentionally not stored in Git. The production C++ OnnxAcousticModel maps the model's 392 eSpeak CTC labels into the engine's compact 40-phoneme inventory plus a conservative blank/unsupported bucket.",
   "source": {
     "repository": "onnx-community/wav2vec2-lv-60-espeak-cv-ft-ONNX",
     "url": "https://huggingface.co/onnx-community/wav2vec2-lv-60-espeak-cv-ft-ONNX",
@@ -9,7 +9,7 @@
   },
   "selectedArtifact": {
     "file": "model_q4f16.onnx",
-    "sizeBytes": 206467072,
+    "sizeBytes": 196911845,
     "quantization": "Q4-FP16"
   },
   "rejectedArtifact": {
@@ -19,13 +19,17 @@
     "rejectedBecause": "38.0% larger, 20.3% more portable peak process RSS, 15.7% slower median / 23.9% slower p95 inference, and lower FP32-parity accuracy than Q4-FP16 in the 2026-09-28 benchmark"
   },
   "runtime": {
-    "engine": "ONNX Runtime Mobile",
+    "engine": "ONNX Runtime iOS C/C++",
     "license": "MIT",
-    "executionProviders": ["CoreML", "CPU"]
+    "executionProviders": [
+      "CPU"
+    ],
+    "packageVersion": "1.24.2",
+    "note": "CPU-first launch integration: ONNX Runtime mobile guidance recommends starting with CPU for quantized models. Core ML remains a device parity/performance gate before enabling it."
   },
   "checksum": {
     "algorithm": "sha256",
-    "value": null,
-    "note": "populate once model_q4f16.onnx is fetched into pronunciation-ios's model resources; see checksums.txt"
+    "value": "9978e7cba1bf721699b2cb673be461ccf09f6ef5dfc257f2f6ed2c4113d4e54c",
+    "note": "Verified by scripts/fetch_pronunciation_model.py before the model is copied into the app bundle."
   }
 }
