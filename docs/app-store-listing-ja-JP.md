@@ -178,12 +178,19 @@ Production rules:
 
 ### Screenshot shell masters
 
-The editable launch shell masters live in `assets/screenshots/shells/`. They are 1320 × 2868 SVGs with a deliberately empty rounded screenshot slot. The slot is replaced with the authentic app capture during screenshot production; do not flatten conceptual UI into the shell.
+The editable launch shell masters live in `assets/screenshots/shells/` and cover **both supported device classes**. The rounded slot is replaced with an authentic capture from the matching device during screenshot production; do not put iPhone captures into the iPad shell or vice versa.
 
+**iPhone — 1320 × 2868**
 - `01-diagnosis.svg` — **苦手な音が、すぐわかる**
 - `02-correction.svg` — **直し方が、日本語でわかる**
-- `03-progress.svg` — **練習して、上達を確かめる**
-- `shell-spec.json` — deterministic canvas and replacement-slot coordinates
+- `03-progress.svg` — **発音を練習して、すぐ再チェック**
+
+**iPad — 2064 × 2752**
+- `ipad-01-diagnosis.svg` — **苦手な音が、すぐわかる**
+- `ipad-02-correction.svg` — **直し方が、日本語でわかる**
+- `ipad-03-progress.svg` — **発音を練習して、すぐ再チェック**
+
+`shell-spec.json` contains deterministic canvas sizes and replacement-slot coordinates for both device classes.
 
 ### Icon brief
 
