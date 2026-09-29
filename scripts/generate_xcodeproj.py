@@ -186,7 +186,7 @@ def render():
         f"{model_build} /* model_q4f16.onnx in Resources */",
     ])
 
-    app_phases = {k: ident("phase", "app", k) for k in ("sources", "frameworks", "resources")}
+    app_phases = {k: ident("phase", "app", k) for k in ("sources", "frameworks", "resources", "normalize-resources")}
     test_phases = {k: ident("phase", "tests", k) for k in ("sources", "frameworks")}
     proxy = ident("proxy")
     dependency = ident("dependency")
@@ -210,12 +210,14 @@ def render():
     b.groups.append(f"\t\t{products_group} /* Products */ = {{isa = PBXGroup; children = ({app_product} /* {APP_NAME}.app */, {test_product} /* {TEST_NAME}.xctest */); name = Products; sourceTree = \"<group>\"; }};")
     out.append(section("PBXGroup", sorted(b.groups)))
     out.append(section("PBXNativeTarget", [
-        f"\t\t{app_target} /* {APP_NAME} */ = {{isa = PBXNativeTarget; buildConfigurationList = {lists['app']} /* Build configuration list for PBXNativeTarget \"{APP_NAME}\" */; buildPhases = ({app_phases['sources']} /* Sources */, {app_phases['frameworks']} /* Frameworks */, {app_phases['resources']} /* Resources */); buildRules = (); dependencies = (); name = {APP_NAME}; packageProductDependencies = ({shell_package_dep} /* iOS18Shell */, {ort_package_dep} /* onnxruntime */); productName = {APP_NAME}; productReference = {app_product} /* {APP_NAME}.app */; productType = \"com.apple.product-type.application\"; }};",
+        f"\t\t{app_target} /* {APP_NAME} */ = {{isa = PBXNativeTarget; buildConfigurationList = {lists['app']} /* Build configuration list for PBXNativeTarget \"{APP_NAME}\" */; buildPhases = ({app_phases['sources']} /* Sources */, {app_phases['frameworks']} /* Frameworks */, {app_phases['resources']} /* Resources */, {app_phases['normalize-resources']} /* Normalize bundle resource permissions */); buildRules = (); dependencies = (); name = {APP_NAME}; packageProductDependencies = ({shell_package_dep} /* iOS18Shell */, {ort_package_dep} /* onnxruntime */); productName = {APP_NAME}; productReference = {app_product} /* {APP_NAME}.app */; productType = \"com.apple.product-type.application\"; }};",
         f"\t\t{test_target} /* {TEST_NAME} */ = {{isa = PBXNativeTarget; buildConfigurationList = {lists['test']} /* Build configuration list for PBXNativeTarget \"{TEST_NAME}\" */; buildPhases = ({test_phases['sources']} /* Sources */, {test_phases['frameworks']} /* Frameworks */); buildRules = (); dependencies = ({dependency} /* PBXTargetDependency */); name = {TEST_NAME}; productName = {TEST_NAME}; productReference = {test_product} /* {TEST_NAME}.xctest */; productType = \"com.apple.product-type.bundle.unit-test\"; }};"]))
     out.append(section("PBXProject", [
         f"\t\t{project_id} /* Project object */ = {{isa = PBXProject; attributes = {{BuildIndependentTargetsInParallel = 1; LastUpgradeCheck = 1640; TargetAttributes = {{{app_target} = {{CreatedOnToolsVersion = 16.4; }}; {test_target} = {{CreatedOnToolsVersion = 16.4; TestTargetID = {app_target}; }}; }}; }}; buildConfigurationList = {lists['proj']} /* Build configuration list for PBXProject */; compatibilityVersion = \"Xcode 14.0\"; developmentRegion = ja; hasScannedForEncodings = 0; knownRegions = (ja, en, Base); mainGroup = {main_group}; packageReferences = ({shell_package_ref} /* XCRemoteSwiftPackageReference \"ios-18-shell\" */, {ort_package_ref} /* XCLocalSwiftPackageReference \"OnnxRuntimeBinary\" */); productRefGroup = {products_group} /* Products */; projectDirPath = \"\"; projectRoot = \"\"; targets = ({app_target} /* {APP_NAME} */, {test_target} /* {TEST_NAME} */); }};"]))
     out.append(section("PBXResourcesBuildPhase", [
         f"\t\t{app_phases['resources']} /* Resources */ = {{isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = ({', '.join(app_res_ids)}); runOnlyForDeploymentPostprocessing = 0; }};"]))
+    out.append(section("PBXShellScriptBuildPhase", [
+        f"\t\t{app_phases['normalize-resources']} /* Normalize bundle resource permissions */ = {{isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (); inputPaths = (); name = \"Normalize bundle resource permissions\"; outputPaths = (); runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/sh; shellScript = \"find \\\"$TARGET_BUILD_DIR/$WRAPPER_NAME\\\" -maxdepth 1 -type f -name \\\"*.png\\\" -exec chmod 0644 {{}} +\"; }};"]))
     out.append(section("PBXSourcesBuildPhase", [
         f"\t\t{app_phases['sources']} /* Sources */ = {{isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = ({', '.join(app_src_ids)}); runOnlyForDeploymentPostprocessing = 0; }};",
         f"\t\t{test_phases['sources']} /* Sources */ = {{isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = ({', '.join(test_src_ids)}); runOnlyForDeploymentPostprocessing = 0; }};"]))

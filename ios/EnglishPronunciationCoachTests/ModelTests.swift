@@ -117,4 +117,24 @@ final class EngineTests: XCTestCase {
         let silent = await engine.analyze(EngineRequest(word: word, samples: Array(repeating: 0, count: 16_000), sampleRate: 16_000))
         XCTAssertEqual(silent, .retry(.silence))
     }
+
+    func testNativeEngineLoadsBundledOnnxModelAndRunsInference() async {
+        let sampleRate = 16_000.0
+        let leadingSilence = Int(sampleRate / 4)
+        var samples = Array(repeating: Float.zero, count: Int(sampleRate * 3 / 2))
+        for index in leadingSilence..<samples.count {
+            samples[index] = 0.35 * sin(2 * Double.pi * 220 * Double(index) / sampleRate)
+        }
+
+        let decision = await NativePronunciationEngine().analyze(
+            EngineRequest(word: word, samples: samples, sampleRate: sampleRate)
+        )
+
+        switch decision {
+        case .result, .retry(.lowConfidence):
+            break // The synthetic waveform is not expected to be a real pronunciation.
+        case .retry(let reason):
+            XCTFail("Bundled ONNX inference did not run: \(reason)")
+        }
+    }
 }
