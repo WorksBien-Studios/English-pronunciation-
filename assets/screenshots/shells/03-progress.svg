@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="2868" viewBox="0 0 1320 2868">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07558a"/>
+      <stop offset=".52" stop-color="#087aa1"/>
+      <stop offset="1" stop-color="#07306d"/>
+    </linearGradient>
+    <linearGradient id="pill" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#1497aa"/>
+      <stop offset="1" stop-color="#18b8bd"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="22" stdDeviation="28" flood-color="#00143d" flood-opacity=".24"/>
+    </filter>
+  </defs>
+  <rect width="1320" height="2868" fill="url(#bg)"/>
+  <path d="M-180 1030 C210 690 520 830 780 690 C1030 560 1190 410 1440 330 L1440 900 C1190 1020 1000 1130 760 1240 C410 1410 110 1290 -180 1580Z" fill="#43d6d8" opacity=".38"/>
+  <path d="M-100 2220 C230 1900 520 2010 820 1880 C1070 1770 1240 1600 1440 1500 L1440 2140 C1190 2250 1030 2370 790 2490 C440 2660 130 2540 -100 2790Z" fill="#25b3cd" opacity=".46"/>
+  <text x="82" y="180" fill="#fff" font-size="90" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic',sans-serif">練習して、</text>
+  <text x="82" y="298" fill="#fff" font-size="90" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic',sans-serif">上達を確かめる</text>
+  <rect x="82" y="350" width="304" height="88" rx="44" fill="url(#pill)"/>
+  <text x="234" y="410" text-anchor="middle" fill="#fff" font-size="42" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic',sans-serif">改善を実感</text>
+  <g transform="translate(1005 104)" fill="#21d9d2">
+    <rect x="0" y="38" width="28" height="78" rx="14"/>
+    <rect x="48" y="0" width="28" height="148" rx="14"/>
+  </g>
+  <text x="1002" y="210" fill="#fff" font-size="30" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic',sans-serif">
+    <tspan x="1002" dy="0">続けるほど</tspan><tspan x="1002" dy="42">伝わる発音に</tspan><tspan x="1002" dy="42">近づく</tspan>
+  </text>
+  <line x1="1002" y1="355" x2="1050" y2="355" stroke="#b7d6df" stroke-width="4"/>
+  <rect id="screenshot-slot" x="116" y="692" width="1088" height="1980" rx="78" fill="#fbfcfe" stroke="#e0edf5" stroke-width="8" filter="url(#shadow)"/>
+</svg>
