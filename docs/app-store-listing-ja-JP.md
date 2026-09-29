@@ -23,9 +23,11 @@ The listing deliberately avoids the crowded generic promises “AI英会話,” 
 | Field | Final Japanese copy | Limit | Count |
 |---|---|---:|---:|
 | Name | **英語発音コーチ｜日本人のための発音矯正** | 30 characters | 19 |
-| Subtitle | **苦手音を診断、日本語で直し方まで解説** | 30 characters | 18 |
-| Promotional text | **採点だけで終わらない発音練習。苦手な音を見つけ、舌・唇・息・声の使い方を日本語で確認。端末上で分析し、毎日10回まで無料で試せます。** | 170 characters | 66 |
-| Keywords | `スピーキング,アクセント,イントネーション,IPA,音素練習,リスニング,TH,RL` | 100 UTF-8 bytes | 98 bytes |
+| Subtitle | **RとL・THなど苦手な音を診断、直し方まで日本語で** | 30 characters | 25 |
+| Promotional text | **採点だけで終わらない発音練習。苦手な音を見つけ、舌・唇・息・声の使い方を日本語で確認。端末内で分析し、1日10回まで無料で試せます。** | 170 characters | 66 |
+| Keywords | `カタカナ英語,発音記号,アクセント,イントネーション,スピーキング,TH` | 100 UTF-8 bytes | 94 bytes |
+
+Keyword-field changes in the 2026-09-29 copy review: removed `音素練習` (not a real search term), `リスニング` (the app does not teach listening comprehension, a 2.3.7 relevance risk) and `RL` (does not match how learners type the pair); added `カタカナ英語` and `発音記号`. The subtitle now carries `R`, `L` and `TH`. These choices are judgment calls without Japan search-volume data — validate them in a keyword tool or Apple Search Ads before locking.
 
 Do not add competitor names, `AI英会話`, `TOEIC`, `英検`, `IELTS`, `無料`, or `オフライン` to the keyword field merely to chase traffic. The first four are either misleading for this narrow product or unsupported at launch; the latter terms belong in readable copy when truthful.
 
@@ -78,19 +80,19 @@ Copy exactly from this block after confirming build parity and deploying the leg
 英語の発音を採点されても、
 「何が違うのか」「どう直せばよいのか」が分からなければ、同じ間違いを繰り返してしまいます。
 
-英語発音コーチは、日本語を母語とする学習者のための、英語発音の診断・矯正練習アプリです。
+英語発音コーチは、日本語話者のための、英語発音の診断・矯正練習アプリです。
 
-録音した声を音ごとに確認し、苦手な音、よくある置き換え、直し方を日本語で示します。舌・唇・あご・息・声の使い方を確かめ、ミニマルペア、単語、文の順で練習できます。
+録音した声を音ごとに確認し、苦手な音、よくある間違い方、直し方を日本語で示します。舌・唇・あご・息・声の使い方を確かめ、ミニマルペア（RとLなど、1音だけ違う単語の組）、単語、文の順で練習できます。
 
 【診断から復習まで】
 
 ・短い発音診断で、苦手な音とおすすめの練習順を確認
 ・RとL、TH、BとV、FとH、母音の区別、語尾の子音などを集中練習
-・目標の音と、聞こえた可能性のある別の音を、音素単位で表示
-・モデル発音と自分の録音をすぐに聞き比べ
+・お手本の音と、実際に聞こえた音の候補を1音ずつ表示
+・お手本音声（iOS標準の音声合成）と自分の録音をすぐに聞き比べ
 ・通常速度とゆっくり再生、IPA発音記号に対応
 ・ミニマルペア、単語、文、再テストへ段階的に進行
-・繰り返し現れる苦手音を記録し、復習候補を整理
+・繰り返し現れる苦手な音を記録し、復習候補を整理
 
 【日本語だから、直し方が分かる】
 
@@ -103,7 +105,7 @@ Copy exactly from this block after confirming build parity and deploying the leg
 
 など、次の一回で試せる具体的な修正方法を日本語で説明します。
 
-【伝わりやすさと発音の違いを分けて表示】
+【「伝わるか」と「音が合っているか」を分けて確認】
 
 ・相手に伝わる可能性
 ・目標の音を出せた可能性
@@ -118,14 +120,14 @@ Copy exactly from this block after confirming build parity and deploying the leg
 
 【プライバシーを守る端末内分析】
 
-発音の録音と分析は端末上で処理されます。音声を分析のために外部サーバーへ送信しません。アカウント登録は不要で、広告や追跡もありません。生の録音は初期設定では保存しません。発音練習と分析はオフラインでも利用できます。
+発音の録音と分析は端末内で処理されます。音声を分析のために外部サーバーへ送信しません。アカウント登録は不要で、広告や追跡もありません。録音データは初期設定では保存しません。発音練習と分析はオフラインでも利用できます。
 
 【無料で使える内容】
 
-・初回発音診断と苦手音マップ
+・初回発音診断と苦手な音マップ
 ・診断で見つかった最優先の音の基礎レッスン
 ・1日10回の有効な発音分析
-・解放済み教材のモデル発音、IPA、日本語解説
+・利用できる教材のお手本音声、IPA、日本語解説
 
 無音、音割れ、録音中断などで結果が返らなかった場合は、無料回数を消費しません。未使用回数の翌日への繰り越しはありません。
 
@@ -133,11 +135,11 @@ Copy exactly from this block after confirming build parity and deploying the leg
 
 ・発音分析の回数制限を解除
 ・すべての発音レッスン
-・苦手音の履歴と個別復習リスト
+・苦手な音の履歴と個別復習リスト
 ・アクセント、リズム、リンキングの練習
 ・追加される新しい練習教材
 
-Proは月間または年間の自動更新サブスクリプションです。購入前にApp Storeが地域に応じた料金と更新期間を表示します。自動更新は現在の期間終了の24時間前までに解約しない限り継続します。管理・解約はApple IDのサブスクリプション設定から行えます。購入の復元にも対応します。
+Proは月額または年額の自動更新サブスクリプションです。購入確定時にApple IDアカウントに請求されます。購入前にApp Storeが地域に応じた料金と更新期間を表示します。自動更新は現在の期間終了の24時間前までに解約しない限り継続します。管理・解約はApple IDのサブスクリプション設定から行えます。購入の復元にも対応します。
 
 利用規約：
 https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
@@ -154,7 +156,7 @@ Create three authentic Japanese screenshots for both iPhone and iPad. Use the sa
 |---:|---|---|---|---|
 | 1 | Outcome | **苦手な音を、診断で見える化** | Completed assessment showing a restrained weakness map, e.g. R/L and TH; no fabricated percentage claims. | Assessment and weakness map are free. |
 | 2 | Path | **舌・唇・息の使い方を日本語で** | Correction screen showing IPA, target/likely substitution and one concise articulatory instruction. | Use the free personalized starter module. |
-| 3 | Proof | **練習して、もう一度確かめる** | Retest screen showing listen → record → feedback → retry, with intelligibility and target sound separated. | Use a free-module example; do not imply every module is free. |
+| 3 | Proof | **発音を練習して、すぐ再チェック** | Retest screen showing listen → record → feedback → retry, with intelligibility and target sound separated. | Use a free-module example; do not imply every module is free. |
 
 Production rules:
 
@@ -344,7 +346,7 @@ Current Apple sources reviewed on 2026-09-28:
 
 ### Version metadata and assets
 
-- [ ] Paste the locked name, subtitle, promotional text, description and 98-byte keyword field.
+- [ ] Paste the locked name, subtitle, promotional text, description and 94-byte keyword field.
 - [ ] Capture three authentic Japanese iPhone screenshots at an accepted 6.9-inch size.
 - [ ] Capture three authentic Japanese iPad screenshots at 2064 × 2752 or another current accepted 13-inch size.
 - [ ] Verify no alpha channel, incorrect crop, debug data, personal data or unsupported claim.
