@@ -42,64 +42,11 @@ Why this name:
 
 The subtitle states the missing benefit found repeatedly in reviews: diagnosis alone is insufficient; users want to know exactly how to correct the sound.
 
-### Promotional text
+### Canonical listing source
 
-**発音を採点するだけで終わらせません。苦手な音を見つけ、舌・唇・息・声の使い方を自然な日本語で解説。練習して、録音して、もう一度確かめられます。**
+The complete App Store copy, keyword field, image captions, StoreKit metadata, privacy answers, review notes and submission checklist live in [`docs/app-store-listing-ja-JP.md`](app-store-listing-ja-JP.md). The machine-readable validation source is [`docs/app-store-listing-manifest.json`](app-store-listing-manifest.json).
 
-### Locked Japanese description
-
-英語の発音を採点されても、
-「どこが違うのか」「どう直せばいいのか」が分からない。
-
-英語発音コーチは、日本語を母語とする人のための発音矯正アプリです。
-
-あなたの発音を音ごとに確認し、苦手な音とよくある置き換えを見つけます。結果は自然な日本語で説明し、舌・唇・あご・息・声をどう使えばよいかまで具体的に案内します。
-
-【できること】
-
-・短い診断で、苦手な音と練習順を確認  
-・RとL、TH、BとV、FとHなど、日本人が間違えやすい音を集中練習  
-・自分が出した音と目標の音を音素単位で比較  
-・舌の位置、唇の形、息の流れ、声の有無を日本語で解説  
-・お手本と自分の録音をすぐに聞き比べ  
-・ゆっくり再生とIPA発音記号に対応  
-・ミニマルペア、単語、文の順で段階的に練習  
-・再テストで、同じ練習中の改善を確認  
-・繰り返し間違える音を記録し、自分専用の復習リストを作成
-
-【点数より、伝わる発音へ】
-
-評価は一つの総合点だけではありません。
-
-・相手に伝わるか  
-・目標の音を出せたか  
-・より自然なリズムやアクセントに近づいたか
-
-を分けて表示します。分析の確信度が低いときは、正解や不正解を断定せず、録音環境の確認や再試行をご案内します。
-
-【短く、毎日続けやすく】
-
-1回の練習は約5分。聞く、発音する、直し方を確認する、もう一度試す、という短い流れで進みます。余分な画面操作を減らし、練習に集中できます。
-
-【プライバシー】
-
-録音は可能な限り端末上で分析します。生の録音データは初期設定では保存せず、アカウント登録も必要ありません。
-
-【無料で使える内容】
-
-・初回発音診断  
-・診断結果と苦手音マップ  
-・RとLの基礎レッスン  
-・毎日の限定練習
-
-【Proプラン】
-
-Proでは、すべての発音レッスン、苦手音の履歴、個別復習リスト、ストレス・リズム・リンキング練習、追加される新しい練習教材を利用できます。
-
-月額：¥600  
-年額：¥4,800
-
-無料版に広告はありません。料金と更新日は購入前に明確に表示します。
+Those files are canonical for all public listing fields. This product specification defines product behavior; it must not carry a second copy of promotional text or the description that can drift from the launch listing.
 
 ## Japan App Store supply audit — 2026-09-28
 
