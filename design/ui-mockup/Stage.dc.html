@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>ステージ3 R の森</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;font-family:"Hiragino Maru Gothic ProN","HiraMaruProN-W4","Noto Sans JP",sans-serif;background:#BDEEFF}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+</style>
+</helmet>
+<div style="position:relative;width:390px;height:844px;overflow:hidden;background:linear-gradient(180deg,#6FD0F7 0%,#BDEEFF 38%,#F3FBFF 100%);color:#1B1F5E;font-family:'Hiragino Maru Gothic ProN','HiraMaruProN-W4','Noto Sans JP',sans-serif">
+
+  <div style="position:absolute;left:0;right:0;top:0;padding:52px 10px 0;display:flex;align-items:center;justify-content:space-between">
+    <a href="Main.dc.html" aria-label="マップに戻る" style="width:44px;height:44px;border-radius:22px;background:#fff;border:3px solid #1B1F5E;box-shadow:0 3px 0 #9fa6d6;display:flex;align-items:center;justify-content:center;box-sizing:border-box">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B1F5E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a>
+    <div style="height:44px;padding:0 22px;border-radius:22px;background:linear-gradient(#FFE066,#FFC933);border:3px solid #1B1F5E;box-shadow:0 3px 0 #C48A00;display:flex;align-items:center;font-size:17px;font-weight:800;box-sizing:border-box">ステージ3 ・ R の森</div>
+    <div style="width:44px"></div>
+  </div>
+
+  <div style="position:absolute;left:14px;right:14px;top:108px;display:flex;flex-direction:column;gap:12px">
+    <div style="position:relative;height:140px;border-radius:26px;background:radial-gradient(90% 120% at 50% 100%,#fff 0%,#E4F6FF 70%);border:3.5px solid #1B1F5E;box-shadow:0 5px 0 #1B1F5E;overflow:hidden">
+      <div style="position:absolute;left:24px;top:22px;animation:bob 1.8s ease-in-out infinite"><dc-import name="Creature" type="r" size="104" hint-size="104px,104px"></dc-import></div>
+      <div style="position:absolute;right:24px;top:22px;animation:bob 1.8s ease-in-out .5s infinite"><dc-import name="Creature" type="l" size="104" hint-size="104px,104px"></dc-import></div>
+      <div style="position:absolute;left:50%;top:38px;margin-left:-30px;width:60px;height:60px;border-radius:30px;background:#fff;border:3px solid #1B1F5E;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;box-shadow:0 3px 0 #9fa6d6">⇄</div>
+      <div style="position:absolute;left:0;right:0;bottom:8px;text-align:center;font-size:13px;font-weight:800">「くるりん」と「ぺろ」を聞き分けよう！</div>
+    </div>
+
+    <dc-import name="MouthDiagram" w="360" hint-size="360px,225px"></dc-import>
+
+    <div style="background:#fff;border:3.5px solid #1B1F5E;border-radius:22px;overflow:hidden;box-shadow:0 5px 0 #1B1F5E">
+      <div style="display:flex;align-items:center;gap:12px;padding:8px 14px;border-bottom:2px dashed #cfd4ee">
+        <div style="width:32px;height:32px;border-radius:16px;background:#FFC933;border:3px solid #1B1F5E;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800">✓</div>
+        <div style="flex:1;font-size:15px;font-weight:800">1 お手本を聞く</div>
+        <div style="font-size:12px;font-weight:800;color:#0A5C52">クリア</div></div>
+      <div style="display:flex;align-items:center;gap:12px;padding:8px 14px;border-bottom:2px dashed #cfd4ee;background:#FFF8D6">
+        <div style="width:32px;height:32px;border-radius:16px;background:#fff;border:3px solid #1B1F5E;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800">2</div>
+        <div style="flex:1;font-size:15px;font-weight:800">口の形をまねる</div>
+        <div style="font-size:12px;font-weight:800;color:#7A4B00">いまここ</div></div>
+      <div style="display:flex;align-items:center;gap:12px;padding:8px 14px">
+        <div style="width:32px;height:32px;border-radius:16px;background:#E5E8F6;border:3px solid #1B1F5E;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#5a608a">3</div>
+        <div style="flex:1;font-size:15px;font-weight:800;color:#5a608a">録音チャレンジ</div>
+        <div style="display:flex;gap:1px"><svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.6 6.2 6.7.4-5.1 4.4 1.7 6.6L10 15l-5.9 3.6 1.7-6.6L.7 7.6l6.7-.4z" fill="#fff" stroke="#1B1F5E" stroke-width="1.8" stroke-linejoin="round"/></svg><svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.6 6.2 6.7.4-5.1 4.4 1.7 6.6L10 15l-5.9 3.6 1.7-6.6L.7 7.6l6.7-.4z" fill="#fff" stroke="#1B1F5E" stroke-width="1.8" stroke-linejoin="round"/></svg><svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.6 6.2 6.7.4-5.1 4.4 1.7 6.6L10 15l-5.9 3.6 1.7-6.6L.7 7.6l6.7-.4z" fill="#fff" stroke="#1B1F5E" stroke-width="1.8" stroke-linejoin="round"/></svg></div></div>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:14px;right:14px;bottom:30px">
+    <a href="Challenge.dc.html" style="display:flex;align-items:center;justify-content:center;gap:10px;height:60px;border-radius:30px;background:linear-gradient(#FFE066,#FFC933);border:3.5px solid #1B1F5E;box-shadow:0 6px 0 #C48A00;font-size:22px;font-weight:800;text-decoration:none;color:#1B1F5E">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1B1F5E" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>チャレンジ！</a>
+  </div>
+  <div style="position:absolute;left:128px;bottom:8px;width:134px;height:5px;border-radius:3px;background:#1c1c1e"></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

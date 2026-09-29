@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>キャラクターシート</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;font-family:"Hiragino Maru Gothic ProN","HiraMaruProN-W4","Noto Sans JP",sans-serif;background:#EAF7FF}
+</style>
+</helmet>
+<div style="width:1194px;height:360px;box-sizing:border-box;padding:24px 32px;background:linear-gradient(180deg,#BDEEFF,#F6FBFF);color:#1B1F5E;font-family:'Hiragino Maru Gothic ProN','HiraMaruProN-W4','Noto Sans JP',sans-serif;display:flex;flex-direction:column;gap:14px">
+  <div style="font-size:22px;font-weight:800">キャラクターシート（オリジナル案）</div>
+  <div style="display:flex;gap:16px;align-items:flex-end">
+    <div style="flex:1.2;display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff;border:3px solid #1B1F5E;border-radius:22px;padding:14px 8px;box-shadow:0 4px 0 #1B1F5E"><dc-import name="Coach" mood="happy" size="120" hint-size="120px,120px"></dc-import><div style="font-size:16px;font-weight:800">コーチ</div><div style="font-size:12px;color:#4a4f80;font-weight:700">案内役</div></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff;border:3px solid #1B1F5E;border-radius:22px;padding:14px 8px;box-shadow:0 4px 0 #1B1F5E"><dc-import name="Creature" type="r" size="120" hint-size="120px,120px"></dc-import><div style="font-size:16px;font-weight:800">くるりん /r/</div><div style="font-size:12px;color:#4a4f80;font-weight:700">唇まるく</div></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff;border:3px solid #1B1F5E;border-radius:22px;padding:14px 8px;box-shadow:0 4px 0 #1B1F5E"><dc-import name="Creature" type="l" size="120" hint-size="120px,120px"></dc-import><div style="font-size:16px;font-weight:800">ぺろ /l/</div><div style="font-size:12px;color:#4a4f80;font-weight:700">舌先が上へ</div></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff;border:3px solid #1B1F5E;border-radius:22px;padding:14px 8px;box-shadow:0 4px 0 #1B1F5E"><dc-import name="Creature" type="th" size="120" hint-size="120px,120px"></dc-import><div style="font-size:16px;font-weight:800">べー /θ/</div><div style="font-size:12px;color:#4a4f80;font-weight:700">舌を歯の間に</div></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff;border:3px solid #1B1F5E;border-radius:22px;padding:14px 8px;box-shadow:0 4px 0 #1B1F5E"><dc-import name="Creature" type="v" size="120" hint-size="120px,120px"></dc-import><div style="font-size:16px;font-weight:800">がぶ /v/</div><div style="font-size:12px;color:#4a4f80;font-weight:700">下唇をかむ</div></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff;border:3px solid #1B1F5E;border-radius:22px;padding:14px 8px;box-shadow:0 4px 0 #1B1F5E"><dc-import name="Creature" type="f" size="120" hint-size="120px,120px"></dc-import><div style="font-size:16px;font-weight:800">ふーふー /f/</div><div style="font-size:12px;color:#4a4f80;font-weight:700">息を出す</div></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff;border:3px solid #1B1F5E;border-radius:22px;padding:14px 8px;box-shadow:0 4px 0 #1B1F5E"><dc-import name="Creature" type="b" size="120" hint-size="120px,120px"></dc-import><div style="font-size:16px;font-weight:800">ぷっぷ /b/</div><div style="font-size:12px;color:#4a4f80;font-weight:700">唇をとじる</div></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1194,"height":360}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

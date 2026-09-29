@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>音のなかま</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:transparent}
+</style>
+</helmet>
+<div style="width:{{px}};height:{{px}}">
+<svg viewBox="0 0 100 100" width="100%" height="100%" aria-hidden="true">
+  <ellipse cx="50" cy="94" rx="27" ry="4" fill="rgba(27,31,94,0.18)"/>
+  <sc-if value="{{isL}}" hint-placeholder-val="{{ false }}">
+    <path d="M50 26 L44 8 L58 20 Z" fill="{{body}}" stroke="#1B1F5E" stroke-width="3.5" stroke-linejoin="round"/>
+  </sc-if>
+  <sc-if value="{{isR}}" hint-placeholder-val="{{ true }}">
+    <path d="M50 26 C42 12 60 2 62 14 C63 22 54 22 54 16" fill="none" stroke="#1B1F5E" stroke-width="4" stroke-linecap="round"/>
+  </sc-if>
+  <ellipse cx="50" cy="57" rx="37" ry="34" fill="{{body}}" stroke="#1B1F5E" stroke-width="3.5"/>
+  <sc-if value="{{locked}}" hint-placeholder-val="{{ false }}">
+    <text x="50" y="72" text-anchor="middle" font-size="44" font-weight="700" fill="#F4F5FB">?</text>
+  </sc-if>
+  <sc-if value="{{open}}" hint-placeholder-val="{{ true }}">
+    <ellipse cx="34" cy="38" rx="11" ry="6" fill="#fff" fill-opacity="0.38" transform="rotate(-24 34 38)"/>
+    <circle cx="36" cy="52" r="8.5" fill="#fff" stroke="#1B1F5E" stroke-width="2.5"/>
+    <circle cx="64" cy="52" r="8.5" fill="#fff" stroke="#1B1F5E" stroke-width="2.5"/>
+    <circle cx="38" cy="53" r="4.6" fill="#1B1F5E"/><circle cx="62" cy="53" r="4.6" fill="#1B1F5E"/>
+    <circle cx="39.6" cy="51" r="1.8" fill="#fff"/><circle cx="63.6" cy="51" r="1.8" fill="#fff"/>
+    <ellipse cx="24" cy="66" rx="6" ry="4" fill="#FFB3C7"/><ellipse cx="76" cy="66" rx="6" ry="4" fill="#FFB3C7"/>
+  </sc-if>
+  <sc-if value="{{isR}}" hint-placeholder-val="{{ true }}">
+    <ellipse cx="50" cy="69" rx="5.5" ry="6.5" fill="#7A1F10" stroke="#1B1F5E" stroke-width="2"/>
+  </sc-if>
+  <sc-if value="{{isL}}" hint-placeholder-val="{{ false }}">
+    <path d="M39 65 Q50 79 61 65 Z" fill="#7A1F10" stroke="#1B1F5E" stroke-width="2" stroke-linejoin="round"/>
+    <ellipse cx="50" cy="66.5" rx="5.5" ry="3.2" fill="#FF8FA3"/>
+  </sc-if>
+  <sc-if value="{{isTH}}" hint-placeholder-val="{{ false }}">
+    <rect x="39" y="65" width="22" height="7" rx="2" fill="#fff" stroke="#1B1F5E" stroke-width="2"/>
+    <ellipse cx="50" cy="74" rx="8" ry="6.5" fill="#FF8FA3" stroke="#1B1F5E" stroke-width="2"/>
+    <path d="M50 70 v7" stroke="#D9587A" stroke-width="1.6" stroke-linecap="round"/>
+  </sc-if>
+  <sc-if value="{{isV}}" hint-placeholder-val="{{ false }}">
+    <path d="M39 68 Q50 76 61 68" fill="none" stroke="#1B1F5E" stroke-width="3" stroke-linecap="round"/>
+    <path d="M42 66 h6 l-3 8 z M52 66 h6 l-3 8 z" fill="#fff" stroke="#1B1F5E" stroke-width="2" stroke-linejoin="round"/>
+  </sc-if>
+  <sc-if value="{{isF}}" hint-placeholder-val="{{ false }}">
+    <ellipse cx="50" cy="69" rx="4.5" ry="5" fill="#1B1F5E"/>
+    <path d="M60 66 q9 -2 14 -9 M61 71 q11 1 17 -3" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+  </sc-if>
+  <sc-if value="{{isB}}" hint-placeholder-val="{{ false }}">
+    <ellipse cx="50" cy="69" rx="9" ry="3.6" fill="#C2185B" stroke="#1B1F5E" stroke-width="2"/>
+    <path d="M44 66 q6 -3 12 0" fill="none" stroke="#1B1F5E" stroke-width="2" stroke-linecap="round"/>
+  </sc-if>
+</svg>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"type":{"editor":"enum","options":["r","l","th","v","f","b"],"default":"r"},"size":{"editor":"int","default":96},"locked":{"editor":"text","default":"no"},"$preview":{"width":96,"height":96}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const t = this.props.type || 'r';
+    const size = Number(this.props.size || 96);
+    const locked = this.props.locked === 'yes';
+    const colors = { r: '#FF7A59', l: '#4DA6FF', th: '#C79BFF', v: '#FFB020', f: '#3DDBB3', b: '#FF8FC7' };
+    return {
+      px: size + 'px',
+      body: locked ? '#C9CDE0' : (colors[t] || '#FF7A59'),
+      locked: locked,
+      open: !locked,
+      isR: !locked && t === 'r',
+      isL: !locked && t === 'l',
+      isTH: !locked && t === 'th',
+      isV: !locked && t === 'v',
+      isF: !locked && t === 'f',
+      isB: !locked && t === 'b'
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>タブバー</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:transparent;font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif}
+</style>
+</helmet>
+<div style="width:390px;height:83px;box-sizing:border-box;padding-top:8px;background:rgba(250,251,255,.94);border-top:1px solid #d5d9ea;display:flex;position:relative">
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:{{c0}}">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>
+    <span style="font-size:10px;font-weight:600">冒険</span></div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:{{c1}}">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM8 7h7"/></svg>
+    <span style="font-size:10px;font-weight:600">図鑑</span></div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:{{c2}}">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 20V11M12 20V4M19 20v-6"/></svg>
+    <span style="font-size:10px;font-weight:600">進捗</span></div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:{{c3}}">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+    <span style="font-size:10px;font-weight:600">設定</span></div>
+  <div style="position:absolute;left:128px;bottom:8px;width:134px;height:5px;border-radius:3px;background:#1c1c1e"></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"int","default":0,"min":0,"max":3},"$preview":{"width":390,"height":83}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const a = Number(this.props.active || 0);
+    const on = '#2A2F8C', off = '#7c7f95';
+    return { c0: a === 0 ? on : off, c1: a === 1 ? on : off, c2: a === 2 ? on : off, c3: a === 3 ? on : off };
+  }
+}
+</script>
+</body>
+</html>
