@@ -49,11 +49,10 @@ int main(int argc, char** argv) {
     if (test == "null_engine_process") {
         char* error = nullptr;
         auto pcm = makeSpeechLikeTone(1.0);
-        return expectRejected(
-            pe_engine_process(
-                nullptr, pcm.data(), static_cast<int>(pcm.size()), 16000,
-                "word:cat", &error),
-            error);
+        pe_engine_result* result = pe_engine_process(
+            nullptr, pcm.data(), static_cast<int>(pcm.size()), 16000,
+            "word:cat", &error);
+        return expectRejected(result, error);
     }
 
     if (test == "null_pcm_positive_count") {
