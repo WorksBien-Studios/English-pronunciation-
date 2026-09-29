@@ -59,3 +59,17 @@ TEST(content_store_builds_exercise_for_sentence_by_concatenating_words) {
                              store.findWord("red")->phonemes.size();
     REQUIRE(sentence.expectedPhonemes.size() == expectedLength);
 }
+
+TEST(content_store_contains_every_new_ios_stage_word) {
+    PhonemeInventory inventory = PhonemeInventory::loadFromFile(kResourcesDir + "/phonemes.json");
+    ContentStore store = ContentStore::loadFromDirectory(kResourcesDir, inventory);
+
+    const char* required[] = {
+        "rock", "lock", "read", "thank", "three",
+        "boat", "vote", "food", "fat", "fire"
+    };
+    for (const char* word : required) {
+        REQUIRE(store.findWord(word) != nullptr);
+        REQUIRE(!store.buildExerciseForWord(word).expectedPhonemes.empty());
+    }
+}
