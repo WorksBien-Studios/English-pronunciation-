@@ -192,7 +192,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		81C5E518D1013D8BB71853FB /* Sign bundled ONNX model */ = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (); inputFileListPaths = (); inputPaths = (); name = "Sign bundled ONNX model"; outputFileListPaths = (); outputPaths = (); runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/sh; shellScript = "if [ \"${CODE_SIGNING_ALLOWED}\" = YES ] && [ \"${EFFECTIVE_PLATFORM_NAME}\" = -iphonesimulator ]; then model=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/model_q4f16.onnx\"; if [ -f \"$model\" ]; then /usr/bin/codesign --force --sign - --timestamp=none \"$model\"; fi; fi"; };
+		81C5E518D1013D8BB71853FB /* Sign bundled ONNX model */ = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (); inputFileListPaths = (); inputPaths = (); name = "Sign bundled ONNX model"; outputFileListPaths = (); outputPaths = (); runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/sh; shellScript = "if [ \"${CODE_SIGNING_ALLOWED}\" = YES ] && [ \"${EFFECTIVE_PLATFORM_NAME}\" = -iphonesimulator ]; then resource_root=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"; for name in model_q4f16.onnx PrivacyInfo.xcprivacy stages.json Assets.car; do file=\"$resource_root/$name\"; if [ -f \"$file\" ]; then /usr/bin/codesign --force --sign - --timestamp=none \"$file\"; fi; done; if [ -d \"$resource_root/Resources\" ]; then find \"$resource_root/Resources\" -type f -exec /usr/bin/codesign --force --sign - --timestamp=none {} \\; ; fi; fi"; };
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
