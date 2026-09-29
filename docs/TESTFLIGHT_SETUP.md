@@ -2,11 +2,12 @@
 
 Status: `PROVISIONING_PENDING`
 
-The repository contains a fail-closed TestFlight pipeline. It performs cheap Linux preflight before allocating a paid macOS runner, archives once, exports once, uploads the same IPA once, then uses a cheap Linux job to deliver the exact processed build to the mapped beta group and attach it to the matching editable App Store version. It never submits the version for App Review.
+The minimal App Store Connect record and explicit bundle ID now exist. No App Store listing copy has been entered. The repository contains a fail-closed TestFlight pipeline. It performs cheap Linux preflight before allocating a paid macOS runner, archives once, exports once, uploads the same IPA once, then uses a cheap Linux job to deliver the exact processed build to the mapped beta group and attach it to the matching editable App Store version. It never submits the version for App Review.
 
 ## Locked identity
 
 - Repository: `lrodeveloperr/English-pronunciation-`
+- App Store Connect app ID: `6817376615`
 - Bundle ID: `com.worksbienstudios.englishpronunciationcoach`
 - Apple team: `49SQ3XQ68Q`
 - Platform: `IOS`
@@ -18,11 +19,10 @@ The repository contains a fail-closed TestFlight pipeline. It performs cheap Lin
 
 The workflow cannot allocate macOS until `.github/testflight-app-map.json` has `state: ready` and contains:
 
-1. the numeric App Store Connect app ID;
-2. the exact non-secret API key ID and issuer ID;
-3. the internal beta-group resource ID;
-4. the committed Xcode project/workspace path and type;
-5. the shared app scheme.
+1. the exact non-secret API key ID and issuer ID;
+2. the internal beta-group resource ID;
+3. the committed Xcode project/workspace path and type;
+4. the shared app scheme.
 
 The iOS app source is not yet present on the default branch. The completed pronunciation engine currently remains on its development branch. Do not point the map at the generic shell example; map the actual English Pronunciation Coach project after the UI repository decision is final.
 
