@@ -85,7 +85,6 @@ Against `docs/product-specification.md#technical-risk-and-mandatory-pre-ui-gate`
 
 | Gate | Status |
 | --- | --- |
-| Every launch prompt has an expected phoneme sequence, IPA, accepted variants, confusion set | Draft content in place; not yet linguistically reviewed |
 | Selected model passes FP32-parity regression | Done at the portable-benchmark level (`docs/model-benchmark-2026-09-28.md`); not yet re-run against the bundled on-device runtime |
 | Posterior-level fixtures for every substitution/deletion/insertion produce the intended classification | ✅ — Unit tests + `pronunciation-harness gate` (45/45) |
 | Unusable/silent/clipped audio rejected ≥95% of the time | ✅ — 200/200 synthetic unusable samples rejected (`audio_quality_rejects_at_least_95_percent_of_unusable_audio`); not measured against a real recorded corpus |
@@ -93,6 +92,7 @@ Against `docs/product-specification.md#technical-risk-and-mandatory-pre-ui-gate`
 | Repeated-error history updates only after ≥2 high-confidence observations | ✅ — `ErrorHistory` + covering tests |
 | Compressed model passes regression parity and licence/notice checks | Licence notices in place (`THIRD_PARTY_NOTICES.md`); parity regression pending the real runtime |
 
-The remaining rows need the public-corpus FP32-parity run through the bundled runtime and linguistic content
-review. Device behaviour (latency, memory, offline use, native-English pass) is verified by the developer's own
-hands-on testing on a physical iPhone and is no longer a specification gate.
+The remaining open row is the public-corpus FP32-parity run through the bundled runtime. Linguistic review of the
+launch prompts is no longer a specification gate (owner decision), and the content stays marked as draft. Device
+behaviour (latency, memory, offline use, native-English pass) is verified by the developer's own hands-on testing on a
+physical iPhone and is likewise not a specification gate.

@@ -700,7 +700,6 @@ Launch validation uses reproducible automated corpora, deterministic engine test
 
 The engine may proceed to UI only when all of these are met:
 
-- every launch prompt has a manually reviewed expected phoneme sequence, IPA form, accepted variants and Japanese-relevant confusion set;
 - the selected acoustic model passes the locked FP32-parity regression over the public UME-ERJ samples and speaker-balanced SpeechOcean762 subset;
 - posterior-level fixtures for every supported substitution, deletion and insertion produce the intended deterministic classification;
 - unusable/silent/clipped audio is rejected rather than scored at least 95% of the time;
