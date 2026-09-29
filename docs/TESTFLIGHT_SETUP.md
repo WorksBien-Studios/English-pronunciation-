@@ -12,6 +12,9 @@ The minimal App Store Connect record, explicit bundle ID, and internal TestFligh
 - Apple team: `49SQ3XQ68Q`
 - Internal beta group: `Internal QA`
 - Beta group resource ID: `5199a6ce-ee5a-4f2d-91ce-992dbe15e3bf`
+- Signing style: automatic
+- Export method: App Store Connect
+- Distribution certificate: Apple Distribution
 - Platform: `IOS`
 - Marketing version: `1.0`
 - Primary App Store language: Japanese
@@ -25,7 +28,7 @@ The workflow cannot allocate macOS until `.github/testflight-app-map.json` has `
 2. the committed Xcode project/workspace path and type;
 3. the shared app scheme.
 
-The iOS app source is not yet present on the default branch. The completed pronunciation engine currently remains on its development branch. Do not point the map at the generic shell example; map the actual English Pronunciation Coach project after the UI repository decision is final.
+The release workflow is now locked to automatic signing with Apple Distribution export; it does not use ad-hoc signing or mutable profile names. The iOS app source is not yet present on the default branch. The completed pronunciation engine currently remains on its development branch. Do not point the map at the generic shell example; map the actual English Pronunciation Coach project after the UI repository decision is final.
 
 ## GitHub Actions credentials
 
