@@ -23,8 +23,8 @@ These are design hypotheses, not evidence of market fit. Validate with Japanese-
 ## 2. Structure
 
 - **Tabs:** 冒険 (map) · 図鑑 · 進捗 · 設定, via the shell's `TabView`/`Tab` with `.sidebarAdaptable` (bottom bar on iPhone, top bar/sidebar on iPad).
-- **Map:** islands of numbered stages. Each stage is one lesson from the content model (`Lesson`, `JapaneseErrorPattern`, `MinimalPair` …). Stage 3 (R の森, /r/ ↔ /l/) is the reference stage in the mockup.
-- **Stage detail:** creature pair, mouth cross-section (English tongue position solid, Japanese ラ行 dotted), tongue/lips/breath/voice cues, three quests: お手本を聞く → 口の形をまねる → 録音チャレンジ, then a しあげテスト (retest).
+- **Map:** islands of numbered stages. Each stage is one lesson from the content model (`Lesson`, `JapaneseErrorPattern`, `MinimalPair` …). Stage 3 (Rの森, /r/ ↔ /l/) is the reference stage in the mockup.
+- **Stage detail:** creature pair, mouth cross-section (English tongue position solid, Japanese ラ行 dotted), tongue/lips/breath/voice cues, three quests: お手本を聞く → 口の形をまねる → 録音チャレンジ, then a 仕上げテスト (retest).
 - **Challenge:** target word, IPA, creature coach, live waveform, obvious recording state, tap-to-stop.
 - **Clear screen:** stars, new creature, plain-language breakdown, EXP.
 - **Star meaning (fixed, maps to the spec's scoring philosophy):** ★1 = the word would likely be understood; ★2 = the target sound was produced; ★3 = stable on a repeat. Stars never reward a single arbitrary "accent score".
@@ -74,6 +74,23 @@ No third-party UI, animation or game libraries are required.
 - **No social feed, leaderboards or accounts** (spec V1 exclusions). Game Center is not used.
 - **Age rating:** re-answer the questionnaire against the final build; cartoon creatures with no violence are expected to stay 4+.
 - **Assets:** all characters, patterns and diagrams in the mockup are original. Do not copy an existing game's or pronunciation app's creature, UI or diagram. No formal similarity/trademark search has been done; do one before the assets ship.
+
+## 6a. Character expression rules (Japanese conventions)
+
+Reviewed 2026-09-29 against common Japanese character-design and emoticon conventions.
+
+- **Resting mouth is closed and tiny** (a small "ω" smile). A permanently open mouth reads as 驚き (shock) or ぽかん (blank), so no creature keeps an open mouth by default.
+- **Open or shaped mouths are a signal, not a default.** Three states exist: `rest` (default), `show` (the articulation cue, e.g. /r/ rounded lips, /l/ tongue tip up, /θ/ tongue between teeth; used only on cue screens such as the challenge hint) and `joy` (small open smile, celebration screens only). In the app, `PhaseAnimator` swaps `rest` → `show` when the hint appears and back afterwards.
+- **Charm points instead of open mouths at rest:** /θ/ has a small side-tongue てへぺろ, /v/ a single 八重歯 (yaeba, a small fang, widely considered cute in Japan), /b/ puffed cheeks. Tongue-out is playful, not rude, only in this cheeky てへぺろ form.
+- **Coach:** `happy` = ^ ^ eyes with a closed smile; `cheer` = "> <" eyes with a small open smile (the ≧∀≦ joy pattern; do not pair "> <" eyes with a flat or wavy mouth, which reads as pain, ＞＜); `wow` is not used in shipped screens.
+- Never show a downturned or frowning mouth on any character, including on `retry` or low-score feedback.
+
+## 6b. Writing rules for all customer-visible Japanese
+
+- Kanji-kana mixed adult register; no word-spacing (分かち書き) between kana, and no spaces between Latin letters/numbers and Japanese (Rの森, Proを始める, 1日10回).
+- UI labels are neutral (です/ます or noun phrases); characters may speak casually (〜よ, 〜だよ).
+- Store and legal wording follows Apple's Japanese conventions (e.g. 購入確定時にApple IDアカウントに請求されます).
+- Prefer 単語 to 言葉 when referring to the practice word; 仕上げテスト (not しあげ), 仲間 for creatures in running text.
 
 ## 7. Impact on other documents (follow-ups, not done here)
 

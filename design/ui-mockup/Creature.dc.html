@@ -33,40 +33,65 @@ body{margin:0;background:transparent}
     <circle cx="39.6" cy="51" r="1.8" fill="#fff"/><circle cx="63.6" cy="51" r="1.8" fill="#fff"/>
     <ellipse cx="24" cy="66" rx="6" ry="4" fill="#FFB3C7"/><ellipse cx="76" cy="66" rx="6" ry="4" fill="#FFB3C7"/>
   </sc-if>
-  <sc-if value="{{isR}}" hint-placeholder-val="{{ true }}">
-    <ellipse cx="50" cy="69" rx="5.5" ry="6.5" fill="#7A1F10" stroke="#1B1F5E" stroke-width="2"/>
+
+  <!-- resting mouth: small closed "ω" smile for every creature -->
+  <sc-if value="{{isRest}}" hint-placeholder-val="{{ true }}">
+    <path d="M43 67 q3.5 4.5 7 0 q3.5 4.5 7 0" fill="none" stroke="#1B1F5E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
   </sc-if>
-  <sc-if value="{{isL}}" hint-placeholder-val="{{ false }}">
-    <path d="M39 65 Q50 79 61 65 Z" fill="#7A1F10" stroke="#1B1F5E" stroke-width="2" stroke-linejoin="round"/>
-    <ellipse cx="50" cy="66.5" rx="5.5" ry="3.2" fill="#FF8FA3"/>
+  <sc-if value="{{restTH}}" hint-placeholder-val="{{ false }}">
+    <ellipse cx="58" cy="73.5" rx="3.6" ry="4.6" fill="#FF8FA3" stroke="#1B1F5E" stroke-width="2"/>
   </sc-if>
-  <sc-if value="{{isTH}}" hint-placeholder-val="{{ false }}">
-    <rect x="39" y="65" width="22" height="7" rx="2" fill="#fff" stroke="#1B1F5E" stroke-width="2"/>
-    <ellipse cx="50" cy="74" rx="8" ry="6.5" fill="#FF8FA3" stroke="#1B1F5E" stroke-width="2"/>
-    <path d="M50 70 v7" stroke="#D9587A" stroke-width="1.6" stroke-linecap="round"/>
+  <sc-if value="{{restV}}" hint-placeholder-val="{{ false }}">
+    <path d="M43.5 68.5 h4.5 l-2.2 5.5 z" fill="#fff" stroke="#1B1F5E" stroke-width="1.8" stroke-linejoin="round"/>
   </sc-if>
-  <sc-if value="{{isV}}" hint-placeholder-val="{{ false }}">
-    <path d="M39 68 Q50 76 61 68" fill="none" stroke="#1B1F5E" stroke-width="3" stroke-linecap="round"/>
-    <path d="M42 66 h6 l-3 8 z M52 66 h6 l-3 8 z" fill="#fff" stroke="#1B1F5E" stroke-width="2" stroke-linejoin="round"/>
+  <sc-if value="{{restB}}" hint-placeholder-val="{{ false }}">
+    <ellipse cx="22" cy="67" rx="8" ry="6" fill="#FFB3C7"/><ellipse cx="78" cy="67" rx="8" ry="6" fill="#FFB3C7"/>
   </sc-if>
-  <sc-if value="{{isF}}" hint-placeholder-val="{{ false }}">
-    <ellipse cx="50" cy="69" rx="4.5" ry="5" fill="#1B1F5E"/>
-    <path d="M60 66 q9 -2 14 -9 M61 71 q11 1 17 -3" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- joy mouth: small open smile, celebration only -->
+  <sc-if value="{{isJoy}}" hint-placeholder-val="{{ false }}">
+    <path d="M42 63 Q50 78 58 63 Z" fill="#7A1F10" stroke="#1B1F5E" stroke-width="2.4" stroke-linejoin="round"/>
+    <ellipse cx="50" cy="71.5" rx="4.5" ry="2.8" fill="#FF8FA3"/>
   </sc-if>
-  <sc-if value="{{isB}}" hint-placeholder-val="{{ false }}">
-    <ellipse cx="50" cy="69" rx="9" ry="3.6" fill="#C2185B" stroke="#1B1F5E" stroke-width="2"/>
-    <path d="M44 66 q6 -3 12 0" fill="none" stroke="#1B1F5E" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- teaching mouth: shows the articulation, used only on cue screens -->
+  <sc-if value="{{showR}}" hint-placeholder-val="{{ false }}">
+    <ellipse cx="50" cy="69" rx="4.5" ry="5.5" fill="#7A1F10" stroke="#1B1F5E" stroke-width="2"/>
+  </sc-if>
+  <sc-if value="{{showL}}" hint-placeholder-val="{{ false }}">
+    <path d="M41 65 Q50 76 59 65 Z" fill="#7A1F10" stroke="#1B1F5E" stroke-width="2" stroke-linejoin="round"/>
+    <ellipse cx="50" cy="66.5" rx="5" ry="3" fill="#FF8FA3"/>
+  </sc-if>
+  <sc-if value="{{showTH}}" hint-placeholder-val="{{ false }}">
+    <rect x="40" y="65" width="20" height="6" rx="2" fill="#fff" stroke="#1B1F5E" stroke-width="2"/>
+    <ellipse cx="50" cy="73" rx="7.5" ry="6" fill="#FF8FA3" stroke="#1B1F5E" stroke-width="2"/>
+    <path d="M50 70 v6" stroke="#D9587A" stroke-width="1.6" stroke-linecap="round"/>
+  </sc-if>
+  <sc-if value="{{showV}}" hint-placeholder-val="{{ false }}">
+    <path d="M40 68 Q50 75 60 68" fill="none" stroke="#1B1F5E" stroke-width="3" stroke-linecap="round"/>
+    <path d="M43 66 h5 l-2.5 6.5 z M52 66 h5 l-2.5 6.5 z" fill="#fff" stroke="#1B1F5E" stroke-width="2" stroke-linejoin="round"/>
+  </sc-if>
+  <sc-if value="{{showF}}" hint-placeholder-val="{{ false }}">
+    <ellipse cx="50" cy="69" rx="3.8" ry="4.4" fill="#1B1F5E"/>
+    <path d="M59 66 q9 -2 14 -9 M60 71 q11 1 17 -3" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+  </sc-if>
+  <sc-if value="{{showB}}" hint-placeholder-val="{{ false }}">
+    <ellipse cx="50" cy="69" rx="8" ry="3.2" fill="#C2185B" stroke="#1B1F5E" stroke-width="2"/>
+    <ellipse cx="22" cy="67" rx="8" ry="6" fill="#FFB3C7"/><ellipse cx="78" cy="67" rx="8" ry="6" fill="#FFB3C7"/>
   </sc-if>
 </svg>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"type":{"editor":"enum","options":["r","l","th","v","f","b"],"default":"r"},"size":{"editor":"int","default":96},"locked":{"editor":"text","default":"no"},"$preview":{"width":96,"height":96}}'>
+<script type="text/x-dc" data-dc-script data-props='{"type":{"editor":"enum","options":["r","l","th","v","f","b"],"default":"r"},"size":{"editor":"int","default":96},"locked":{"editor":"text","default":"no"},"mouth":{"editor":"enum","options":["rest","show","joy"],"default":"rest"},"$preview":{"width":96,"height":96}}'>
 class Component extends DCLogic {
   renderVals() {
     const t = this.props.type || 'r';
+    const m = this.props.mouth || 'rest';
     const size = Number(this.props.size || 96);
     const locked = this.props.locked === 'yes';
     const colors = { r: '#FF7A59', l: '#4DA6FF', th: '#C79BFF', v: '#FFB020', f: '#3DDBB3', b: '#FF8FC7' };
+    const rest = !locked && m === 'rest';
+    const show = !locked && m === 'show';
     return {
       px: size + 'px',
       body: locked ? '#C9CDE0' : (colors[t] || '#FF7A59'),
@@ -74,10 +99,17 @@ class Component extends DCLogic {
       open: !locked,
       isR: !locked && t === 'r',
       isL: !locked && t === 'l',
-      isTH: !locked && t === 'th',
-      isV: !locked && t === 'v',
-      isF: !locked && t === 'f',
-      isB: !locked && t === 'b'
+      isRest: rest,
+      isJoy: !locked && m === 'joy',
+      restTH: rest && t === 'th',
+      restV: rest && t === 'v',
+      restB: rest && t === 'b',
+      showR: show && t === 'r',
+      showL: show && t === 'l',
+      showTH: show && t === 'th',
+      showV: show && t === 'v',
+      showF: show && t === 'f',
+      showB: show && t === 'b'
     };
   }
 }
