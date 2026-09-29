@@ -192,12 +192,18 @@ A single speech shape containing two clearly separated sound-wave strokes, sugge
 | Copyright | `2026 WorksBien Studios Inc.` | Proposed; confirm account/legal presentation |
 | Bundle ID | `com.worksbienstudios.englishpronunciationcoach` | Proposed; reserve before implementation |
 | SKU | `WB-EN-PRON-JP-IOS-001` | Proposed; immutable after app record creation |
-| Support URL | `https://worksbienstudios.com/customerservice` | Must be live and include current contact details |
-| Marketing URL | `https://worksbienstudios.com/apps/english-pronunciation-coach` | Must be deployed before submission or omit |
-| Privacy URL | `https://worksbienstudios.com/apps/english-pronunciation-coach/privacy` | Must be deployed before submission |
+| Support URL | `https://worksbienstudios.com/apps/english-pronunciation-coach/support/` | **Live and verified 2026-09-28** |
+| Marketing URL | `https://worksbienstudios.com/apps/english-pronunciation-coach/` | **Live and verified 2026-09-28** |
+| Privacy URL | `https://worksbienstudios.com/apps/english-pronunciation-coach/privacy/` | **Live and verified 2026-09-28** |
 | Terms | Apple Standard EULA | Locked |
 | Release method | Manual release after approval | Recommended |
 | App preview video | Omit at launch | Locked; optional post-launch |
+
+Additional public legal pages:
+
+- Terms: `https://worksbienstudios.com/apps/english-pronunciation-coach/terms/`
+- Subscription conditions: `https://worksbienstudios.com/apps/english-pronunciation-coach/subscriptions/`
+- Specified Commercial Transactions Act disclosure: `https://worksbienstudios.com/apps/english-pronunciation-coach/commercial-transactions/`
 
 ## 6. Subscription metadata
 
@@ -307,7 +313,7 @@ Current Apple sources reviewed on 2026-09-28:
 
 | Guideline | Application | Required release evidence |
 |---|---|---|
-| 1.5 Developer Information | Support contact must be reachable. | Live support URL with current email/contact details. |
+| 1.5 Developer Information | Support contact must be reachable. | **Pass for the website layer:** the app-specific support page is live with the current public email; reconfirm immediately before submission. |
 | 1.6 Data Security | Voice and learning history remain protected locally. | Storage review, file protection and no unexpected network transfer. |
 | 2.1 App Completeness | The engine, URLs and both subscriptions must be functional. | Final build/device test and IAP review assets. |
 | 2.3 Accurate Metadata | Every privacy, offline, free-limit and feature claim must match the binary. | Build/listing parity audit. |
@@ -368,7 +374,7 @@ Current Apple sources reviewed on 2026-09-28:
 
 ### Legal and review
 
-- [ ] Deploy and open Privacy, Support and Marketing pages from a signed-out browser.
+- [x] Deploy and open Privacy, Terms, Subscription, 特商法, Support and Marketing pages from a signed-out browser (verified 2026-09-28).
 - [ ] Add Apache-2.0 and MIT notices in-app and in the repository.
 - [ ] Confirm the final archive contains only assets with documented commercial rights.
 - [ ] Add current reviewer contact privately in App Store Connect.
@@ -383,10 +389,9 @@ Current Apple sources reviewed on 2026-09-28:
 The following remain build-stage blockers, not drafting failures:
 
 1. final bundle ID/SKU and App Store Connect record;
-2. deployed per-app Privacy and Marketing pages;
-3. final archive, SDK/privacy-manifest inspection and physical-device evidence;
-4. authentic screenshots and finished icon;
-5. created StoreKit products, localized pricing and review assets;
-6. final human Japanese copy review and live App Store Connect validation.
+2. final archive, SDK/privacy-manifest inspection and physical-device evidence;
+3. authentic screenshots and finished icon;
+4. created StoreKit products, localized pricing and review assets;
+5. final human Japanese copy review and live App Store Connect validation.
 
-Do not label the app ready to submit until those six items are evidenced.
+Do not label the app ready to submit until those five items are evidenced.

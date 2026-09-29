@@ -23,7 +23,7 @@
     "final_release_build_inspected": false,
     "signed_archive_inspected": false,
     "app_store_connect_inspected": false,
-    "public_policies_inspected": false,
+    "public_policies_inspected": true,
     "official_apple_sources_refreshed": true,
     "fact_ledger_complete": true,
     "facts_reconciled": true,
@@ -34,7 +34,7 @@
     "official_sources_reviewed_on": "2026-09-28",
     "unresolved_conflicts": [
       "Build-dependent statements require final archive and device verification",
-      "Legal URLs must be deployed and checked before review mode"
+      "App Store Connect fields must be populated and checked before review mode"
     ]
   },
   "aso_context": {
@@ -77,9 +77,9 @@
         "音素練習",
         "リスニング"
       ],
-      "support_url": "https://worksbienstudios.com/customerservice",
-      "privacy_url": "https://worksbienstudios.com/apps/english-pronunciation-coach/privacy",
-      "marketing_url": "https://worksbienstudios.com/apps/english-pronunciation-coach",
+      "support_url": "https://worksbienstudios.com/apps/english-pronunciation-coach/support/",
+      "privacy_url": "https://worksbienstudios.com/apps/english-pronunciation-coach/privacy/",
+      "marketing_url": "https://worksbienstudios.com/apps/english-pronunciation-coach/",
       "whats_new": "",
       "native_language_reviewed": false,
       "ui_language_disclosed_accurately": true,
@@ -226,7 +226,7 @@
     "paid_value_and_location": "Settings > Pro and locked-module entry disclose unlimited scoring, all lessons, full history, and the review queue"
   },
   "privacy": {
-    "policy_url": "https://worksbienstudios.com/apps/english-pronunciation-coach/privacy",
+    "policy_url": "https://worksbienstudios.com/apps/english-pronunciation-coach/privacy/",
     "data_inventory_complete": false,
     "third_party_sdks_included": false,
     "app_privacy_answers_match_final_build": false,
@@ -362,8 +362,8 @@
       "evidence": "Reviewer contact and final test path must be entered privately."
     },
     "legal_urls_live": {
-      "status": "blocked",
-      "evidence": "Per-app privacy and marketing pages must be deployed."
+      "status": "pass",
+      "evidence": "Privacy, terms, subscription, commercial disclosure, support, and marketing pages were live-verified on 2026-09-28."
     },
     "privacy_policy_matches_build": {
       "status": "blocked",
@@ -410,8 +410,8 @@
       "evidence": "Japan-only availability must be confirmed in App Store Connect."
     },
     "contact_information_current": {
-      "status": "blocked",
-      "evidence": "Current reviewer and public support contacts must be verified."
+      "status": "pass",
+      "evidence": "The app-specific support page publishes the current public support email; reviewer contact remains a private submission field."
     },
     "applicable_guidelines_reviewed": {
       "status": "pass",
