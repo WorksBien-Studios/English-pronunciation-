@@ -235,7 +235,7 @@ def render():
     out.append(section("PBXTargetDependency", [
         f"\t\t{dependency} /* PBXTargetDependency */ = {{isa = PBXTargetDependency; target = {app_target} /* {APP_NAME} */; targetProxy = {proxy} /* PBXContainerItemProxy */; }};"]))
 
-    project_common = "ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; CLANG_CXX_LANGUAGE_STANDARD = \"c++17\"; IPHONEOS_DEPLOYMENT_TARGET = 18.0; SDKROOT = iphoneos; SWIFT_VERSION = 5.0; "
+    project_common = "ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; CLANG_CXX_LANGUAGE_STANDARD = \"c++17\"; IPHONEOS_DEPLOYMENT_TARGET = 18.0; SDKROOT = iphoneos; SWIFT_VERSION = 6.0; "
     debug_extra = "DEBUG_INFORMATION_FORMAT = dwarf; ENABLE_TESTABILITY = YES; ONLY_ACTIVE_ARCH = YES; SWIFT_ACTIVE_COMPILATION_CONDITIONS = \"DEBUG $(inherited)\"; SWIFT_OPTIMIZATION_LEVEL = \"-Onone\"; "
     release_extra = "DEBUG_INFORMATION_FORMAT = \"dwarf-with-dsym\"; ENABLE_NS_ASSERTIONS = NO; SWIFT_COMPILATION_MODE = wholemodule; SWIFT_OPTIMIZATION_LEVEL = \"-O\"; VALIDATE_PRODUCT = YES; "
     app_settings = (
@@ -251,11 +251,11 @@ def render():
         "OTHER_LDFLAGS = \"$(inherited) -framework Network -framework Accelerate\"; "
         "HEADER_SEARCH_PATHS = \"$(inherited) $(PROJECT_DIR)/../pronunciation-engine/include $(PROJECT_DIR)/../pronunciation-engine/src $(PROJECT_DIR)/../pronunciation-engine/third_party\"; "
         f"SWIFT_OBJC_BRIDGING_HEADER = {APP_NAME}/EngineBridge/PronunciationEngine-Bridging-Header.h; "
-        "SUPPORTED_PLATFORMS = \"iphoneos iphonesimulator\"; SUPPORTS_MACCATALYST = NO; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = \"1,2\"; "
+        "SUPPORTED_PLATFORMS = \"iphoneos iphonesimulator\"; SUPPORTS_MACCATALYST = NO; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_VERSION = 6.0; TARGETED_DEVICE_FAMILY = \"1,2\"; "
     )
     test_settings = (
         f"BUNDLE_LOADER = \"$(TEST_HOST)\"; CODE_SIGN_STYLE = Automatic; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 18.0; "
-        f"PRODUCT_BUNDLE_IDENTIFIER = {BUNDLE_ID}.tests; PRODUCT_NAME = \"$(TARGET_NAME)\"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = \"1,2\"; "
+        f"PRODUCT_BUNDLE_IDENTIFIER = {BUNDLE_ID}.tests; PRODUCT_NAME = \"$(TARGET_NAME)\"; SWIFT_VERSION = 6.0; TARGETED_DEVICE_FAMILY = \"1,2\"; "
         f"TEST_HOST = \"$(BUILT_PRODUCTS_DIR)/{APP_NAME}.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/{APP_NAME}\"; "
     )
 

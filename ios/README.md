@@ -46,8 +46,8 @@ ios/EnglishPronunciationCoachTests/   unit tests for the pure logic and the cont
   hands-on testing.
 - **Subscription group ID is a placeholder** (`StoreConfig.subscriptionGroupID`). Until it is set the paywall
   shows a notice. Product IDs match the listing pack. Prices are always read from StoreKit.
-- **Swift language mode is 5** with the Swift 6 toolchain. The spec targets Swift 6 mode; move over after the
-  first green CI run and a concurrency audit of `AudioRecorder`/`EntitlementStore`.
+- **Swift 6 language mode** (`SWIFT_VERSION = 6.0`, strict concurrency). `AudioRecorder`, `EntitlementStore` and the
+  engine adapter are actor-isolated; the realtime audio tap uses a `Sendable` buffer.
 - **Art is mockup-grade** (vector, drawn in code from the design mockup). Replace with final illustrator art.
 - **Content is a starter set** (4 stages, 6 sounds). Only stage 1 is free; the free/Pro split follows the listing pack.
 - **No sound effects, Live Activities, or Game Center.** Haptics use `.sensoryFeedback`.
