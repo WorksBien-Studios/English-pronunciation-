@@ -192,7 +192,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		20ACDA7C00A3A1B19FBE85B8 /* Normalize bundle resource permissions */ = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (); inputPaths = (); name = "Normalize bundle resource permissions"; outputPaths = (); runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/sh; shellScript = "find \"$TARGET_BUILD_DIR/$WRAPPER_NAME\" -maxdepth 1 -type f -name \"*.png\" -exec chmod 0644 {} +"; };
+		20ACDA7C00A3A1B19FBE85B8 /* Normalize bundle resource permissions */ = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (); inputPaths = (); name = "Normalize bundle resource permissions"; outputPaths = (); runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/sh; shellScript = "xattr -cr \"$TARGET_BUILD_DIR/$WRAPPER_NAME\"; find \"$TARGET_BUILD_DIR/$WRAPPER_NAME\" -maxdepth 1 -type f -name \"*.png\" -exec chmod 0644 {} +"; };
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
