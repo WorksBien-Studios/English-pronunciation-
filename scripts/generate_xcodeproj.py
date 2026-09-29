@@ -110,7 +110,8 @@ class Builder:
 
 
 def quote(value):
-    if value and all(c.isalnum() or c in "._/" for c in value):
+    # Old-style plist strings may only be unquoted when they are plain ASCII words.
+    if value and all(c.isascii() and (c.isalnum() or c in "._/") for c in value):
         return value
     return '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
@@ -265,8 +266,83 @@ def render():
     }
 
 
+def validate_openstep(text):
+    """Strict old-style plist parser: raises SystemExit on anything Xcode would reject."""
+    i, n = 0, len(text)
+
+    def fail(message):
+        line = text.count("\n", 0, i) + 1
+        raise SystemExit(f"project.pbxproj parse error (line {line}): {message}")
+
+    def ws():
+        nonlocal i
+        while i < n:
+            if text[i].isspace():
+                i += 1
+            elif text.startswith("/*", i):
+                j = text.find("*/", i)
+                if j < 0:
+                    fail("unterminated comment")
+                i = j + 2
+            elif text.startswith("//", i):
+                j = text.find("\n", i)
+                i = n if j < 0 else j + 1
+            else:
+                break
+
+    def string():
+        nonlocal i
+        if text[i] == '"':
+            i += 1
+            while text[i] != '"':
+                i += 2 if text[i] == "\\" else 1
+            i += 1
+            return
+        j = i
+        while i < n and text[i].isascii() and (text[i].isalnum() or text[i] in "_$/:.-"):
+            i += 1
+        if i == j:
+            fail(f"unquoted or unexpected text {text[i:i + 30]!r}")
+
+    def value():
+        nonlocal i
+        ws()
+        if text[i] == "{":
+            i += 1
+            while True:
+                ws()
+                if text[i] == "}":
+                    i += 1
+                    return
+                string(); ws()
+                if text[i] != "=":
+                    fail("expected '='")
+                i += 1
+                value(); ws()
+                if text[i] != ";":
+                    fail("expected ';'")
+                i += 1
+        elif text[i] == "(":
+            i += 1
+            while True:
+                ws()
+                if text[i] == ")":
+                    i += 1
+                    return
+                value(); ws()
+                if text[i] == ",":
+                    i += 1
+        else:
+            string()
+
+    value(); ws()
+    if i != n:
+        fail("trailing content")
+
+
 def main():
     files = render()
+    validate_openstep(files[PROJECT / "project.pbxproj"])
     if "--check" in sys.argv:
         stale = [str(p.relative_to(ROOT)) for p, text in files.items() if not p.exists() or p.read_text(encoding="utf-8") != text]
         if stale:
