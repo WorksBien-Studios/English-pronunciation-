@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "stages": [
+    {
+      "id": "rl-forest",
+      "number": 1,
+      "title": "Rの森",
+      "summary": "RとLを聞き分けて、言い分けよう。",
+      "sounds": ["r", "l"],
+      "isFree": true,
+      "showsRLDiagram": true,
+      "words": [
+        { "text": "right", "ipa": "/raɪt/", "target": "r", "contrast": "l" },
+        { "text": "light", "ipa": "/laɪt/", "target": "l", "contrast": "r" },
+        { "text": "rock", "ipa": "/rɑːk/", "target": "r", "contrast": "l" },
+        { "text": "lock", "ipa": "/lɑːk/", "target": "l", "contrast": "r" },
+        { "text": "read", "ipa": "/riːd/", "target": "r", "contrast": "l" }
+      ],
+      "cues": [
+        { "part": "舌", "instruction": "少し奥に引き、上あごにつけない" },
+        { "part": "唇", "instruction": "軽く丸めて前に出す" },
+        { "part": "息", "instruction": "止めずに、続けて流す" },
+        { "part": "声", "instruction": "のどを震わせる（有声音）" }
+      ],
+      "mapPosition": { "x": 0.27, "y": 0.78 }
+    },
+    {
+      "id": "th-lake",
+      "number": 2,
+      "title": "THの湖",
+      "summary": "舌を歯の間にはさむTHの音。",
+      "sounds": ["th"],
+      "isFree": false,
+      "showsRLDiagram": false,
+      "words": [
+        { "text": "think", "ipa": "/θɪŋk/", "target": "th", "contrast": null },
+        { "text": "thank", "ipa": "/θæŋk/", "target": "th", "contrast": null },
+        { "text": "three", "ipa": "/θriː/", "target": "th", "contrast": null }
+      ],
+      "cues": [
+        { "part": "舌", "instruction": "舌先を上下の歯の間に軽くはさむ" },
+        { "part": "唇", "instruction": "力を抜いて、自然に開く" },
+        { "part": "息", "instruction": "舌と歯のすき間から静かに流す" },
+        { "part": "声", "instruction": "/θ/は声を出さない" }
+      ],
+      "mapPosition": { "x": 0.68, "y": 0.68 }
+    },
+    {
+      "id": "bv-bay",
+      "number": 3,
+      "title": "BとVの入り江",
+      "summary": "上の歯を下唇に当てるVの音。",
+      "sounds": ["b", "v"],
+      "isFree": false,
+      "showsRLDiagram": false,
+      "words": [
+        { "text": "berry", "ipa": "/ˈberi/", "target": "b", "contrast": "v" },
+        { "text": "very", "ipa": "/ˈveri/", "target": "v", "contrast": "b" },
+        { "text": "boat", "ipa": "/boʊt/", "target": "b", "contrast": "v" },
+        { "text": "vote", "ipa": "/voʊt/", "target": "v", "contrast": "b" }
+      ],
+      "cues": [
+        { "part": "舌", "instruction": "力を抜いて、口の中で軽く置く" },
+        { "part": "唇", "instruction": "Vは上の歯を下唇に軽く当てる" },
+        { "part": "息", "instruction": "Vは歯と唇のすき間から流す" },
+        { "part": "声", "instruction": "のどを震わせる（有声音）" }
+      ],
+      "mapPosition": { "x": 0.31, "y": 0.56 }
+    },
+    {
+      "id": "fh-field",
+      "number": 4,
+      "title": "FとHの野原",
+      "summary": "Fは歯と唇、Hはのどから息を出す。",
+      "sounds": ["f"],
+      "isFree": false,
+      "showsRLDiagram": false,
+      "words": [
+        { "text": "food", "ipa": "/fuːd/", "target": "f", "contrast": null },
+        { "text": "fat", "ipa": "/fæt/", "target": "f", "contrast": null },
+        { "text": "fire", "ipa": "/ˈfaɪər/", "target": "f", "contrast": null }
+      ],
+      "cues": [
+        { "part": "舌", "instruction": "口の中で楽にしておく" },
+        { "part": "唇", "instruction": "上の歯を下唇に軽く当てる" },
+        { "part": "息", "instruction": "歯と唇のすき間から息だけを流す" },
+        { "part": "声", "instruction": "声は出さない（無声音）" }
+      ],
+      "mapPosition": { "x": 0.74, "y": 0.42 }
+    }
+  ]
+}
