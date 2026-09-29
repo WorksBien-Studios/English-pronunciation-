@@ -70,14 +70,32 @@ jobs:
               print(f"{key}={sorted(candidates)[-1][1]}")
           PY
 
-      - name: Build and test on iPhone
+      - name: Build for simulator tests
         run: |
           set -o pipefail
           xcodebuild -project ios/EnglishPronunciationCoach.xcodeproj -scheme EnglishPronunciationCoach \
             -destination "platform=iOS Simulator,id=$IPHONE_SIMULATOR" \
             -derivedDataPath "$RUNNER_TEMP/DerivedData" \
             -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO \
-            test 2>&1 | tee "$RUNNER_TEMP/iphone.log"
+            build-for-testing 2>&1 | tee "$RUNNER_TEMP/iphone-build.log"
+
+      - name: Validate simulator app metadata
+        run: |
+          app="$RUNNER_TEMP/DerivedData/Build/Products/Debug-iphonesimulator/EnglishPronunciationCoach.app"
+          plist="$app/Info.plist"
+          test -f "$plist"
+          plutil -p "$plist"
+          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$plist")" = "com.worksbienstudios.englishpronunciationcoach"
+          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$plist")" = "EnglishPronunciationCoach"
+
+      - name: Test on iPhone
+        run: |
+          set -o pipefail
+          xcodebuild -project ios/EnglishPronunciationCoach.xcodeproj -scheme EnglishPronunciationCoach \
+            -destination "platform=iOS Simulator,id=$IPHONE_SIMULATOR" \
+            -derivedDataPath "$RUNNER_TEMP/DerivedData" \
+            -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO \
+            test-without-building 2>&1 | tee "$RUNNER_TEMP/iphone.log"
 
       - name: Test on iPad
         run: |
@@ -86,7 +104,7 @@ jobs:
             -destination "platform=iOS Simulator,id=$IPAD_SIMULATOR" \
             -derivedDataPath "$RUNNER_TEMP/DerivedData" \
             -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO \
-            test 2>&1 | tee "$RUNNER_TEMP/ipad.log"
+            test-without-building 2>&1 | tee "$RUNNER_TEMP/ipad.log"
 
       - name: Release build (Release configuration, generic iOS device, unsigned)
         run: |
@@ -115,6 +133,7 @@ jobs:
         with:
           name: xcodebuild-logs
           path: |
+            ${{ runner.temp }}/iphone-build.log
             ${{ runner.temp }}/iphone.log
             ${{ runner.temp }}/ipad.log
             ${{ runner.temp }}/release.log
