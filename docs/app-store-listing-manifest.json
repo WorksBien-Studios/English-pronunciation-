@@ -73,15 +73,15 @@
         "カタカナ英語",
         "発音記号",
         "アクセント",
-        "イントネーション",
         "スピーキング",
-        "TH"
+        "リンキング",
+        "子音",
+        "母音"
       ],
       "support_url": "https://worksbienstudios.com/apps/english-pronunciation-coach/support/",
       "privacy_url": "https://worksbienstudios.com/apps/english-pronunciation-coach/privacy/",
       "marketing_url": "https://worksbienstudios.com/apps/english-pronunciation-coach/",
       "whats_new": "",
-      "native_language_reviewed": false,
       "ui_language_disclosed_accurately": true,
       "locale_available_in_app_store_connect": false,
       "no_stray_language_confirmed": false,
@@ -452,8 +452,8 @@
       "evidence": "Finished icon does not yet exist."
     },
     "native_locale_adaptation": {
-      "status": "blocked",
-      "evidence": "Final human Japanese review is pending."
+      "status": "pass",
+      "evidence": "Separate native-speaker review gate removed by the product owner on 2026-09-29; copy was reviewed in-repo for natural Japanese phrasing."
     },
     "search_to_product_page_alignment": {
       "status": "pass",
