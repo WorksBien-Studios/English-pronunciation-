@@ -208,10 +208,10 @@ jobs:
       - name: Fetch and verify locked pronunciation model
         run: python3 scripts/fetch_pronunciation_model.py
 
-      - name: Validate content and regenerate Xcode project
+      - name: Validate content and Xcode project
         run: |
           python3 scripts/validate_stage_engine_content.py
-          python3 scripts/generate_xcodeproj.py
+          python3 scripts/generate_xcodeproj.py --check
 
       - name: Select Xcode and prepare credentials
         shell: bash
