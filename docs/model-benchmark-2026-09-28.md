@@ -14,7 +14,7 @@ Q4-FP16 is the locked development and launch candidate. Against INT8 it is:
 
 INT8 offers no measured advantage relevant to this product. The choice is therefore not a size-versus-quality compromise: Q4-FP16 wins both deployment efficiency and compression fidelity.
 
-This result closes the portable model-selection benchmark. It does **not** yet close the full product engine gate. Physical iPhone/Core ML measurements and a properly labelled Japanese-speaker false-correction study remain mandatory.
+This result closes the portable model-selection benchmark. It does **not** yet close the full product engine gate. Physical iPhone/Core ML measurements, the final scoring pipeline, automated diagnostic fixtures and the complete developer test remain mandatory.
 
 ## Candidates
 
@@ -118,7 +118,9 @@ Before UI production or release approval:
 2. Confirm p95 end-to-end scoring latency of no more than 2.5 seconds for clips up to three seconds.
 3. Confirm additional peak resident memory of no more than 650 MiB on that device.
 4. Implement the actual CTC forced alignment, GOP-style contrast scoring, audio-quality rejection, and conservative confidence rules; this benchmark compares acoustic-model outputs, not final diagnoses.
-5. Evaluate the untouched, speaker-disjoint Japanese-English holdout set with two qualified raters and confirm each targeted contrast has a specific-error false-positive rate no greater than 5%.
+5. Run the locked public-corpus regressions, posterior-level fixtures for every supported error class, audio-quality rejection suite and complete native-English developer pass over the launch curriculum. Low-confidence evidence must return `retry`, and persistent weaknesses require two high-confidence observations.
 6. Verify airplane-mode operation, licences/notices, and a signed model checksum in the application bundle.
+
+A labelled Japanese-speaker holdout study would strengthen later validation but is not a launch dependency. Until such a study exists, do not claim clinical validation or guaranteed detection of every accent error.
 
 Until those checks pass, the correct status is: **model selected; pronunciation engine not yet release-approved**.
