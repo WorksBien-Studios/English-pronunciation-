@@ -132,8 +132,8 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		CF3771BF74A13A0DF8E8D452 /* Bundle Pronunciation Engine */ = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (); inputFileListPaths = (); inputPaths = (); name = "Bundle Pronunciation Engine"; outputFileListPaths = (); outputPaths = (); runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/bash; shellScript = "bash \\\"$SRCROOT/../scripts/bundle_pronunciation_engine.sh\\\""; };
-		1946EB6C012DE2FC97AD4F96 /* Fix ONNX Runtime MinimumOSVersion */ = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (); inputFileListPaths = (); inputPaths = (); name = "Fix ONNX Runtime MinimumOSVersion"; outputFileListPaths = (); outputPaths = (); runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/bash; shellScript = "bash \\\"$SRCROOT/../scripts/fix_onnxruntime_minimum_os.sh\\\""; };
+		CF3771BF74A13A0DF8E8D452 /* Bundle Pronunciation Engine */ = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (); inputFileListPaths = (); inputPaths = (); name = "Bundle Pronunciation Engine"; outputFileListPaths = (); outputPaths = (); runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/bash; shellScript = "bash \"$SRCROOT/../scripts/bundle_pronunciation_engine.sh\""; };
+		1946EB6C012DE2FC97AD4F96 /* Fix ONNX Runtime MinimumOSVersion */ = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (); inputFileListPaths = (); inputPaths = (); name = "Fix ONNX Runtime MinimumOSVersion"; outputFileListPaths = (); outputPaths = (); runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/bash; shellScript = "bash \"$SRCROOT/../scripts/fix_onnxruntime_minimum_os.sh\""; };
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
