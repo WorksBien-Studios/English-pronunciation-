@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <string>
 
 #include "AcousticModel.h"
@@ -11,20 +12,16 @@ namespace pronunciation {
 // see model/model-manifest.json) run through ONNX Runtime Mobile with the
 // Core ML execution provider (docs/product-specification.md#runtime-inference).
 //
-// This class is intentionally NOT implemented yet: it requires linking
-// ONNX Runtime and bundling the ~197 MB model artifact, both of which
-// belong to the iOS target build (pronunciation-ios/EngineBridge), not to
-// engine development in this environment. Every other module in this
-// engine (AudioQuality, CTCAlignment, PhonemeScoring, Prosody,
-// DecisionRules, ContentValidation) only depends on the AcousticModel
-// interface, so wiring this in later does not require touching them.
+// The model emits a 392-label eSpeak/IPA vocabulary. Its logits are projected
+// through Resources/model-output-map.json into the engine's inventory plus
+// explicit unknown and CTC-blank columns before any alignment or scoring.
 //
-// Build with -DPRONUNCIATION_ENGINE_WITH_ONNXRUNTIME=ON and provide
-// onnxruntime's headers/libs to enable the real implementation; otherwise
-// infer() throws so the mistake is loud rather than silently mis-scoring.
+// Build with -DPRONUNCIATION_ENGINE_WITH_ONNXRUNTIME=ON and provide ONNX
+// Runtime's headers/library to enable inference. Builds without ONNX Runtime
+// retain a fail-closed stub so the portable unit suite needs no model binary.
 class OnnxAcousticModel : public AcousticModel {
 public:
-    explicit OnnxAcousticModel(std::string modelPath);
+    OnnxAcousticModel(std::string modelPath, std::string resourcesDirectory);
     ~OnnxAcousticModel() override;
 
     FrameLogProbs infer(const PcmBuffer& audio) override;
@@ -32,7 +29,10 @@ public:
     int blankColumn() const override;
 
 private:
+    class Impl;
     std::string modelPath_;
+    std::string resourcesDirectory_;
+    std::unique_ptr<Impl> impl_;
 };
 
 } // namespace pronunciation

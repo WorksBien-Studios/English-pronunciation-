@@ -1,15 +1,16 @@
 {
   "$schema": "model-manifest.v1",
-  "status": "locked-not-yet-bundled",
-  "notes": "docs/product-specification.md#runtime-inference locks this checkpoint after the 2026-09-28 portable benchmark (see docs/model-benchmark-2026-09-28.md). The artifact itself is not vendored into this repository: it is ~197 MB, is fetched once into the iOS target's model resources during EngineBridge integration, and its checksum is recorded here at that time. src/Acoustic/OnnxAcousticModel.h is the wiring point; until then, engine development and tests run entirely against MockAcousticModel.",
+  "status": "integrated-download-verified-at-build",
+  "notes": "docs/product-specification.md#runtime-inference locks this checkpoint after the 2026-09-28 portable benchmark (see docs/model-benchmark-2026-09-28.md). scripts/fetch_pronunciation_model.sh downloads the artifact directly from the source repository, verifies its exact size and SHA-256, and places it in the iOS application bundle. The large binary is intentionally not duplicated in Git history.",
   "source": {
     "repository": "onnx-community/wav2vec2-lv-60-espeak-cv-ft-ONNX",
     "url": "https://huggingface.co/onnx-community/wav2vec2-lv-60-espeak-cv-ft-ONNX",
+    "revision": "c69750f5043e5e1f8a71ab95dd3b98338c280c92",
     "license": "Apache-2.0"
   },
   "selectedArtifact": {
     "file": "model_q4f16.onnx",
-    "sizeBytes": 206467072,
+    "sizeBytes": 196911845,
     "quantization": "Q4-FP16"
   },
   "rejectedArtifact": {
@@ -19,13 +20,13 @@
     "rejectedBecause": "38.0% larger, 20.3% more portable peak process RSS, 15.7% slower median / 23.9% slower p95 inference, and lower FP32-parity accuracy than Q4-FP16 in the 2026-09-28 benchmark"
   },
   "runtime": {
-    "engine": "ONNX Runtime Mobile",
+    "engine": "ONNX Runtime 1.30.0 Apple C/C++ binary",
     "license": "MIT",
     "executionProviders": ["CoreML", "CPU"]
   },
   "checksum": {
     "algorithm": "sha256",
-    "value": null,
-    "note": "populate once model_q4f16.onnx is fetched into pronunciation-ios's model resources; see checksums.txt"
+    "value": "9978e7cba1bf721699b2cb673be461ccf09f6ef5dfc257f2f6ed2c4113d4e54c",
+    "note": "Verified by scripts/fetch_pronunciation_model.sh and CI before every iOS build; see checksums.txt"
   }
 }

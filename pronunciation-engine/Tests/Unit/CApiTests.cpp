@@ -63,3 +63,17 @@ TEST(c_api_reports_unwired_onnx_backend_as_an_error_not_a_crash) {
     pe_free_error_message(error);
     pe_engine_destroy(engine);
 }
+
+TEST(c_api_audio_quality_check_does_not_require_a_model) {
+    std::vector<float> shortPcm(100, 0.2f);
+    pe_audio_quality_result tooShort = pe_check_audio_quality(
+        shortPcm.data(), static_cast<int>(shortPcm.size()), 16000);
+    REQUIRE(tooShort.passes_gate == 0);
+    REQUIRE(tooShort.reason == PE_AUDIO_TOO_SHORT);
+
+    std::vector<float> silentPcm(16000, 0.0f);
+    pe_audio_quality_result silence = pe_check_audio_quality(
+        silentPcm.data(), static_cast<int>(silentPcm.size()), 16000);
+    REQUIRE(silence.passes_gate == 0);
+    REQUIRE(silence.reason == PE_AUDIO_SILENCE);
+}

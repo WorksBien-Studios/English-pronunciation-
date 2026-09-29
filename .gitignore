@@ -1,4 +1,5 @@
 .DS_Store
+ios/EnglishPronunciationCoach/Resources/model_q4f16.onnx
 xcuserdata/
 *.xcuserstate
 DerivedData/

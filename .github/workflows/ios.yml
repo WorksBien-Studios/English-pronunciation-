@@ -4,14 +4,18 @@ on:
   pull_request:
     paths:
       - "ios/**"
+      - "pronunciation-engine/**"
       - "scripts/generate_xcodeproj.py"
+      - "scripts/fetch_pronunciation_model.sh"
       - ".github/workflows/ios.yml"
   push:
     branches:
       - main
     paths:
       - "ios/**"
+      - "pronunciation-engine/**"
       - "scripts/generate_xcodeproj.py"
+      - "scripts/fetch_pronunciation_model.sh"
       - ".github/workflows/ios.yml"
 
 concurrency:
@@ -25,6 +29,9 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+
+      - name: Fetch and verify locked pronunciation model
+        run: scripts/fetch_pronunciation_model.sh
 
       - name: Xcode project matches the source tree
         run: python3 scripts/generate_xcodeproj.py --check
@@ -91,6 +98,10 @@ jobs:
           /usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$app/Info.plist"
           /usr/libexec/PlistBuddy -c 'Print :ITSAppUsesNonExemptEncryption' "$app/Info.plist"
           /usr/libexec/PlistBuddy -c 'Print :NSMicrophoneUsageDescription' "$app/Info.plist"
+          test -f "$app/model_q4f16.onnx"
+          echo '9978e7cba1bf721699b2cb673be461ccf09f6ef5dfc257f2f6ed2c4113d4e54c  '"$app/model_q4f16.onnx" | shasum -a 256 -c -
+          test -f "$app/Resources/phonemes.json"
+          test -f "$app/Resources/model-output-map.json"
 
       - name: Upload logs
         if: always()

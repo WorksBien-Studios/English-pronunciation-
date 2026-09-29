@@ -68,12 +68,123 @@ struct PreviewPronunciationEngine: PronunciationEngine {
     }
 }
 
+/// Production adapter for the C++ core and its ONNX Runtime backend. The
+/// actor serializes access to the engine's error-history state and loads the
+/// large model lazily on the first usable recording.
+actor NativePronunciationEngine: PronunciationEngine {
+    private var handle: OpaquePointer?
+    private var attemptedInitialization = false
+
+    deinit {
+        if let handle { pe_engine_destroy(handle) }
+    }
+
+    func analyze(_ request: EngineRequest) async -> EngineDecision {
+        guard request.sampleRate.isFinite,
+              request.sampleRate > 0,
+              request.sampleRate <= Double(Int32.max),
+              request.samples.count <= Int(Int32.max) else {
+            return .retry(.tooShort)
+        }
+
+        let sampleRate = Int32(request.sampleRate.rounded())
+        let quality = request.samples.withUnsafeBufferPointer { buffer in
+            pe_check_audio_quality(buffer.baseAddress, Int32(buffer.count), sampleRate)
+        }
+        guard quality.passes_gate != 0 else {
+            switch quality.reason {
+            case PE_AUDIO_TOO_SHORT: return .retry(.tooShort)
+            case PE_AUDIO_SILENCE: return .retry(.silence)
+            case PE_AUDIO_CLIPPING: return .retry(.clipped)
+            default: return .retry(.lowConfidence)
+            }
+        }
+
+        guard let engine = loadEngineIfNeeded() else {
+            return .retry(.engineUnavailable)
+        }
+
+        var errorMessage: UnsafeMutablePointer<CChar>?
+        let exerciseID = "word:\(request.word.id.lowercased())"
+        let result = request.samples.withUnsafeBufferPointer { buffer in
+            exerciseID.withCString { exercise in
+                pe_engine_process(
+                    engine,
+                    buffer.baseAddress,
+                    Int32(buffer.count),
+                    sampleRate,
+                    exercise,
+                    &errorMessage
+                )
+            }
+        }
+        if let errorMessage { pe_free_error_message(errorMessage) }
+        guard let result else { return .retry(.engineUnavailable) }
+        defer { pe_engine_result_free(result) }
+
+        let diagnosis = pe_result_diagnosis(result)
+        switch diagnosis.outcome {
+        case PE_OUTCOME_PASS:
+            return .result(
+                PronunciationResult(
+                    intelligible: true,
+                    targetSoundProduced: true,
+                    likelySubstitution: nil,
+                    confidence: confidenceValue(diagnosis.confidence)
+                )
+            )
+        case PE_OUTCOME_SPECIFIC_ERROR:
+            return .result(
+                PronunciationResult(
+                    intelligible: true,
+                    targetSoundProduced: false,
+                    likelySubstitution: request.word.contrast,
+                    confidence: confidenceValue(diagnosis.confidence)
+                )
+            )
+        default:
+            return .retry(.lowConfidence)
+        }
+    }
+
+    private func loadEngineIfNeeded() -> OpaquePointer? {
+        if let handle { return handle }
+        guard !attemptedInitialization else { return nil }
+        attemptedInitialization = true
+
+        guard let resourceRoot = Bundle.main.resourceURL?
+                .appendingPathComponent("Resources", isDirectory: true),
+              FileManager.default.fileExists(
+                atPath: resourceRoot.appendingPathComponent("phonemes.json").path),
+              let modelURL = Bundle.main.url(
+                forResource: "model_q4f16", withExtension: "onnx") else {
+            return nil
+        }
+
+        var errorMessage: UnsafeMutablePointer<CChar>?
+        let created = resourceRoot.path.withCString { resources in
+            modelURL.path.withCString { model in
+                pe_engine_create(resources, model, &errorMessage)
+            }
+        }
+        if let errorMessage { pe_free_error_message(errorMessage) }
+        handle = created
+        return created
+    }
+
+    private func confidenceValue(_ confidence: pe_confidence_level) -> Double {
+        switch confidence {
+        case PE_CONFIDENCE_HIGH: return 0.95
+        case PE_CONFIDENCE_MEDIUM: return 0.7
+        default: return 0.4
+        }
+    }
+}
+
 enum EngineFactory {
+    private static let productionEngine: PronunciationEngine = NativePronunciationEngine()
+
     static func makeDefault() -> PronunciationEngine {
-        #if DEBUG
-        return PreviewPronunciationEngine()
-        #else
-        return UnavailablePronunciationEngine()
-        #endif
+        productionEngine
     }
 }

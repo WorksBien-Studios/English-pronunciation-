@@ -29,9 +29,10 @@ Per the locked pipeline in `docs/product-specification.md#model-strategy`:
 2. **Acoustic model interface** (`src/Acoustic`) — `AcousticModel` is the only
    thing the rest of the engine depends on. `MockAcousticModel` scripts
    deterministic frame log-probabilities for development, tests, and the
-   harness. `OnnxAcousticModel` is the wiring point for the locked
+   harness. `OnnxAcousticModel` runs the locked
    `onnx-community/wav2vec2-lv-60-espeak-cv-ft-ONNX` checkpoint through ONNX
-   Runtime Mobile — see **What's not implemented** below.
+   Runtime 1.30.0, normalizes/resamples input audio, and projects its 392
+   eSpeak/IPA labels into the engine inventory without discarding unknown evidence.
 3. **CTC forced alignment** (`src/CTCAlignment`) — Viterbi forced alignment
    of frame log-probabilities against an exercise's expected phoneme
    sequence, plus a free greedy decode + Levenshtein alignment used
@@ -57,19 +58,15 @@ Per the locked pipeline in `docs/product-specification.md#model-strategy`:
    against.
 9. **CLI harness** (`Harness/main.cpp`) — a `gate` subcommand that sweeps
    every practice word/pattern through correct-pronunciation and
-   substitution scenarios (35/35 passing today), and a `run` subcommand for
+   substitution scenarios (45/45 passing today), and a `run` subcommand for
    ad hoc one-off scripted exercises.
 
-## What's not implemented (and why)
+## Remaining release gates
 
-- **ONNX Runtime Mobile inference is not wired up.** Doing so requires
-  linking ONNX Runtime and bundling the ~197 MB `model_q4f16.onnx` artifact
-  (see `model/model-manifest.json`), both of which belong to the
-  `pronunciation-ios/EngineBridge` integration, not to engine development in
-  this environment. `OnnxAcousticModel::infer()` throws a descriptive error
-  rather than silently mis-scoring; every other module only depends on the
-  `AcousticModel` interface, so wiring the real backend in later does not
-  require touching them.
+- **Physical-device evidence is still required.** The backend, Apple runtime,
+  verified model download, iOS bundle wiring and Swift adapter are complete,
+  but latency, memory and Core ML/CPU partitioning still need measurement on
+  the reference iPhone SE 2020 before release approval.
 - **Content is an engineering draft**, not the "manually reviewed" content
   the spec's pre-UI gate requires. It is internally consistent (see
   `ContentValidator` and the `content_pack_passes_structural_validation`
@@ -90,15 +87,14 @@ Against `docs/product-specification.md#technical-risk-and-mandatory-pre-ui-gate`
 | --- | --- |
 | Every launch prompt has an expected phoneme sequence, IPA, accepted variants, confusion set | Draft content in place; not yet linguistically reviewed |
 | Selected model passes FP32-parity regression | Done at the portable-benchmark level (`docs/model-benchmark-2026-09-28.md`); not yet re-run against the bundled on-device runtime |
-| Posterior-level fixtures for every substitution/deletion/insertion produce the intended classification | ✅ — Unit tests + `pronunciation-harness gate` (35/35) |
+| Posterior-level fixtures for every substitution/deletion/insertion produce the intended classification | ✅ — Unit tests + `pronunciation-harness gate` (45/45) |
 | Correct native-English pronunciation never produces a high-confidence specific-error diagnosis | ✅ — exercised for every practice word by `pronunciation-harness gate` |
 | Unusable/silent/clipped audio rejected ≥95% of the time | ✅ in unit tests against synthetic audio; not yet measured against a real recorded corpus |
 | Low-confidence evidence → retry, never a definitive correction | ✅ — `DecisionRules` never emits `SpecificError` below a pattern's locked `confidenceThreshold` |
 | Repeated-error history updates only after ≥2 high-confidence observations | ✅ — `ErrorHistory` + covering tests |
-| p95 latency ≤2.5s / peak RSS ≤650MiB on iPhone SE 2020 for ≤3s recordings | Not measurable until ONNX Runtime Mobile + the real model are wired into an iOS target |
+| p95 latency ≤2.5s / peak RSS ≤650MiB on iPhone SE 2020 for ≤3s recordings | Backend is wired; physical-device measurement remains |
 | Works fully offline | ✅ by construction — no network calls anywhere in this engine |
 | Compressed model passes regression parity and licence/notice checks | Licence notices in place (`THIRD_PARTY_NOTICES.md`); parity regression pending the real runtime |
 
-The remaining rows are blocked on the iOS `EngineBridge` integration (ONNX
-Runtime Mobile + the bundled model) and a linguistic content review — both
-explicitly out of scope for engine development in this environment.
+The remaining rows require physical-device/corpus validation and linguistic
+content review; they are no longer blocked on runtime or bundle integration.

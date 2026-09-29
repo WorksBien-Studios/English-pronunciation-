@@ -218,6 +218,10 @@ jobs:
           echo "ARCHIVE_PATH=$RUNNER_TEMP/EnglishPronunciation.xcarchive" >> "$GITHUB_ENV"
           echo "EXPORT_PATH=$RUNNER_TEMP/export" >> "$GITHUB_ENV"
 
+      - name: Fetch and verify locked pronunciation model
+        shell: bash
+        run: scripts/fetch_pronunciation_model.sh
+
       - name: Archive once
         shell: bash
         run: |

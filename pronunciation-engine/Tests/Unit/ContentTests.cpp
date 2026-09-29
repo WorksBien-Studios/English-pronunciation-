@@ -3,6 +3,12 @@
 #include "ContentValidation/ContentValidation.h"
 #include "TestFramework.h"
 
+#include <algorithm>
+#include <cctype>
+#include <fstream>
+
+#include <nlohmann/json.hpp>
+
 using namespace pronunciation;
 
 namespace {
@@ -58,4 +64,24 @@ TEST(content_store_builds_exercise_for_sentence_by_concatenating_words) {
                              store.findWord("light")->phonemes.size() + store.findWord("is")->phonemes.size() +
                              store.findWord("red")->phonemes.size();
     REQUIRE(sentence.expectedPhonemes.size() == expectedLength);
+}
+
+TEST(every_ios_stage_word_has_a_scoring_definition) {
+    PhonemeInventory inventory = PhonemeInventory::loadFromFile(kResourcesDir + "/phonemes.json");
+    ContentStore store = ContentStore::loadFromDirectory(kResourcesDir, inventory);
+    std::ifstream input(PRONUNCIATION_ENGINE_IOS_STAGES_PATH);
+    REQUIRE(static_cast<bool>(input));
+    nlohmann::json stages;
+    input >> stages;
+
+    for (const auto& stage : stages.at("stages")) {
+        for (const auto& word : stage.at("words")) {
+            std::string id = word.at("text").get<std::string>();
+            std::transform(id.begin(), id.end(), id.begin(),
+                           [](unsigned char character) {
+                               return static_cast<char>(std::tolower(character));
+                           });
+            REQUIRE(store.findWord(id) != nullptr);
+        }
+    }
 }

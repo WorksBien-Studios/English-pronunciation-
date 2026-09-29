@@ -10,6 +10,7 @@
 
 #include "Acoustic/MockAcousticModel.h"
 #include "Acoustic/OnnxAcousticModel.h"
+#include "AudioQuality/AudioQuality.h"
 #include "Engine.h"
 
 struct pe_engine {
@@ -102,7 +103,8 @@ pe_engine* pe_engine_create(
     }
 
     try {
-        auto model = std::make_unique<pronunciation::OnnxAcousticModel>(model_path);
+        auto model = std::make_unique<pronunciation::OnnxAcousticModel>(
+            model_path, resources_dir);
         return new pe_engine{
             pronunciation::PronunciationEngine(resources_dir, std::move(model))
         };
@@ -222,6 +224,34 @@ pe_engine_result* pe_engine_process(
         setError(out_error_message, "pe_engine_process: unknown processing failure");
     }
     return nullptr;
+}
+
+pe_audio_quality_result pe_check_audio_quality(
+    const float* pcm_samples,
+    int sample_count,
+    int sample_rate_hz) {
+    if (sample_count < 0 || sample_rate_hz <= 0 ||
+        (sample_count > 0 && !pcm_samples)) {
+        return pe_audio_quality_result{
+            0, PE_AUDIO_LOW_SNR, -120.0f, 0.0f, 0.0f, 0.0f
+        };
+    }
+
+    pronunciation::PcmBuffer audio;
+    audio.sampleRateHz = sample_rate_hz;
+    if (sample_count > 0) {
+        audio.samples.assign(
+            pcm_samples, pcm_samples + static_cast<size_t>(sample_count));
+    }
+    const auto quality = pronunciation::AudioQualityGate().evaluate(audio);
+    return pe_audio_quality_result{
+        quality.passesGate ? 1 : 0,
+        toCReason(quality.reason),
+        quality.rmsDbfs,
+        quality.peakAmplitude,
+        quality.clippingRatio,
+        quality.estimatedSnrDb
+    };
 }
 
 pe_audio_quality_result pe_result_audio_quality(const pe_engine_result* result) {

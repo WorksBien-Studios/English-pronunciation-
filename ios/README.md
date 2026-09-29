@@ -39,10 +39,10 @@ ios/EnglishPronunciationCoachTests/   unit tests for the pure logic and the cont
 
 ## Decisions and known gaps
 
-- **Engine is not linked yet.** `EngineFactory` returns a preview engine in Debug (so the UI flow can be
-  exercised) and `UnavailablePronunciationEngine` in Release, which always answers "retry". The app never
-  fabricates a pronunciation score. Integrating the C++ core/ONNX model behind `PronunciationEngine` is the next
-  engineering step, and the pre-UI engine gate in the product spec still applies to shipping.
+- **The production engine is linked.** `EngineFactory` uses the actor-isolated C++/ONNX adapter in Debug and
+  Release. CI fetches the locked model, verifies its SHA-256, bundles the complete engine content pack, and checks
+  both resources in the built app. Audio-quality feedback remains available without loading the model. Physical
+  iPhone SE 2020 latency/memory and native-speaker accuracy gates still apply before shipping.
 - **Subscription group ID is a placeholder** (`StoreConfig.subscriptionGroupID`). Until it is set the paywall
   shows a notice. Product IDs match the listing pack. Prices are always read from StoreKit.
 - **Swift language mode is 5** with the Swift 6 toolchain. The spec targets Swift 6 mode; move over after the

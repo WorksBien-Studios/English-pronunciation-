@@ -84,6 +84,14 @@ pe_engine_result* pe_engine_process(
     const char* exercise_id,
     char** out_error_message);
 
+// Runs the model-independent audio-quality gate without constructing or
+// loading the ONNX session. This preserves useful silence/clipping/too-short
+// feedback even if the production model bundle is unavailable.
+pe_audio_quality_result pe_check_audio_quality(
+    const float* pcm_samples,
+    int sample_count,
+    int sample_rate_hz);
+
 // Accessors are total functions: NULL result pointers and invalid indices
 // never throw across the C boundary. They return conservative sentinels:
 // bad/NULL audio => passes_gate=0, diagnosis => Retry/Low,

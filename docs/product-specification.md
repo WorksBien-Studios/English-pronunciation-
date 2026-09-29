@@ -727,8 +727,8 @@ If Q4-FP16 misses the remaining gate, do not compensate with UI or relax the thr
 5. ~~Implement CTC forced alignment and GOP-style phoneme scoring.~~ **Complete:** `pronunciation-engine/src/CTCAlignment`, `src/PhonemeScoring`.
 6. ~~Implement audio-quality and Accelerate/vDSP prosody analysis.~~ **Complete (portable reference; vDSP substitution pending iOS target):** `pronunciation-engine/src/AudioQuality`, `src/Prosody`.
 7. ~~Implement conservative signal fusion and deterministic error classification.~~ **Complete:** `pronunciation-engine/src/DecisionRules`.
-8. ~~Assemble the automated posterior-fixture and audio-quality regression suite.~~ **Complete against synthetic/mock evidence:** `pronunciation-engine/Tests/Unit` (31 tests) + `pronunciation-harness gate` (35/35 scenarios). The public-corpus (UME-ERJ / SpeechOcean762) regression still requires the real ONNX Runtime Mobile backend below.
-9. **Blocked on iOS integration:** run the 50-word pre-UI diagnostic gate with the selected Q4-FP16 model through ONNX Runtime Mobile (`src/Acoustic/OnnxAcousticModel.h` is the wiring point — not implemented yet, see `pronunciation-engine/README.md`), followed by the complete native-English developer pass on the reference iPhone.
+8. ~~Assemble the automated posterior-fixture and audio-quality regression suite.~~ **Complete against synthetic/mock evidence:** `pronunciation-engine/Tests/Unit` (43 tests) + `pronunciation-harness gate` (45/45 scenarios). The public-corpus (UME-ERJ / SpeechOcean762) regression still needs to be repeated through the bundled Apple runtime.
+9. ~~Wire the selected Q4-FP16 model into iOS.~~ **Complete:** ONNX Runtime 1.30.0, checksum-verified model bundling, 392-label model-output projection, C++/Swift bridge and Release engine factory are connected. **Still required:** run the 50-word pre-UI diagnostic gate and complete native-English developer pass on the reference iPhone.
 10. Write and validate Japanese corrective content.
 11. Implement assessment and daily-practice state machines.
 12. Add SwiftData persistence and StoreKit 2 entitlements.
