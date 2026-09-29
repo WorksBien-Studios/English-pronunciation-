@@ -9,7 +9,7 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE RelWithDebInfo)
 endif()
 
-option(PRONUNCIATION_ENGINE_WITH_ONNXRUNTIME "Link the ONNX Runtime Mobile backend (not implemented yet)" OFF)
+option(PRONUNCIATION_ENGINE_WITH_ONNXRUNTIME "Link the production ONNX Runtime acoustic backend" OFF)\nset(ONNXRUNTIME_ROOT "" CACHE PATH "Optional ONNX Runtime installation root")
 option(PRONUNCIATION_ENGINE_BUILD_TESTS "Build the Unit test suite" ON)
 option(PRONUNCIATION_ENGINE_BUILD_HARNESS "Build the CLI harness" ON)
 
@@ -38,7 +38,20 @@ target_include_directories(pronunciation_engine
 )
 
 if(PRONUNCIATION_ENGINE_WITH_ONNXRUNTIME)
+  find_path(ONNXRUNTIME_INCLUDE_DIR
+    NAMES onnxruntime_cxx_api.h
+    HINTS ${ONNXRUNTIME_ROOT}/include
+  )
+  find_library(ONNXRUNTIME_LIBRARY
+    NAMES onnxruntime
+    HINTS ${ONNXRUNTIME_ROOT}/lib
+  )
+  if(NOT ONNXRUNTIME_INCLUDE_DIR OR NOT ONNXRUNTIME_LIBRARY)
+    message(FATAL_ERROR "ONNX Runtime requested but headers/library were not found. Set ONNXRUNTIME_ROOT.")
+  endif()
   target_compile_definitions(pronunciation_engine PRIVATE PRONUNCIATION_ENGINE_WITH_ONNXRUNTIME)
+  target_include_directories(pronunciation_engine PRIVATE ${ONNXRUNTIME_INCLUDE_DIR})
+  target_link_libraries(pronunciation_engine PRIVATE ${ONNXRUNTIME_LIBRARY})
 endif()
 
 target_compile_options(pronunciation_engine PRIVATE
