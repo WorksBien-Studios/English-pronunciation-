@@ -1,0 +1,470 @@
+{
+  "$schema": "acoustic-token-map.v1",
+  "model": "onnx-community/wav2vec2-lv-60-espeak-cv-ft-ONNX",
+  "modelRevision": "0c57084ff1713c6ab2edd62ff710176c705f2a27",
+  "modelVocabSize": 392,
+  "blankTokenId": 0,
+  "notes": "Maps the frozen eSpeak/IPA CTC vocabulary into the engine's smaller ARPAbet-like inventory. Unmapped model tokens are conservatively folded into CTC blank. Composite rhotic/syllabic tokens split their probability mass across the listed engine phonemes.",
+  "mappings": [
+    {
+      "tokenIds": [
+        59,
+        41,
+        278
+      ],
+      "phonemes": [
+        "AA"
+      ]
+    },
+    {
+      "tokenIds": [
+        36,
+        267
+      ],
+      "phonemes": [
+        "AE"
+      ]
+    },
+    {
+      "tokenIds": [
+        33
+      ],
+      "phonemes": [
+        "AH"
+      ]
+    },
+    {
+      "tokenIds": [
+        40,
+        67
+      ],
+      "phonemes": [
+        "AO"
+      ]
+    },
+    {
+      "tokenIds": [
+        53
+      ],
+      "phonemes": [
+        "AW"
+      ]
+    },
+    {
+      "tokenIds": [
+        7,
+        20,
+        50
+      ],
+      "phonemes": [
+        "AX"
+      ]
+    },
+    {
+      "tokenIds": [
+        37
+      ],
+      "phonemes": [
+        "AY"
+      ]
+    },
+    {
+      "tokenIds": [
+        14,
+        87
+      ],
+      "phonemes": [
+        "EH"
+      ]
+    },
+    {
+      "tokenIds": [
+        58,
+        63
+      ],
+      "phonemes": [
+        "ER"
+      ]
+    },
+    {
+      "tokenIds": [
+        44,
+        268
+      ],
+      "phonemes": [
+        "EY"
+      ]
+    },
+    {
+      "tokenIds": [
+        17,
+        365
+      ],
+      "phonemes": [
+        "IH"
+      ]
+    },
+    {
+      "tokenIds": [
+        10,
+        30,
+        364,
+        389
+      ],
+      "phonemes": [
+        "IY"
+      ]
+    },
+    {
+      "tokenIds": [
+        49,
+        207
+      ],
+      "phonemes": [
+        "OW"
+      ]
+    },
+    {
+      "tokenIds": [
+        100,
+        114
+      ],
+      "phonemes": [
+        "OY"
+      ]
+    },
+    {
+      "tokenIds": [
+        29,
+        353
+      ],
+      "phonemes": [
+        "UH"
+      ]
+    },
+    {
+      "tokenIds": [
+        34,
+        46,
+        260
+      ],
+      "phonemes": [
+        "UW"
+      ]
+    },
+    {
+      "tokenIds": [
+        26,
+        296
+      ],
+      "phonemes": [
+        "B"
+      ]
+    },
+    {
+      "tokenIds": [
+        66,
+        219,
+        276,
+        289
+      ],
+      "phonemes": [
+        "CH"
+      ]
+    },
+    {
+      "tokenIds": [
+        12,
+        303
+      ],
+      "phonemes": [
+        "D"
+      ]
+    },
+    {
+      "tokenIds": [
+        22
+      ],
+      "phonemes": [
+        "DH"
+      ]
+    },
+    {
+      "tokenIds": [
+        23
+      ],
+      "phonemes": [
+        "F"
+      ]
+    },
+    {
+      "tokenIds": [
+        35,
+        322
+      ],
+      "phonemes": [
+        "G"
+      ]
+    },
+    {
+      "tokenIds": [
+        39
+      ],
+      "phonemes": [
+        "HH"
+      ]
+    },
+    {
+      "tokenIds": [
+        60,
+        216,
+        338
+      ],
+      "phonemes": [
+        "JH"
+      ]
+    },
+    {
+      "tokenIds": [
+        11,
+        201,
+        288,
+        375
+      ],
+      "phonemes": [
+        "K"
+      ]
+    },
+    {
+      "tokenIds": [
+        8,
+        175,
+        386
+      ],
+      "phonemes": [
+        "L"
+      ]
+    },
+    {
+      "tokenIds": [
+        13
+      ],
+      "phonemes": [
+        "M"
+      ]
+    },
+    {
+      "tokenIds": [
+        4
+      ],
+      "phonemes": [
+        "N"
+      ]
+    },
+    {
+      "tokenIds": [
+        42,
+        280
+      ],
+      "phonemes": [
+        "NG"
+      ]
+    },
+    {
+      "tokenIds": [
+        18,
+        145,
+        171,
+        344
+      ],
+      "phonemes": [
+        "P"
+      ]
+    },
+    {
+      "tokenIds": [
+        27,
+        31,
+        244
+      ],
+      "phonemes": [
+        "R"
+      ]
+    },
+    {
+      "tokenIds": [
+        5
+      ],
+      "phonemes": [
+        "S"
+      ]
+    },
+    {
+      "tokenIds": [
+        38,
+        208
+      ],
+      "phonemes": [
+        "SH"
+      ]
+    },
+    {
+      "tokenIds": [
+        6,
+        150,
+        294
+      ],
+      "phonemes": [
+        "T"
+      ]
+    },
+    {
+      "tokenIds": [
+        52
+      ],
+      "phonemes": [
+        "TH"
+      ]
+    },
+    {
+      "tokenIds": [
+        25
+      ],
+      "phonemes": [
+        "V"
+      ]
+    },
+    {
+      "tokenIds": [
+        32
+      ],
+      "phonemes": [
+        "W"
+      ]
+    },
+    {
+      "tokenIds": [
+        24
+      ],
+      "phonemes": [
+        "Y"
+      ]
+    },
+    {
+      "tokenIds": [
+        21
+      ],
+      "phonemes": [
+        "Z"
+      ]
+    },
+    {
+      "tokenIds": [
+        65
+      ],
+      "phonemes": [
+        "ZH"
+      ]
+    },
+    {
+      "tokenIds": [
+        43
+      ],
+      "phonemes": [
+        "AX",
+        "R"
+      ]
+    },
+    {
+      "tokenIds": [
+        61
+      ],
+      "phonemes": [
+        "AX",
+        "L"
+      ]
+    },
+    {
+      "tokenIds": [
+        68
+      ],
+      "phonemes": [
+        "AA",
+        "R"
+      ]
+    },
+    {
+      "tokenIds": [
+        71
+      ],
+      "phonemes": [
+        "AO",
+        "R"
+      ]
+    },
+    {
+      "tokenIds": [
+        77
+      ],
+      "phonemes": [
+        "OW",
+        "R"
+      ]
+    },
+    {
+      "tokenIds": [
+        81
+      ],
+      "phonemes": [
+        "IY",
+        "AX"
+      ]
+    },
+    {
+      "tokenIds": [
+        94
+      ],
+      "phonemes": [
+        "EH",
+        "R"
+      ]
+    },
+    {
+      "tokenIds": [
+        97
+      ],
+      "phonemes": [
+        "IH",
+        "R"
+      ]
+    },
+    {
+      "tokenIds": [
+        104
+      ],
+      "phonemes": [
+        "UH",
+        "R"
+      ]
+    },
+    {
+      "tokenIds": [
+        131
+      ],
+      "phonemes": [
+        "AY",
+        "AX",
+        "R"
+      ]
+    },
+    {
+      "tokenIds": [
+        139
+      ],
+      "phonemes": [
+        "AY",
+        "AX"
+      ]
+    }
+  ]
+}
