@@ -4,7 +4,7 @@
 **Market:** Japan iOS App Store  
 **Product type:** Education / pronunciation training  
 **Locked App Store name:** 英語発音コーチ｜日本人のための発音矯正  
-**Locked subtitle:** 苦手音を診断、日本語で直し方まで解説  
+**Locked subtitle:** RとL・THなど苦手な音を診断、直し方まで日本語で  
 **Locked launch price:** Free download + Pro at ¥600/month or ¥4,800/year  
 **Research date:** 2026-09-28
 
@@ -38,7 +38,7 @@ Why this name:
 
 ### Subtitle
 
-**苦手音を診断、日本語で直し方まで解説**
+**RとL・THなど苦手な音を診断、直し方まで日本語で**
 
 The subtitle states the missing benefit found repeatedly in reviews: diagnosis alone is insufficient; users want to know exactly how to correct the sound.
 
