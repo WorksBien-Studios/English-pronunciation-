@@ -84,6 +84,10 @@ Reviewed 2026-09-29 against common Japanese character-design and emoticon conven
 - **Charm points instead of open mouths at rest:** /θ/ has a small side-tongue てへぺろ, /v/ a single 八重歯 (yaeba, a small fang, widely considered cute in Japan), /b/ puffed cheeks. Tongue-out is playful, not rude, only in this cheeky てへぺろ form.
 - **Coach:** `happy` = ^ ^ eyes with a closed smile; `cheer` = "> <" eyes with a small open smile (the ≧∀≦ joy pattern; do not pair "> <" eyes with a flat or wavy mouth, which reads as pain, ＞＜); `wow` is not used in shipped screens.
 - Never show a downturned or frowning mouth on any character, including on `retry` or low-score feedback.
+- **Eyes:** solid dark glossy eyes with two highlights (きらきら), set low and wide with pink cheeks (baby-schema proportions). White-scleral round eyes were rejected because they read as staring or startled.
+- **Joy face:** closed "^ ^" eyes plus a small open smile, the strongest joy signal in Japanese emoticons and character art.
+- **てへぺろ:** the /θ/ creature winks with a small side tongue; without the wink the tongue reads as drooling.
+- **Distinct silhouettes:** each creature has its own top feature so the 図鑑 entries are recognisable as shadows: /r/ curl, /l/ horn, /θ/ round ears, /v/ pointed ears, /f/ leaf, /b/ bubbles.
 
 ## 6b. Writing rules for all customer-visible Japanese
 
