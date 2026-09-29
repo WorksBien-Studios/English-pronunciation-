@@ -1,9 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
   <!-- Full-bleed square, no transparency: iOS applies the corner mask itself. -->
   <rect width="1024" height="1024" fill="#2A2F8C"/>
-  <!-- Speech shape -->
-  <path fill="#FFFFFF" d="M362 190 H662 A170 170 0 0 1 832 360 V548 A170 170 0 0 1 662 718 H468 L292 838 L326 718 H362 A170 170 0 0 1 192 548 V360 A170 170 0 0 1 362 190 Z"/>
-  <!-- Two separated sound waves, opposite phase: "hear the difference" -->
-  <path d="M316 366 q49 -90 98 0 t98 0 t98 0 t98 0" fill="none" stroke="#3D42C9" stroke-width="46" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M316 548 q49 90 98 0 t98 0 t98 0 t98 0" fill="none" stroke="#12B5A4" stroke-width="46" stroke-linecap="round" stroke-linejoin="round"/>
+  <g transform="translate(0 20)">
+    <!-- Speech shape -->
+    <path fill="#FFFFFF" d="M320 160 H704 A190 190 0 0 1 894 350 V510 A190 190 0 0 1 704 700 H470 L268 850 L300 700 H320 A190 190 0 0 1 130 510 V350 A190 190 0 0 1 320 160 Z"/>
+    <!-- Two separated sound waves, opposite phase: "hear the difference" -->
+    <path d="M317 335 q65 -80 130 0 t130 0 t130 0" fill="none" stroke="#3D42C9" stroke-width="60" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M317 525 q65 80 130 0 t130 0 t130 0" fill="none" stroke="#12B5A4" stroke-width="60" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
 </svg>
