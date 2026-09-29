@@ -14,10 +14,6 @@ float linearToDbfs(float linear) {
     return 20.0f * std::log10(std::max(linear, kMinLinearForDb));
 }
 
-// Splits the buffer into ~20ms frames and returns each frame's RMS energy
-// (linear, not dB) so silence/SNR estimation can reason about the envelope
-// rather than a single whole-buffer average, which would hide a short loud
-// burst inside an otherwise silent recording.
 std::vector<float> frameRmsEnergies(const PcmBuffer& audio, int frameSamples) {
     std::vector<float> energies;
     if (frameSamples <= 0 || audio.samples.empty()) return energies;
@@ -40,7 +36,7 @@ AudioQualityGate::AudioQualityGate(AudioQualityThresholds thresholds) : threshol
 AudioQualityResult AudioQualityGate::evaluate(const PcmBuffer& audio) const {
     AudioQualityResult result;
 
-    if (audio.durationSeconds() < thresholds_.minDurationSeconds) {
+    if (audio.sampleRateHz <= 0 || audio.durationSeconds() < thresholds_.minDurationSeconds) {
         result.reason = AudioQualityReason::TooShort;
         return result;
     }
@@ -53,11 +49,19 @@ AudioQualityResult AudioQualityGate::evaluate(const PcmBuffer& audio) const {
     float peak = 0.0f;
     size_t clippedCount = 0;
     for (float sample : audio.samples) {
+        // NaN/Inf must never flow into RMS/SNR comparisons. Comparisons
+        // against NaN are false, which previously let corrupt PCM pass.
+        if (!std::isfinite(sample)) {
+            result.reason = AudioQualityReason::LowSignalToNoise;
+            return result;
+        }
+
         sumSquares += static_cast<double>(sample) * sample;
         float magnitude = std::fabs(sample);
         peak = std::max(peak, magnitude);
         if (magnitude >= thresholds_.clippingAmplitude) ++clippedCount;
     }
+
     float overallRms = static_cast<float>(std::sqrt(sumSquares / audio.samples.size()));
     result.rmsDbfs = linearToDbfs(overallRms);
     result.peakAmplitude = peak;
@@ -65,17 +69,19 @@ AudioQualityResult AudioQualityGate::evaluate(const PcmBuffer& audio) const {
 
     int frameSamples = std::max(1, static_cast<int>(0.02 * audio.sampleRateHz));
     std::vector<float> frameEnergies = frameRmsEnergies(audio, frameSamples);
+    if (frameEnergies.empty()) {
+        result.reason = AudioQualityReason::LowSignalToNoise;
+        return result;
+    }
+
     std::vector<float> sorted = frameEnergies;
     std::sort(sorted.begin(), sorted.end());
-    // Noise floor: median of the quietest 20% of frames. Signal level: 90th
-    // percentile frame, so a handful of loud voiced frames are enough to
-    // establish speech is present even in a mostly-quiet recording.
     size_t noiseSampleCount = std::max<size_t>(1, sorted.size() / 5);
     double noiseSum = 0.0;
     for (size_t i = 0; i < noiseSampleCount; ++i) noiseSum += sorted[i];
     float noiseFloor = static_cast<float>(noiseSum / noiseSampleCount);
     size_t signalIndex = static_cast<size_t>(0.9 * (sorted.size() - 1));
-    float signalLevel = sorted.empty() ? overallRms : sorted[signalIndex];
+    float signalLevel = sorted[signalIndex];
     result.estimatedSnrDb = linearToDbfs(signalLevel) - linearToDbfs(noiseFloor);
 
     if (result.rmsDbfs < thresholds_.silenceRmsDbfs) {
@@ -86,7 +92,7 @@ AudioQualityResult AudioQualityGate::evaluate(const PcmBuffer& audio) const {
         result.reason = AudioQualityReason::Clipping;
         return result;
     }
-    if (result.estimatedSnrDb < thresholds_.minSnrDb) {
+    if (!std::isfinite(result.estimatedSnrDb) || result.estimatedSnrDb < thresholds_.minSnrDb) {
         result.reason = AudioQualityReason::LowSignalToNoise;
         return result;
     }
