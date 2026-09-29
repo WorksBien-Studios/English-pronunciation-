@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - "stress/english-engine-2026-09-29"
+      - "claude/inspiring-wozniak-kdaxq3"
   workflow_dispatch:
 
 jobs:
