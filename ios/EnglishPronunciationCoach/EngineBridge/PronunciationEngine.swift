@@ -153,7 +153,7 @@ actor NativePronunciationEngine: PronunciationEngine {
         attemptedInitialization = true
 
         guard let resourceRoot = Bundle.main.resourceURL?
-                .appendingPathComponent("Resources", isDirectory: true),
+                .appendingPathComponent("PronunciationEngineData", isDirectory: true),
               FileManager.default.fileExists(
                 atPath: resourceRoot.appendingPathComponent("phonemes.json").path),
               let modelURL = Bundle.main.url(
