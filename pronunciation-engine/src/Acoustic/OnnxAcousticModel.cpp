@@ -11,7 +11,14 @@
 #include <vector>
 
 #ifdef PRONUNCIATION_ENGINE_WITH_ONNXRUNTIME
+#if defined(__APPLE__)
+// The official Apple archive is linked as onnxruntime.framework. Framework
+// headers are addressed through the framework name rather than as flat
+// headers, unlike the Linux package used by the integration smoke test.
+#include <onnxruntime/onnxruntime_cxx_api.h>
+#else
 #include <onnxruntime_cxx_api.h>
+#endif
 #endif
 
 #include "ModelOutputProjection.h"
