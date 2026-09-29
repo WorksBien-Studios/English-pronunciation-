@@ -6,3 +6,6 @@ build/
 .build/
 *.xcarchive
 *.ipa
+.model-cache/
+ios/Generated/
+ios/Pods/
