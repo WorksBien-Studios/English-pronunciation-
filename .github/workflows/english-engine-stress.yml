@@ -1,10 +1,22 @@
 name: English Engine Stress
 
 on:
+  pull_request:
+    paths:
+      - "pronunciation-engine/**"
+      - "ios/EnglishPronunciationCoach/Resources/stages.json"
+      - "scripts/validate_engine_bundle.py"
+      - ".github/workflows/english-engine-stress.yml"
   push:
     branches:
+      - main
       - "stress/english-engine-2026-09-29"
       - "claude/inspiring-wozniak-kdaxq3"
+    paths:
+      - "pronunciation-engine/**"
+      - "ios/EnglishPronunciationCoach/Resources/stages.json"
+      - "scripts/validate_engine_bundle.py"
+      - ".github/workflows/english-engine-stress.yml"
   workflow_dispatch:
 
 jobs:
@@ -17,6 +29,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Validate iOS/engine content contract
+        run: python3 ../scripts/validate_engine_bundle.py
 
       - name: Configure with ASan and UBSan
         run: >
