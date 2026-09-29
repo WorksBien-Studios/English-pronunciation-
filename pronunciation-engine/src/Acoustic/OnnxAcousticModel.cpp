@@ -1,6 +1,7 @@
 #include "OnnxAcousticModel.h"
 
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <cstddef>
 #include <fstream>
@@ -257,6 +258,12 @@ struct OnnxAcousticModel::Impl {
     std::vector<std::string> outputNames;
     size_t outputIndex = 0;
 };
+
+#else
+
+// Keep the pImpl complete in engine-only builds where ONNX Runtime is
+// intentionally absent; infer() remains fail-closed in those builds.
+struct OnnxAcousticModel::Impl {};
 
 #endif
 
