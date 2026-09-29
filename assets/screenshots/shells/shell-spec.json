@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "replacement_rule": "Replace only the element with id='screenshot-slot' / its interior with the authentic app capture. Keep the outer shell and caption unchanged.",
   "devices": {
     "iphone": {
@@ -54,21 +54,36 @@
           "position": 1,
           "file": "ipad-01-diagnosis.svg",
           "caption": "苦手な音が、すぐわかる",
-          "pill": "日本語話者向け"
+          "pill": "日本語話者向け",
+          "capture_state": {
+            "left_column": "diagnosed weak sounds / recommended order",
+            "right_column": "selected diagnosis/result detail"
+          }
         },
         {
           "position": 2,
           "file": "ipad-02-correction.svg",
           "caption": "直し方が、日本語でわかる",
-          "pill": "すぐ実践できる"
+          "pill": "すぐ実践できる",
+          "capture_state": {
+            "left_column": "lesson / target-sound list",
+            "right_column": "selected correction lesson with IPA and Japanese articulatory guidance"
+          }
         },
         {
           "position": 3,
           "file": "ipad-03-progress.svg",
           "caption": "発音を練習して、すぐ再チェック",
-          "pill": "改善を実感"
+          "pill": "改善を実感",
+          "capture_state": {
+            "left_column": "practice/review context",
+            "right_column": "recording result, feedback, and retry loop"
+          }
         }
-      ]
+      ],
+      "capture_layout": "two-column NavigationSplitView",
+      "compact_single_column_allowed_for_store_screenshots": false,
+      "capture_rule": "Use the regular-width iPad state with both master/sidebar and detail columns visible. The shell has one replacement slot because it receives one full authentic iPad capture."
     }
   }
 }
