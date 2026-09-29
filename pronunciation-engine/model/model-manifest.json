@@ -1,7 +1,7 @@
 {
   "$schema": "model-manifest.v1",
-  "status": "locked-not-yet-bundled",
-  "notes": "docs/product-specification.md#runtime-inference locks this checkpoint after the 2026-09-28 portable benchmark (see docs/model-benchmark-2026-09-28.md). The artifact itself is not vendored into this repository: it is ~197 MB, is fetched once into the iOS target's model resources during EngineBridge integration, and its checksum is recorded here at that time. src/Acoustic/OnnxAcousticModel.h is the wiring point; until then, engine development and tests run entirely against MockAcousticModel.",
+  "status": "integrated-build-fetched",
+  "notes": "The frozen Q4-FP16 artifact is fetched only at build preparation from pinned Hugging Face revision 0c57084 and SHA-256 verified before being copied into the signed iOS bundle. The app never downloads or replaces the model at runtime.",
   "source": {
     "repository": "onnx-community/wav2vec2-lv-60-espeak-cv-ft-ONNX",
     "url": "https://huggingface.co/onnx-community/wav2vec2-lv-60-espeak-cv-ft-ONNX",
@@ -9,7 +9,7 @@
   },
   "selectedArtifact": {
     "file": "model_q4f16.onnx",
-    "sizeBytes": 206467072,
+    "sizeBytes": 196911845,
     "quantization": "Q4-FP16"
   },
   "rejectedArtifact": {
@@ -21,11 +21,16 @@
   "runtime": {
     "engine": "ONNX Runtime Mobile",
     "license": "MIT",
-    "executionProviders": ["CoreML", "CPU"]
+    "executionProviders": [
+      "CoreML",
+      "CPU"
+    ],
+    "onnxRuntimeVersion": "1.30.0",
+    "integration": "onnxruntime-c CocoaPod; CoreML requested on Apple with CPU fallback"
   },
   "checksum": {
     "algorithm": "sha256",
-    "value": null,
-    "note": "populate once model_q4f16.onnx is fetched into pronunciation-ios's model resources; see checksums.txt"
+    "value": "9978e7cba1bf721699b2cb673be461ccf09f6ef5dfc257f2f6ed2c4113d4e54c",
+    "note": "Verified by scripts/prepare_ios_engine.sh before every iOS build."
   }
 }
