@@ -25,9 +25,9 @@ The listing deliberately avoids the crowded generic promises “AI英会話,” 
 | Name | **英語発音コーチ｜日本人のための発音矯正** | 30 characters | 19 |
 | Subtitle | **RとL・THなど苦手な音を診断、直し方まで日本語で** | 30 characters | 25 |
 | Promotional text | **採点だけで終わらない発音練習。苦手な音を見つけ、舌・唇・息・声の使い方を日本語で確認。端末内で分析し、1日10回まで無料で試せます。** | 170 characters | 66 |
-| Keywords | `カタカナ英語,発音記号,アクセント,イントネーション,スピーキング,TH` | 100 UTF-8 bytes | 94 bytes |
+| Keywords | `カタカナ英語,発音記号,アクセント,スピーキング,リンキング,子音,母音` | 100 UTF-8 bytes | 96 bytes |
 
-Keyword-field changes in the 2026-09-29 copy review: removed `音素練習` (not a real search term), `リスニング` (the app does not teach listening comprehension, a 2.3.7 relevance risk) and `RL` (does not match how learners type the pair); added `カタカナ英語` and `発音記号`. The subtitle now carries `R`, `L` and `TH`. These choices are judgment calls without Japan search-volume data — validate them in a keyword tool or Apple Search Ads before locking.
+Keyword-field changes in the 2026-09-29 copy review: removed `音素練習` (not a real search term), `リスニング` (the app does not teach listening comprehension, a 2.3.7 relevance risk), `RL` (does not match how learners type the pair), `イントネーション` (not supported by any listed feature) and `TH` (already in the subtitle, so it only wasted bytes); added `カタカナ英語`, `発音記号`, `リンキング`, `子音` and `母音`, each tied to a feature the description states. Web spot-checks on 2026-09-29 (no Apple keyword-popularity or Japan search-volume data was available) showed `発音記号`, `スピーキング` and `アクセント` in live competitor titles, and `カタカナ英語` used by learners to describe the problem this app solves. Treat the field as a hypothesis and review it against App Store Connect search-term analytics after launch.
 
 Do not add competitor names, `AI英会話`, `TOEIC`, `英検`, `IELTS`, `無料`, or `オフライン` to the keyword field merely to chase traffic. The first four are either misleading for this narrow product or unsupported at launch; the latter terms belong in readable copy when truthful.
 
@@ -346,7 +346,7 @@ Current Apple sources reviewed on 2026-09-28:
 
 ### Version metadata and assets
 
-- [ ] Paste the locked name, subtitle, promotional text, description and 94-byte keyword field.
+- [ ] Paste the locked name, subtitle, promotional text, description and 96-byte keyword field.
 - [ ] Capture three authentic Japanese iPhone screenshots at an accepted 6.9-inch size.
 - [ ] Capture three authentic Japanese iPad screenshots at 2064 × 2752 or another current accepted 13-inch size.
 - [ ] Verify no alpha channel, incorrect crop, debug data, personal data or unsupported claim.
@@ -394,6 +394,6 @@ The following remain build-stage blockers, not drafting failures:
 2. final archive, SDK/privacy-manifest inspection and physical-device evidence;
 3. authentic screenshots and finished icon;
 4. created StoreKit products, localized pricing and review assets;
-5. final human Japanese copy review and live App Store Connect validation.
+5. live App Store Connect validation of the final metadata.
 
 Do not label the app ready to submit until those five items are evidenced.
