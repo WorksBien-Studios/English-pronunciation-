@@ -76,7 +76,7 @@ jobs:
           xcodebuild -project ios/EnglishPronunciationCoach.xcodeproj -scheme EnglishPronunciationCoach \
             -destination "platform=iOS Simulator,id=$IPHONE_SIMULATOR" \
             -derivedDataPath "$RUNNER_TEMP/DerivedData" \
-            -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO \
+            -parallel-testing-enabled NO ASSETCATALOG_COMPILER_APPICON_NAME= \
             build-for-testing 2>&1 | tee "$RUNNER_TEMP/iphone-build.log"
 
       - name: Validate simulator app metadata
@@ -94,14 +94,6 @@ jobs:
           if test -f "$app/Frameworks/onnxruntime.framework/onnxruntime"; then
             file "$app/Frameworks/onnxruntime.framework/onnxruntime"
           fi
-
-      - name: Ad hoc sign simulator test bundle
-        run: |
-          app="$RUNNER_TEMP/DerivedData/Build/Products/Debug-iphonesimulator/EnglishPronunciationCoach.app"
-          find "$app" -maxdepth 1 -type f -name '*.png' -exec chmod 0644 {} +
-          xattr -cr "$app"
-          codesign --force --deep --sign - --timestamp=none "$app"
-          codesign --verify --deep --strict --verbose=2 "$app"
 
       - name: Test on iPhone
         run: |
@@ -142,8 +134,8 @@ jobs:
           /usr/libexec/PlistBuddy -c 'Print :NSMicrophoneUsageDescription' "$app/Info.plist"
           test -f "$app/model_q4f16.onnx"
           echo '9978e7cba1bf721699b2cb673be461ccf09f6ef5dfc257f2f6ed2c4113d4e54c  '"$app/model_q4f16.onnx" | shasum -a 256 -c -
-          test -f "$app/Resources/phonemes.json"
-          test -f "$app/Resources/model-output-map.json"
+          test -f "$app/PronunciationEngineData/phonemes.json"
+          test -f "$app/PronunciationEngineData/model-output-map.json"
 
       - name: Upload logs
         if: always()
