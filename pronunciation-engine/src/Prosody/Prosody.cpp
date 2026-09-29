@@ -4,17 +4,49 @@
 #include <cmath>
 #include <numeric>
 
+#if defined(__APPLE__)
+#include <Accelerate/Accelerate.h>
+#endif
+
 namespace pronunciation {
 
 namespace {
 
 constexpr float kMinLinearForDb = 1e-9f;
 
+// The two hot loops of the prosody stage. Apple builds use Accelerate/vDSP (single-precision, vectorised);
+// every other build uses the portable double-precision loops. Everything else in this file is shared, so the
+// unit tests run against both implementations (the Apple CI job runs them with vDSP).
+double sumSquares(const float* samples, int count) {
+    if (count <= 0) return 0.0;
+#if defined(__APPLE__)
+    float result = 0.0f;
+    vDSP_svesq(samples, 1, &result, static_cast<vDSP_Length>(count));
+    return static_cast<double>(result);
+#else
+    double total = 0.0;
+    for (int i = 0; i < count; ++i) total += static_cast<double>(samples[i]) * samples[i];
+    return total;
+#endif
+}
+
+double dotProduct(const float* a, const float* b, int count) {
+    if (count <= 0) return 0.0;
+#if defined(__APPLE__)
+    float result = 0.0f;
+    vDSP_dotpr(a, 1, b, 1, &result, static_cast<vDSP_Length>(count));
+    return static_cast<double>(result);
+#else
+    double total = 0.0;
+    for (int i = 0; i < count; ++i) total += static_cast<double>(a[i]) * b[i];
+    return total;
+#endif
+}
+
 float rmsDb(const std::vector<float>& samples, int start, int end) {
     if (end <= start) return -120.0f;
-    double sumSquares = 0.0;
-    for (int i = start; i < end; ++i) sumSquares += static_cast<double>(samples[i]) * samples[i];
-    float rms = static_cast<float>(std::sqrt(sumSquares / (end - start)));
+    double energy = sumSquares(samples.data() + start, end - start);
+    float rms = static_cast<float>(std::sqrt(energy / (end - start)));
     return 20.0f * std::log10(std::max(rms, kMinLinearForDb));
 }
 
@@ -27,18 +59,13 @@ float estimatePitchHz(const std::vector<float>& samples, int start, int end, int
     int maxLag = sampleRateHz / 70;
     if (n < maxLag * 2 || minLag < 1) return 0.0f;
 
-    double energy0 = 0.0;
-    for (int i = start; i < end; ++i) energy0 += static_cast<double>(samples[i]) * samples[i];
+    double energy0 = sumSquares(samples.data() + start, n);
     if (energy0 < 1e-9) return 0.0f;
 
     int bestLag = -1;
     double bestCorrelation = 0.0;
     for (int lag = minLag; lag <= maxLag && start + lag < end; ++lag) {
-        double correlation = 0.0;
-        for (int i = start; i < end - lag; ++i) {
-            correlation += static_cast<double>(samples[i]) * samples[i + lag];
-        }
-        correlation /= energy0;
+        double correlation = dotProduct(samples.data() + start, samples.data() + start + lag, n - lag) / energy0;
         if (correlation > bestCorrelation) {
             bestCorrelation = correlation;
             bestLag = lag;
