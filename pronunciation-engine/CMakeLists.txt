@@ -53,6 +53,12 @@ if(PRONUNCIATION_ENGINE_WITH_ONNXRUNTIME)
   target_link_libraries(pronunciation_engine PRIVATE ${ONNXRUNTIME_LIBRARY})
 endif()
 
+if(APPLE)
+  # Prosody uses vDSP on Apple platforms (see src/Prosody/Prosody.cpp).
+  find_library(ACCELERATE_FRAMEWORK Accelerate REQUIRED)
+  target_link_libraries(pronunciation_engine PUBLIC ${ACCELERATE_FRAMEWORK})
+endif()
+
 target_compile_options(pronunciation_engine PRIVATE
   $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wall -Wextra>
 )

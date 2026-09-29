@@ -86,3 +86,32 @@ TEST(prosody_reports_zero_duration_for_undeleted_span) {
     ProsodyFeatures features = extractProsody(audio, alignment, exercise, kFrameDurationSeconds);
     REQUIRE(features.durationsSeconds[0] == 0.0f);
 }
+
+// Numeric accuracy checks. Apple builds compute these sums with Accelerate/vDSP in single precision, so these
+// bounds are what the Apple CI job holds the vDSP path to; Linux checks the portable double-precision path.
+TEST(prosody_energy_and_pitch_match_analytic_values) {
+    constexpr int numFrames = 10;
+    constexpr float amplitude = 0.5f;
+    constexpr float f0 = 200.0f; // an integer 80-sample period at 16 kHz
+    PcmBuffer audio = makeTone(numFrames, amplitude, f0);
+
+    ExerciseDefinition exercise;
+    ExpectedPhonemeSlot slot;
+    slot.isVowel = true;
+    exercise.expectedPhonemes.push_back(slot);
+
+    ForcedAlignmentResult alignment;
+    alignment.succeeded = true;
+    AlignedPhoneme aligned;
+    aligned.expectedIndex = 0;
+    aligned.startFrame = 0;
+    aligned.endFrame = numFrames - 1;
+    alignment.phonemes.push_back(aligned);
+
+    ProsodyFeatures features = extractProsody(audio, alignment, exercise, kFrameDurationSeconds);
+
+    // A sine's RMS is amplitude / sqrt(2); 0.2 s at 200 Hz is exactly 40 whole cycles.
+    const double expectedDb = 20.0 * std::log10(amplitude / std::sqrt(2.0));
+    REQUIRE_NEAR(features.energyDb[0], expectedDb, 0.05);
+    REQUIRE_NEAR(features.pitchHz[0], f0, 5.0);
+}

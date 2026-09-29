@@ -248,7 +248,7 @@ def render():
         "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait; "
         f"IPHONEOS_DEPLOYMENT_TARGET = 18.0; MARKETING_VERSION = 1.0; PRODUCT_BUNDLE_IDENTIFIER = {BUNDLE_ID}; PRODUCT_NAME = \"$(TARGET_NAME)\"; "
         "GCC_PREPROCESSOR_DEFINITIONS = \"$(inherited) PRONUNCIATION_ENGINE_WITH_ONNXRUNTIME=1\"; "
-        "OTHER_LDFLAGS = \"$(inherited) -framework Network\"; "
+        "OTHER_LDFLAGS = \"$(inherited) -framework Network -framework Accelerate\"; "
         "HEADER_SEARCH_PATHS = \"$(inherited) $(PROJECT_DIR)/../pronunciation-engine/include $(PROJECT_DIR)/../pronunciation-engine/src $(PROJECT_DIR)/../pronunciation-engine/third_party\"; "
         f"SWIFT_OBJC_BRIDGING_HEADER = {APP_NAME}/EngineBridge/PronunciationEngine-Bridging-Header.h; "
         "SUPPORTED_PLATFORMS = \"iphoneos iphonesimulator\"; SUPPORTS_MACCATALYST = NO; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = \"1,2\"; "

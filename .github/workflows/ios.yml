@@ -7,6 +7,7 @@ on:
       - "pronunciation-engine/**"
       - "scripts/generate_xcodeproj.py"
       - "scripts/fetch_pronunciation_model.sh"
+      - "scripts/validate_stage_engine_content.py"
       - ".github/workflows/ios.yml"
   push:
     branches:
@@ -16,6 +17,7 @@ on:
       - "pronunciation-engine/**"
       - "scripts/generate_xcodeproj.py"
       - "scripts/fetch_pronunciation_model.sh"
+      - "scripts/validate_stage_engine_content.py"
       - ".github/workflows/ios.yml"
 
 concurrency:
@@ -35,6 +37,17 @@ jobs:
 
       - name: Xcode project matches the source tree
         run: python3 scripts/generate_xcodeproj.py --check
+
+      - name: Stage words exist in the engine content pack
+        run: python3 scripts/validate_stage_engine_content.py
+
+      - name: Engine unit tests and content gate (Apple toolchain, vDSP prosody)
+        run: |
+          set -o pipefail
+          cmake -S pronunciation-engine -B "$RUNNER_TEMP/engine-build" -DCMAKE_BUILD_TYPE=Release
+          cmake --build "$RUNNER_TEMP/engine-build" -j 4
+          "$RUNNER_TEMP/engine-build/pronunciation_engine_tests"
+          "$RUNNER_TEMP/engine-build/pronunciation-harness" pronunciation-engine/Resources gate
 
       - name: Toolchain
         run: |
