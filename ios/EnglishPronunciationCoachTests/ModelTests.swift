@@ -117,4 +117,20 @@ final class EngineTests: XCTestCase {
         let silent = await engine.analyze(EngineRequest(word: word, samples: Array(repeating: 0, count: 16_000), sampleRate: 16_000))
         XCTAssertEqual(silent, .retry(.silence))
     }
+
+    func testNativeEngineLoadsLockedModelAndRunsInference() async {
+        var samples = Array(repeating: Float(0.0001), count: 16_000)
+        for i in 4_000..<12_000 {
+            samples[i] = 0.2 * sin(Float(i) * 2 * .pi * 220 / 16_000)
+        }
+
+        let decision = await NativePronunciationEngine().analyze(
+            EngineRequest(word: word, samples: samples, sampleRate: 16_000)
+        )
+        XCTAssertNotEqual(
+            decision,
+            .retry(.engineUnavailable),
+            "The bundled ONNX model must load and execute; scoring may still conservatively retry."
+        )
+    }
 }
