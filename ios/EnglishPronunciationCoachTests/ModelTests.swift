@@ -103,11 +103,36 @@ final class StageCatalogTests: XCTestCase {
 final class EngineTests: XCTestCase {
     private let word = PracticeWord(text: "right", ipa: "/raɪt/", target: .r, contrast: .l)
 
-    func testUnavailableEngineNeverFabricatesAScore() async {
+    private func validTone(seconds: Double = 1.0) -> [Float] {
+        let count = Int(16_000 * seconds)
+        return (0..<count).map { index in
+            0.2 * sin(Float(index) * 2 * .pi * 220 / 16_000)
+        }
+    }
+
+    func testUnavailableEngineNeverFabricatesAScoreForValidAudio() async {
         let decision = await UnavailablePronunciationEngine().analyze(
-            EngineRequest(word: word, samples: [0.5, 0.5], sampleRate: 16_000)
+            EngineRequest(word: word, samples: validTone(), sampleRate: 16_000)
         )
         XCTAssertEqual(decision, .retry(.engineUnavailable))
+    }
+
+    func testUnavailableEngineStillReturnsRealAudioQualityFeedback() async {
+        let engine = UnavailablePronunciationEngine()
+        let tooShort = await engine.analyze(
+            EngineRequest(word: word, samples: [0.1], sampleRate: 16_000)
+        )
+        XCTAssertEqual(tooShort, .retry(.tooShort))
+
+        let silent = await engine.analyze(
+            EngineRequest(word: word, samples: Array(repeating: 0, count: 16_000), sampleRate: 16_000)
+        )
+        XCTAssertEqual(silent, .retry(.silence))
+
+        let clipped = await engine.analyze(
+            EngineRequest(word: word, samples: Array(repeating: 1, count: 16_000), sampleRate: 16_000)
+        )
+        XCTAssertEqual(clipped, .retry(.clipped))
     }
 
     func testPreviewEngineRejectsShortAndSilentAudio() async {
