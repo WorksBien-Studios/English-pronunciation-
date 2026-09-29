@@ -123,7 +123,7 @@ final class EngineTests: XCTestCase {
         let leadingSilence = Int(sampleRate / 4)
         var samples = Array(repeating: Float.zero, count: Int(sampleRate * 3 / 2))
         for index in leadingSilence..<samples.count {
-            samples[index] = 0.35 * sin(2 * Double.pi * 220 * Double(index) / sampleRate)
+            samples[index] = Float(0.35 * sin(2 * Double.pi * 220 * Double(index) / sampleRate))
         }
 
         let decision = await NativePronunciationEngine().analyze(
