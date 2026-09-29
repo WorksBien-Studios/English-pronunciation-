@@ -76,7 +76,7 @@ jobs:
           xcodebuild -project ios/EnglishPronunciationCoach.xcodeproj -scheme EnglishPronunciationCoach \
             -destination "platform=iOS Simulator,id=$IPHONE_SIMULATOR" \
             -derivedDataPath "$RUNNER_TEMP/DerivedData" \
-            -parallel-testing-enabled NO \
+            -parallel-testing-enabled NO ASSETCATALOG_COMPILER_APPICON_NAME= \
             build-for-testing 2>&1 | tee "$RUNNER_TEMP/iphone-build.log"
 
       - name: Validate simulator app metadata
