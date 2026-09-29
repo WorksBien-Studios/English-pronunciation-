@@ -226,6 +226,8 @@ Use the value-based iOS 18 `TabView`/`Tab` APIs with `.sidebarAdaptable` for dur
 
 Avoid custom controls where native iOS behavior is sufficient.
 
+For App Store screenshots, the iPad set must use the **regular-width two-column `NavigationSplitView` presentation** with both columns visible. Do not capture the compact single-column fallback for the iPad product page; that duplicates the iPhone presentation and fails to demonstrate the adaptive iPad experience.
+
 ## Audio capture
 
 ### AVFoundation / AVAudioEngine
