@@ -65,6 +65,7 @@ if(PRONUNCIATION_ENGINE_BUILD_TESTS)
     Tests/Unit/ContentTests.cpp
     Tests/Unit/EngineTests.cpp
     Tests/Unit/CApiTests.cpp
+    Tests/Stress/StressTests.cpp
   )
   target_include_directories(pronunciation_engine_tests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -77,4 +78,16 @@ if(PRONUNCIATION_ENGINE_BUILD_TESTS)
   target_link_libraries(pronunciation_engine_tests PRIVATE pronunciation_engine)
 
   add_test(NAME pronunciation_engine_tests COMMAND pronunciation_engine_tests)
+
+  add_executable(pronunciation_engine_safety_probe
+    Tests/Stress/SafetyProbe.cpp
+  )
+  target_include_directories(pronunciation_engine_safety_probe PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/third_party
+  )
+  target_compile_definitions(pronunciation_engine_safety_probe PRIVATE
+    PRONUNCIATION_ENGINE_RESOURCES_DIR="${CMAKE_CURRENT_SOURCE_DIR}/Resources"
+  )
+  target_link_libraries(pronunciation_engine_safety_probe PRIVATE pronunciation_engine)
 endif()
