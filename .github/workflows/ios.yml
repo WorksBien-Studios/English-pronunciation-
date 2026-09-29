@@ -87,6 +87,13 @@ jobs:
           plutil -p "$plist"
           test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$plist")" = "com.worksbienstudios.englishpronunciationcoach"
           test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$plist")" = "EnglishPronunciationCoach"
+          find "$app" -type f -name Info.plist -print | while read -r nested_plist; do
+            echo "Inspecting $nested_plist"
+            plutil -p "$nested_plist"
+          done
+          if test -f "$app/Frameworks/onnxruntime.framework/onnxruntime"; then
+            file "$app/Frameworks/onnxruntime.framework/onnxruntime"
+          fi
 
       - name: Ad hoc sign simulator test bundle
         run: |
@@ -115,6 +122,8 @@ jobs:
             test-without-building 2>&1 | tee "$RUNNER_TEMP/ipad.log"
 
       - name: Release build (Release configuration, generic iOS device, unsigned)
+        id: release
+        if: always()
         run: |
           set -o pipefail
           xcodebuild -project ios/EnglishPronunciationCoach.xcodeproj -scheme EnglishPronunciationCoach \
@@ -123,6 +132,7 @@ jobs:
             CODE_SIGNING_ALLOWED=NO build 2>&1 | tee "$RUNNER_TEMP/release.log"
 
       - name: Privacy manifest is in the built app
+        if: ${{ always() && steps.release.outcome == 'success' }}
         run: |
           app="$(find "$RUNNER_TEMP/DerivedDataRelease/Build/Products" -maxdepth 2 -type d -name 'EnglishPronunciationCoach.app' -print -quit)"
           test -n "$app"
