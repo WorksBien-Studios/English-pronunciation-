@@ -1,0 +1,10 @@
+platform :ios, '18.0'
+
+project 'EnglishPronunciationCoach.xcodeproj'
+
+install! 'cocoapods', :deterministic_uuids => true
+
+target 'EnglishPronunciationCoach' do
+  use_frameworks! :linkage => :static
+  pod 'onnxruntime-c', '1.30.0'
+end
