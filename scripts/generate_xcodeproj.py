@@ -210,23 +210,24 @@ def render():
     b.groups.append(f"\t\t{products_group} /* Products */ = {{isa = PBXGroup; children = ({app_product} /* {APP_NAME}.app */, {test_product} /* {TEST_NAME}.xctest */); name = Products; sourceTree = \"<group>\"; }};")
     out.append(section("PBXGroup", sorted(b.groups)))
     out.append(section("PBXNativeTarget", [
-        f"\t\t{app_target} /* {APP_NAME} */ = {{isa = PBXNativeTarget; buildConfigurationList = {lists['app']} /* Build configuration list for PBXNativeTarget \"{APP_NAME}\" */; buildPhases = ({app_phases['sources']} /* Sources */, {app_phases['frameworks']} /* Frameworks */, {app_phases['resources']} /* Resources */, {app_phases['sign-model']} /* Sign bundled ONNX model */); buildRules = (); dependencies = (); name = {APP_NAME}; packageProductDependencies = ({shell_package_dep} /* iOS18Shell */, {ort_package_dep} /* onnxruntime */); productName = {APP_NAME}; productReference = {app_product} /* {APP_NAME}.app */; productType = \"com.apple.product-type.application\"; }};",
+        f"\t\t{app_target} /* {APP_NAME} */ = {{isa = PBXNativeTarget; buildConfigurationList = {lists['app']} /* Build configuration list for PBXNativeTarget \"{APP_NAME}\" */; buildPhases = ({app_phases['sources']} /* Sources */, {app_phases['frameworks']} /* Frameworks */, {app_phases['resources']} /* Resources */, {app_phases['sign-model']} /* Prepare pronunciation resources */); buildRules = (); dependencies = (); name = {APP_NAME}; packageProductDependencies = ({shell_package_dep} /* iOS18Shell */, {ort_package_dep} /* onnxruntime */); productName = {APP_NAME}; productReference = {app_product} /* {APP_NAME}.app */; productType = \"com.apple.product-type.application\"; }};",
         f"\t\t{test_target} /* {TEST_NAME} */ = {{isa = PBXNativeTarget; buildConfigurationList = {lists['test']} /* Build configuration list for PBXNativeTarget \"{TEST_NAME}\" */; buildPhases = ({test_phases['sources']} /* Sources */, {test_phases['frameworks']} /* Frameworks */); buildRules = (); dependencies = ({dependency} /* PBXTargetDependency */); name = {TEST_NAME}; productName = {TEST_NAME}; productReference = {test_product} /* {TEST_NAME}.xctest */; productType = \"com.apple.product-type.bundle.unit-test\"; }};"]))
     out.append(section("PBXProject", [
         f"\t\t{project_id} /* Project object */ = {{isa = PBXProject; attributes = {{BuildIndependentTargetsInParallel = 1; LastUpgradeCheck = 1640; TargetAttributes = {{{app_target} = {{CreatedOnToolsVersion = 16.4; }}; {test_target} = {{CreatedOnToolsVersion = 16.4; TestTargetID = {app_target}; }}; }}; }}; buildConfigurationList = {lists['proj']} /* Build configuration list for PBXProject */; compatibilityVersion = \"Xcode 14.0\"; developmentRegion = ja; hasScannedForEncodings = 0; knownRegions = (ja, en, Base); mainGroup = {main_group}; packageReferences = ({shell_package_ref} /* XCRemoteSwiftPackageReference \"ios-18-shell\" */, {ort_package_ref} /* XCLocalSwiftPackageReference \"OnnxRuntimeBinary\" */); productRefGroup = {products_group} /* Products */; projectDirPath = \"\"; projectRoot = \"\"; targets = ({app_target} /* {APP_NAME} */, {test_target} /* {TEST_NAME} */); }};"]))
     out.append(section("PBXResourcesBuildPhase", [
         f"\t\t{app_phases['resources']} /* Resources */ = {{isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = ({', '.join(app_res_ids)}); runOnlyForDeploymentPostprocessing = 0; }};"]))
-    model_sign_script = (
-        'if [ "${CODE_SIGNING_ALLOWED}" = YES ] && [ "${EFFECTIVE_PLATFORM_NAME}" = -iphonesimulator ]; then '
+    prepare_resources_script = (
         'resource_root="${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"; '
-        'for name in model_q4f16.onnx PrivacyInfo.xcprivacy stages.json Assets.car; do '
-        'file="$resource_root/$name"; if [ -f "$file" ]; then /usr/bin/codesign --force --sign - --timestamp=none "$file"; fi; '
-        'done; '
-        'if [ -d "$resource_root/Resources" ]; then find "$resource_root/Resources" -type f -exec /usr/bin/codesign --force --sign - --timestamp=none {} \\; ; fi; '
-        'fi'
+        'engine_source="$resource_root/Resources"; engine_dest="$resource_root/PronunciationEngineData"; '
+        'if [ -d "$engine_source" ]; then rm -rf "$engine_dest"; mv "$engine_source" "$engine_dest"; fi; '
+        'for path in "$resource_root/model_q4f16.onnx" "$resource_root/PrivacyInfo.xcprivacy" '
+        '"$resource_root/stages.json" "$resource_root/Assets.car"; do '
+        'if [ -f "$path" ]; then /usr/bin/xattr -c "$path"; /bin/chmod 0644 "$path"; fi; done; '
+        'if [ -d "$engine_dest" ]; then /usr/bin/find "$engine_dest" -type f '
+        '-exec /usr/bin/xattr -c {} \\; -exec /bin/chmod 0644 {} \\; ; fi'
     )
     out.append(section("PBXShellScriptBuildPhase", [
-        f"\t\t{app_phases['sign-model']} /* Sign bundled ONNX model */ = {{isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (); inputFileListPaths = (); inputPaths = (); name = \"Sign bundled ONNX model\"; outputFileListPaths = (); outputPaths = (); runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/sh; shellScript = {quote(model_sign_script)}; }};"
+        f"\t\t{app_phases['sign-model']} /* Prepare pronunciation resources */ = {{isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (); inputFileListPaths = (); inputPaths = (); name = \"Prepare pronunciation resources\"; outputFileListPaths = (); outputPaths = (); runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/sh; shellScript = {quote(prepare_resources_script)}; }};"
     ]))
     out.append(section("PBXSourcesBuildPhase", [
         f"\t\t{app_phases['sources']} /* Sources */ = {{isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = ({', '.join(app_src_ids)}); runOnlyForDeploymentPostprocessing = 0; }};",
