@@ -28,10 +28,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## ONNX Runtime Mobile (not yet linked; production backend, see `src/Acoustic/OnnxAcousticModel.h`)
+## ONNX Runtime 1.30.0 (`onnxruntime-c`; production iOS inference backend)
 
 MIT licensed. https://github.com/microsoft/onnxruntime
 
-## wav2vec2-lv-60-espeak-cv-ft (not yet bundled; locked model, see `model/model-manifest.json`)
+## wav2vec2-lv-60-espeak-cv-ft (Q4-FP16 model; bundled in the signed iOS app)
 
 Apache-2.0 licensed. https://huggingface.co/onnx-community/wav2vec2-lv-60-espeak-cv-ft-ONNX
