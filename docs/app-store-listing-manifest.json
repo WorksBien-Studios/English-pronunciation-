@@ -31,7 +31,7 @@
     "evidence_index": "docs/app-store-listing-ja-JP.md",
     "final_build_reviewed_on": "2026-09-28",
     "app_store_connect_snapshot_date": "2026-09-28",
-    "official_sources_reviewed_on": "2026-09-28",
+    "official_sources_reviewed_on": "2026-09-29",
     "unresolved_conflicts": [
       "Build-dependent statements require final archive and device verification",
       "App Store Connect fields must be populated and checked before review mode"
@@ -43,7 +43,8 @@
       "2026-09-28 Japan App Store lane: 英語 発音",
       "2026-09-28 Japan App Store lane: 発音矯正",
       "2026-09-28 review language: 日本語で発音の直し方",
-      "2026-09-28 review language: ゆっくりお手本を再生"
+      "2026-09-28 review language: ゆっくりお手本を再生",
+      "2026-09-29 validated practice intent: 発音練習 / 発音トレーニング"
     ],
     "restricted_terms": [
       "ELSA",
@@ -63,7 +64,7 @@
   "locales": [
     {
       "locale": "ja-JP",
-      "name": "英語発音コーチ｜日本人のための発音矯正",
+      "name": "英語発音コーチ｜日本人向け発音矯正・練習",
       "subtitle": "RとL・THなど苦手な音を診断、直し方まで日本語で",
       "promotional_text": "採点だけで終わらない発音練習。苦手な音を見つけ、舌・唇・息・声の使い方を日本語で確認。端末内で分析し、1日10回まで無料で試せます。",
       "promotion_owner": "WorksBien Studios Inc.",
@@ -425,11 +426,11 @@
     },
     "name_subtitle_fit_confirmed": {
       "status": "pass",
-      "evidence": "Name and subtitle are truthful, readable, complementary, and each under 30 characters."
+      "evidence": "The 20-character name and 25-character subtitle are truthful, complementary, within Apple's 30-character limits, and cover pronunciation, correction, practice, diagnosis, and Japanese guidance."
     },
     "keyword_field_relevant_deduplicated": {
       "status": "pass",
-      "evidence": "The eight-term field is relevant, unique, and 98 UTF-8 bytes."
+      "evidence": "The seven-term field is relevant, unique, excludes words already used in the name and subtitle, and is 96 UTF-8 bytes."
     },
     "competitor_trademark_screened": {
       "status": "pass",
@@ -457,7 +458,7 @@
     },
     "search_to_product_page_alignment": {
       "status": "pass",
-      "evidence": "English pronunciation correction intent is repeated consistently from name through screenshots."
+      "evidence": "English pronunciation correction and practice intent are repeated consistently from the name through the planned screenshots."
     },
     "claims_supported": {
       "status": "blocked",
