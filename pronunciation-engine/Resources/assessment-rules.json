@@ -1,0 +1,14 @@
+{
+  "$schema": "assessment-rule.v1",
+  "notes": "Engineering draft content pending linguistic review.",
+  "assessmentRules": [
+    { "id": "rule-rl", "appliesToErrorPatternId": "rl-substitution", "confidenceThreshold": 0.62, "minRepeatsToConfirm": 2, "recommendedLessonId": "lesson-rl" },
+    { "id": "rule-th", "appliesToErrorPatternId": "th-voiceless-to-s", "confidenceThreshold": 0.62, "minRepeatsToConfirm": 2, "recommendedLessonId": "lesson-th" },
+    { "id": "rule-dh", "appliesToErrorPatternId": "dh-voiced-to-z-d", "confidenceThreshold": 0.62, "minRepeatsToConfirm": 2, "recommendedLessonId": "lesson-dh" },
+    { "id": "rule-bv", "appliesToErrorPatternId": "b-v-substitution", "confidenceThreshold": 0.6, "minRepeatsToConfirm": 2, "recommendedLessonId": "lesson-bv" },
+    { "id": "rule-fh", "appliesToErrorPatternId": "f-h-substitution", "confidenceThreshold": 0.6, "minRepeatsToConfirm": 2, "recommendedLessonId": "lesson-fh" },
+    { "id": "rule-vowel-insertion", "appliesToErrorPatternId": "vowel-insertion-after-consonant", "confidenceThreshold": 0.55, "minRepeatsToConfirm": 2, "recommendedLessonId": "lesson-vowel-insertion" },
+    { "id": "rule-final-consonant", "appliesToErrorPatternId": "final-consonant-deletion", "confidenceThreshold": 0.6, "minRepeatsToConfirm": 2, "recommendedLessonId": "lesson-final-consonant" },
+    { "id": "rule-schwa", "appliesToErrorPatternId": "schwa-reduction", "confidenceThreshold": 0.55, "minRepeatsToConfirm": 2, "recommendedLessonId": "lesson-schwa" }
+  ]
+}

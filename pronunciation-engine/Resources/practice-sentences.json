@@ -1,0 +1,24 @@
+{
+  "$schema": "practice-sentence.v1",
+  "notes": "Engineering draft content for the 50-word pre-UI spike. Requires manual linguistic review. wordIds must resolve against practice-words.json; the engine concatenates each word's phoneme sequence to build the exercise's expected phoneme sequence.",
+  "practiceSentences": [
+    {
+      "id": "the-right-light-is-red",
+      "text": "The right light is red.",
+      "wordIds": ["the", "right", "light", "is", "red"],
+      "targetErrorPatternIds": ["rl-substitution"]
+    },
+    {
+      "id": "i-think-the-book-is-big",
+      "text": "I think the book is big.",
+      "wordIds": ["i", "think", "the", "book", "is", "big"],
+      "targetErrorPatternIds": ["th-voiceless-to-s", "final-consonant-deletion", "vowel-insertion-after-consonant"]
+    },
+    {
+      "id": "the-big-dog-ate-the-cat",
+      "text": "The big dog ate the cat.",
+      "wordIds": ["the", "big", "dog", "ate", "the", "cat"],
+      "targetErrorPatternIds": ["final-consonant-deletion", "vowel-insertion-after-consonant"]
+    }
+  ]
+}

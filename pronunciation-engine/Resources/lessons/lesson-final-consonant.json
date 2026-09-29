@@ -1,0 +1,11 @@
+{
+  "$schema": "lesson.v1",
+  "id": "lesson-final-consonant",
+  "errorPatternId": "final-consonant-deletion",
+  "title": "語末の子音をはっきり発音する",
+  "order": 7,
+  "minimalPairIds": [],
+  "practiceWordIds": ["cat", "book", "milk", "test", "stop", "big", "dog"],
+  "practiceSentenceIds": ["i-think-the-book-is-big", "the-big-dog-ate-the-cat"],
+  "successThreshold": 0.6
+}

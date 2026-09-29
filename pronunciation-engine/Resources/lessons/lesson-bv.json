@@ -1,0 +1,11 @@
+{
+  "$schema": "lesson.v1",
+  "id": "lesson-bv",
+  "errorPatternId": "b-v-substitution",
+  "title": "/b/ と /v/ の区別",
+  "order": 4,
+  "minimalPairIds": ["berry-very", "boat-vote"],
+  "practiceWordIds": ["berry", "very"],
+  "practiceSentenceIds": [],
+  "successThreshold": 0.6
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "minimal-pair.v1",
+  "notes": "Engineering draft content for the 50-word pre-UI spike. Requires manual linguistic review.",
+  "minimalPairs": [
+    { "id": "right-light", "errorPatternId": "rl-substitution", "wordA": "right", "phonemesA": ["R", "AY", "T"], "wordB": "light", "phonemesB": ["L", "AY", "T"], "contrastPosition": 0 },
+    { "id": "rice-lice", "errorPatternId": "rl-substitution", "wordA": "rice", "phonemesA": ["R", "AY", "S"], "wordB": "lice", "phonemesB": ["L", "AY", "S"], "contrastPosition": 0 },
+    { "id": "correct-collect", "errorPatternId": "rl-substitution", "wordA": "correct", "phonemesA": ["K", "AX", "R", "EH", "K", "T"], "wordB": "collect", "phonemesB": ["K", "AX", "L", "EH", "K", "T"], "contrastPosition": 2 },
+    { "id": "think-sink", "errorPatternId": "th-voiceless-to-s", "wordA": "think", "phonemesA": ["TH", "IH", "NG", "K"], "wordB": "sink", "phonemesB": ["S", "IH", "NG", "K"], "contrastPosition": 0 },
+    { "id": "thank-sank", "errorPatternId": "th-voiceless-to-s", "wordA": "thank", "phonemesA": ["TH", "AE", "NG", "K"], "wordB": "sank", "phonemesB": ["S", "AE", "NG", "K"], "contrastPosition": 0 },
+    { "id": "then-zen", "errorPatternId": "dh-voiced-to-z-d", "wordA": "then", "phonemesA": ["DH", "EH", "N"], "wordB": "zen", "phonemesB": ["Z", "EH", "N"], "contrastPosition": 0 },
+    { "id": "breathe-breeze", "errorPatternId": "dh-voiced-to-z-d", "wordA": "breathe", "phonemesA": ["B", "R", "IY", "DH"], "wordB": "breeze", "phonemesB": ["B", "R", "IY", "Z"], "contrastPosition": 3 },
+    { "id": "berry-very", "errorPatternId": "b-v-substitution", "wordA": "berry", "phonemesA": ["B", "EH", "R", "IY"], "wordB": "very", "phonemesB": ["V", "EH", "R", "IY"], "contrastPosition": 0 },
+    { "id": "boat-vote", "errorPatternId": "b-v-substitution", "wordA": "boat", "phonemesA": ["B", "OW", "T"], "wordB": "vote", "phonemesB": ["V", "OW", "T"], "contrastPosition": 0 },
+    { "id": "fight-height", "errorPatternId": "f-h-substitution", "wordA": "fight", "phonemesA": ["F", "AY", "T"], "wordB": "height", "phonemesB": ["HH", "AY", "T"], "contrastPosition": 0 },
+    { "id": "few-hue", "errorPatternId": "f-h-substitution", "wordA": "few", "phonemesA": ["F", "Y", "UW"], "wordB": "hue", "phonemesB": ["HH", "Y", "UW"], "contrastPosition": 0 }
+  ]
+}

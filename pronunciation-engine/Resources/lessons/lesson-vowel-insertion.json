@@ -1,0 +1,11 @@
+{
+  "$schema": "lesson.v1",
+  "id": "lesson-vowel-insertion",
+  "errorPatternId": "vowel-insertion-after-consonant",
+  "title": "語末の余分な母音を削る",
+  "order": 6,
+  "minimalPairIds": [],
+  "practiceWordIds": ["cat", "book", "milk", "test", "strike"],
+  "practiceSentenceIds": ["i-think-the-book-is-big", "the-big-dog-ate-the-cat"],
+  "successThreshold": 0.55
+}

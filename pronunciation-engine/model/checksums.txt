@@ -1,0 +1,5 @@
+# SHA-256 checksums of model artifacts bundled with the iOS target.
+# Populated once model_q4f16.onnx is fetched into pronunciation-ios's model
+# resources (see model-manifest.json). Empty at this stage because engine
+# development in this environment uses MockAcousticModel exclusively; no
+# model binary is vendored into this repository.

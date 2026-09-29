@@ -1,0 +1,23 @@
+{
+  "$schema": "diagnostic-prompt.v1",
+  "notes": "Initial-assessment diagnostic set (docs/product-specification.md#1-initial-assessment). Engineering draft content pending linguistic review.",
+  "diagnosticPrompts": [
+    { "id": "diag-01", "order": 1, "promptType": "minimalPair", "referenceId": "right-light", "targetErrorPatternIds": ["rl-substitution"] },
+    { "id": "diag-02", "order": 2, "promptType": "minimalPair", "referenceId": "rice-lice", "targetErrorPatternIds": ["rl-substitution"] },
+    { "id": "diag-03", "order": 3, "promptType": "word", "referenceId": "correct", "targetErrorPatternIds": ["rl-substitution", "schwa-reduction"] },
+    { "id": "diag-04", "order": 4, "promptType": "minimalPair", "referenceId": "think-sink", "targetErrorPatternIds": ["th-voiceless-to-s"] },
+    { "id": "diag-05", "order": 5, "promptType": "minimalPair", "referenceId": "then-zen", "targetErrorPatternIds": ["dh-voiced-to-z-d"] },
+    { "id": "diag-06", "order": 6, "promptType": "minimalPair", "referenceId": "breathe-breeze", "targetErrorPatternIds": ["dh-voiced-to-z-d"] },
+    { "id": "diag-07", "order": 7, "promptType": "minimalPair", "referenceId": "berry-very", "targetErrorPatternIds": ["b-v-substitution"] },
+    { "id": "diag-08", "order": 8, "promptType": "minimalPair", "referenceId": "boat-vote", "targetErrorPatternIds": ["b-v-substitution"] },
+    { "id": "diag-09", "order": 9, "promptType": "minimalPair", "referenceId": "fight-height", "targetErrorPatternIds": ["f-h-substitution"] },
+    { "id": "diag-10", "order": 10, "promptType": "minimalPair", "referenceId": "few-hue", "targetErrorPatternIds": ["f-h-substitution"] },
+    { "id": "diag-11", "order": 11, "promptType": "word", "referenceId": "cat", "targetErrorPatternIds": ["vowel-insertion-after-consonant", "final-consonant-deletion"] },
+    { "id": "diag-12", "order": 12, "promptType": "word", "referenceId": "book", "targetErrorPatternIds": ["vowel-insertion-after-consonant", "final-consonant-deletion"] },
+    { "id": "diag-13", "order": 13, "promptType": "word", "referenceId": "milk", "targetErrorPatternIds": ["vowel-insertion-after-consonant", "final-consonant-deletion"] },
+    { "id": "diag-14", "order": 14, "promptType": "word", "referenceId": "strike", "targetErrorPatternIds": ["vowel-insertion-after-consonant"] },
+    { "id": "diag-15", "order": 15, "promptType": "sentence", "referenceId": "the-right-light-is-red", "targetErrorPatternIds": ["rl-substitution"] },
+    { "id": "diag-16", "order": 16, "promptType": "sentence", "referenceId": "i-think-the-book-is-big", "targetErrorPatternIds": ["th-voiceless-to-s", "final-consonant-deletion", "vowel-insertion-after-consonant"] },
+    { "id": "diag-17", "order": 17, "promptType": "sentence", "referenceId": "the-big-dog-ate-the-cat", "targetErrorPatternIds": ["final-consonant-deletion", "vowel-insertion-after-consonant"] }
+  ]
+}
