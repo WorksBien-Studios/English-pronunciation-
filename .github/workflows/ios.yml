@@ -103,6 +103,37 @@ jobs:
           codesign --force --deep --sign - --timestamp=none "$app"
           codesign --verify --deep --strict --verbose=2 "$app"
 
+      - name: Diagnose simulator install (temporary)
+        continue-on-error: true
+        run: |
+          app="$RUNNER_TEMP/DerivedData/Build/Products/Debug-iphonesimulator/EnglishPronunciationCoach.app"
+          {
+            echo "== top level"; ls -la "$app"
+            echo "== every directory (depth<=3)"; find "$app" -maxdepth 3 -type d | sort
+            echo "== bundle-like dirs and Info.plist ids"
+            find "$app" -type d \( -name '*.bundle' -o -name '*.framework' -o -name '*.xctest' -o -name '*.appex' -o -name '*.app' -o -name '*.xcframework' \) | sort | while read -r d; do
+              if test -f "$d/Info.plist"; then echo "$d -> $(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$d/Info.plist" 2>&1)"; else echo "$d -> NO Info.plist"; fi
+            done
+            echo "== every Info.plist and its bundle id"
+            find "$app" -name Info.plist | sort | while read -r f; do echo "$f -> $(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$f" 2>&1)"; done
+            echo "== code signature"; codesign -dvvv "$app" 2>&1 | head -30
+            echo "== simctl install (device $IPHONE_SIMULATOR)"
+            xcrun simctl boot "$IPHONE_SIMULATOR" 2>&1 || true
+            xcrun simctl bootstatus "$IPHONE_SIMULATOR" 2>&1 | tail -3 || true
+            xcrun simctl install "$IPHONE_SIMULATOR" "$app" 2>&1; echo "simctl install exit: $?"
+            echo "== install with the .xctest removed from PlugIns (isolation)"
+            copy="$RUNNER_TEMP/app-noxctest/EnglishPronunciationCoach.app"
+            rm -rf "$RUNNER_TEMP/app-noxctest"; mkdir -p "$RUNNER_TEMP/app-noxctest"; cp -R "$app" "$copy"
+            rm -rf "$copy/PlugIns/EnglishPronunciationCoachTests.xctest"
+            xcrun simctl install "$IPHONE_SIMULATOR" "$copy" 2>&1; echo "simctl install (no xctest) exit: $?"
+            echo "== install with model + engine Resources removed (isolation)"
+            copy2="$RUNNER_TEMP/app-nodata/EnglishPronunciationCoach.app"
+            rm -rf "$RUNNER_TEMP/app-nodata"; mkdir -p "$RUNNER_TEMP/app-nodata"; cp -R "$app" "$copy2"
+            rm -rf "$copy2/PlugIns/EnglishPronunciationCoachTests.xctest" "$copy2/model_q4f16.onnx" "$copy2/Resources"
+            codesign --force --deep --sign - --timestamp=none "$copy2" 2>&1 | tail -2
+            xcrun simctl install "$IPHONE_SIMULATOR" "$copy2" 2>&1; echo "simctl install (no xctest, no data) exit: $?"
+          } 2>&1 | tee "$RUNNER_TEMP/diagnose.log"
+
       - name: Test on iPhone
         run: |
           set -o pipefail
@@ -155,4 +186,5 @@ jobs:
             ${{ runner.temp }}/iphone.log
             ${{ runner.temp }}/ipad.log
             ${{ runner.temp }}/release.log
+            ${{ runner.temp }}/diagnose.log
           if-no-files-found: ignore
