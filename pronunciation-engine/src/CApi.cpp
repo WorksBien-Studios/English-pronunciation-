@@ -10,6 +10,7 @@
 
 #include "Acoustic/MockAcousticModel.h"
 #include "Acoustic/OnnxAcousticModel.h"
+#include "AudioQuality/AudioQuality.h"
 #include "Engine.h"
 
 struct pe_engine {
@@ -89,6 +90,37 @@ pe_diagnosis safeRetryDiagnosis() {
 }
 
 } // namespace
+
+pe_audio_quality_result pe_audio_quality_evaluate(
+    const float* pcm_samples,
+    int sample_count,
+    int sample_rate_hz) {
+
+    if (sample_count < 0 || sample_rate_hz <= 0 ||
+        (sample_count > 0 && !pcm_samples)) {
+        return pe_audio_quality_result{
+            0, PE_AUDIO_LOW_SNR, -120.0f, 0.0f, 0.0f, 0.0f
+        };
+    }
+
+    pronunciation::PcmBuffer audio;
+    audio.sampleRateHz = sample_rate_hz;
+    if (sample_count > 0) {
+        audio.samples.assign(
+            pcm_samples, pcm_samples + static_cast<size_t>(sample_count));
+    }
+
+    const pronunciation::AudioQualityResult q =
+        pronunciation::AudioQualityGate{}.evaluate(audio);
+    return pe_audio_quality_result{
+        q.passesGate ? 1 : 0,
+        toCReason(q.reason),
+        q.rmsDbfs,
+        q.peakAmplitude,
+        q.clippingRatio,
+        q.estimatedSnrDb
+    };
+}
 
 pe_engine* pe_engine_create(
     const char* resources_dir,
