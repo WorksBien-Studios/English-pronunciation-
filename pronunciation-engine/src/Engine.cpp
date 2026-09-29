@@ -24,6 +24,13 @@ PronunciationEngine::PronunciationEngine(const std::string& resourcesDir, std::u
       content_(ContentStore::loadFromDirectory(resourcesDir, inventory_)),
       model_(std::move(model)) {
     if (!model_) throw std::invalid_argument("Engine: acoustic model must not be null");
+    const int expectedVocabularySize = static_cast<int>(inventory_.size()) + 1;
+    const int expectedBlankColumn = static_cast<int>(inventory_.size());
+    if (model_->vocabularySize() != expectedVocabularySize ||
+        model_->blankColumn() != expectedBlankColumn) {
+        throw std::runtime_error(
+            "Engine: acoustic-model vocabulary must match phoneme inventory + blank");
+    }
 }
 
 ExerciseDefinition PronunciationEngine::resolveExercise(const std::string& exerciseId) const {
