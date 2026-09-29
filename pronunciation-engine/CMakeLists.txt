@@ -9,7 +9,7 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE RelWithDebInfo)
 endif()
 
-option(PRONUNCIATION_ENGINE_WITH_ONNXRUNTIME "Link the ONNX Runtime Mobile backend (not implemented yet)" OFF)
+option(PRONUNCIATION_ENGINE_WITH_ONNXRUNTIME "Link the ONNX Runtime backend" OFF)
 option(PRONUNCIATION_ENGINE_BUILD_TESTS "Build the Unit test suite" ON)
 option(PRONUNCIATION_ENGINE_BUILD_HARNESS "Build the CLI harness" ON)
 
