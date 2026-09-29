@@ -102,7 +102,8 @@
           2868
         ]
       ],
-      "dimension_source_url": "https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications/"
+      "dimension_source_url": "https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications/",
+      "required_layout": "single-column compact"
     },
     {
       "locale": "ja-JP",
@@ -114,7 +115,9 @@
           2752
         ]
       ],
-      "dimension_source_url": "https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications/"
+      "dimension_source_url": "https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications/",
+      "required_layout": "two-column NavigationSplitView",
+      "compact_single_column_allowed": false
     }
   ],
   "screenshots": [
@@ -134,7 +137,8 @@
       "paid_feature_disclosed_if_needed": true,
       "no_other_platform_imagery": false,
       "search_result_legibility_checked": false,
-      "shell_path": "assets/screenshots/shells/01-diagnosis.svg"
+      "shell_path": "assets/screenshots/shells/01-diagnosis.svg",
+      "required_layout": "single-column compact"
     },
     {
       "locale": "ja-JP",
@@ -152,7 +156,8 @@
       "paid_feature_disclosed_if_needed": true,
       "no_other_platform_imagery": false,
       "search_result_legibility_checked": false,
-      "shell_path": "assets/screenshots/shells/02-correction.svg"
+      "shell_path": "assets/screenshots/shells/02-correction.svg",
+      "required_layout": "single-column compact"
     },
     {
       "locale": "ja-JP",
@@ -170,7 +175,8 @@
       "paid_feature_disclosed_if_needed": true,
       "no_other_platform_imagery": false,
       "search_result_legibility_checked": false,
-      "shell_path": "assets/screenshots/shells/03-progress.svg"
+      "shell_path": "assets/screenshots/shells/03-progress.svg",
+      "required_layout": "single-column compact"
     },
     {
       "locale": "ja-JP",
@@ -188,7 +194,13 @@
       "paid_feature_disclosed_if_needed": true,
       "no_other_platform_imagery": false,
       "search_result_legibility_checked": false,
-      "shell_path": "assets/screenshots/shells/ipad-01-diagnosis.svg"
+      "shell_path": "assets/screenshots/shells/ipad-01-diagnosis.svg",
+      "required_layout": "two-column NavigationSplitView",
+      "compact_single_column_allowed": false,
+      "capture_state": {
+        "left_column": "diagnosed weak sounds / recommended order",
+        "right_column": "selected diagnosis/result detail"
+      }
     },
     {
       "locale": "ja-JP",
@@ -206,7 +218,13 @@
       "paid_feature_disclosed_if_needed": true,
       "no_other_platform_imagery": false,
       "search_result_legibility_checked": false,
-      "shell_path": "assets/screenshots/shells/ipad-02-correction.svg"
+      "shell_path": "assets/screenshots/shells/ipad-02-correction.svg",
+      "required_layout": "two-column NavigationSplitView",
+      "compact_single_column_allowed": false,
+      "capture_state": {
+        "left_column": "lesson / target-sound list",
+        "right_column": "selected correction lesson with IPA and Japanese articulatory guidance"
+      }
     },
     {
       "locale": "ja-JP",
@@ -224,7 +242,13 @@
       "paid_feature_disclosed_if_needed": true,
       "no_other_platform_imagery": false,
       "search_result_legibility_checked": false,
-      "shell_path": "assets/screenshots/shells/ipad-03-progress.svg"
+      "shell_path": "assets/screenshots/shells/ipad-03-progress.svg",
+      "required_layout": "two-column NavigationSplitView",
+      "compact_single_column_allowed": false,
+      "capture_state": {
+        "left_column": "practice/review context",
+        "right_column": "recording result, feedback, and retry loop"
+      }
     }
   ],
   "visual_disclosure": {
@@ -452,7 +476,7 @@
     },
     "launch_visual_story": {
       "status": "pass",
-      "evidence": "Three captions form an outcome-path-proof sequence for iPhone and iPad."
+      "evidence": "Three captions form an outcome-path-proof sequence; iPhone uses the compact single-column UI while iPad deliberately shows the regular-width two-column NavigationSplitView so the device sets add distinct visual information."
     },
     "icon_small_size_checked": {
       "status": "blocked",
