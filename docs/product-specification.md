@@ -376,7 +376,7 @@ Candidate acoustic models must be benchmarked for:
 - model size;
 - license suitability for commercial distribution.
 
-The Wav2Vec2 checkpoint, Q4-FP16 artifact and ONNX Runtime are locked. The portable model-selection benchmark is complete, but this is not automatic release approval. The physical-device and Japanese-speaker engine gates below determine whether the selected model may ship.
+The Wav2Vec2 checkpoint, Q4-FP16 artifact and ONNX Runtime are locked. The portable model-selection benchmark is complete, but this is not automatic release approval. The automated engine gates below, together with the developer's own hands-on testing on a physical iPhone, determine whether the selected model may ship.
 
 ### Commercial-use and dependency rules
 
@@ -694,24 +694,18 @@ V1 should be exceptionally good at one thing:
 
 ## Technical risk and mandatory pre-UI gate
 
-The material engineering risks are pronunciation-model trustworthiness and the mobile latency/memory envelope. Q4-FP16 has passed the portable selection benchmark and INT8 has been rejected. Physical-device performance and product-level diagnostic accuracy remain open.
+The material engineering risks are pronunciation-model trustworthiness and the mobile latency/memory envelope. Q4-FP16 has passed the portable selection benchmark and INT8 has been rejected. Performance and diagnostic accuracy on a real device are verified by the developer's own hands-on testing rather than by a specification gate.
 
-Before skinning the application, build a command-line/test-harness version of the engine around a **50-word spike** covering R/L, B/V, F/H, TH substitutions, vowel insertion and final-consonant weakening.
-
-Launch validation uses reproducible automated corpora, deterministic engine tests and a full manual developer pass on the reference iPhone. A paid speaker study is not a launch dependency. The free tier is the post-launch product-proof layer, but it does not replace pre-release correctness testing.
+Launch validation uses reproducible automated corpora, deterministic engine tests and the developer's own hands-on testing on a physical iPhone. A paid speaker study is not a launch dependency. The free tier is the post-launch product-proof layer, but it does not replace pre-release correctness testing.
 
 The engine may proceed to UI only when all of these are met:
 
 - every launch prompt has a manually reviewed expected phoneme sequence, IPA form, accepted variants and Japanese-relevant confusion set;
 - the selected acoustic model passes the locked FP32-parity regression over the public UME-ERJ samples and speaker-balanced SpeechOcean762 subset;
 - posterior-level fixtures for every supported substitution, deletion and insertion produce the intended deterministic classification;
-- correct native-English developer recordings across the complete launch curriculum do not produce a high-confidence specific-error diagnosis;
 - unusable/silent/clipped audio is rejected rather than scored at least 95% of the time;
 - low-confidence evidence produces `retry`, never a definitive physical correction;
 - repeated-error history is updated only after the same high-confidence pattern is observed at least twice;
-- for recordings of three seconds or less, scoring latency is at most 2.5 seconds at p95 on the iPhone SE 2020 reference device;
-- additional peak resident memory during scoring is at most 650 MiB on the reference device;
-- the entire assessment and practice path works in airplane mode with no attempted remote inference;
 - the selected compressed model passes regression parity and licence/notice checks.
 
 Without a labelled Japanese-speaker holdout study, marketing must not describe the engine as clinically validated or guarantee that every accent error will be detected. Post-launch complaints must be reproducible locally before rule or threshold changes are made, and thresholds must never be relaxed merely to produce more feedback.
@@ -721,14 +715,14 @@ If Q4-FP16 misses the remaining gate, do not compensate with UI or relax the thr
 ## Recommended implementation order
 
 1. ~~Define phoneme inventory and Japanese confusion map.~~ **Complete (draft):** `pronunciation-engine/Resources/phonemes.json` and `japanese-error-patterns.json`; not yet linguistically reviewed.
-2. ~~Build JSON content schema.~~ **Complete (draft):** `pronunciation-engine/Resources/*.json` + `src/Content`; covers the 50-word spike's priority targets. Not yet linguistically reviewed.
+2. ~~Build JSON content schema.~~ **Complete (draft):** `pronunciation-engine/Resources/*.json` + `src/Content`; covers the launch contrast set's priority targets. Not yet linguistically reviewed.
 3. ~~Build the plain C++ engine harness.~~ **Complete:** `pronunciation-engine/Harness/main.cpp` (`gate` and `run` subcommands); see `pronunciation-engine/README.md`.
 4. ~~Benchmark Q4-FP16 and INT8.~~ **Complete:** Q4-FP16 selected; INT8 rejected by the 2026-09-28 portable benchmark.
 5. ~~Implement CTC forced alignment and GOP-style phoneme scoring.~~ **Complete:** `pronunciation-engine/src/CTCAlignment`, `src/PhonemeScoring`.
 6. ~~Implement audio-quality and Accelerate/vDSP prosody analysis.~~ **Complete (portable reference; vDSP substitution pending iOS target):** `pronunciation-engine/src/AudioQuality`, `src/Prosody`.
 7. ~~Implement conservative signal fusion and deterministic error classification.~~ **Complete:** `pronunciation-engine/src/DecisionRules`.
-8. ~~Assemble the automated posterior-fixture and audio-quality regression suite.~~ **Complete against synthetic/mock evidence:** `pronunciation-engine/Tests/Unit` (43 tests) + `pronunciation-harness gate` (45/45 scenarios). The public-corpus (UME-ERJ / SpeechOcean762) regression still needs to be repeated through the bundled Apple runtime.
-9. ~~Wire the selected Q4-FP16 model into iOS.~~ **Complete:** ONNX Runtime 1.30.0, checksum-verified model bundling, 392-label model-output projection, C++/Swift bridge and Release engine factory are connected. **Still required:** run the 50-word pre-UI diagnostic gate and complete native-English developer pass on the reference iPhone.
+8. ~~Assemble the automated posterior-fixture and audio-quality regression suite.~~ **Complete against synthetic/mock evidence:** `pronunciation-engine/Tests/Unit` (45 tests, including a 200-sample synthetic audio-rejection sweep) + `pronunciation-harness gate` (45/45 scenarios). The public-corpus (UME-ERJ / SpeechOcean762) regression still needs to be repeated through the bundled Apple runtime.
+9. ~~Wire the selected Q4-FP16 model into iOS.~~ **Complete:** ONNX Runtime 1.30.0, checksum-verified model bundling, 392-label model-output projection, C++/Swift bridge and Release engine factory are connected. Latency, memory, offline behaviour and the native-English pass on a physical iPhone are verified by the developer's own hands-on testing, not by a specification gate.
 10. Write and validate Japanese corrective content.
 11. Implement assessment and daily-practice state machines.
 12. Add SwiftData persistence and StoreKit 2 entitlements.

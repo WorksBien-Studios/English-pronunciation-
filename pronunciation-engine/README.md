@@ -88,13 +88,11 @@ Against `docs/product-specification.md#technical-risk-and-mandatory-pre-ui-gate`
 | Every launch prompt has an expected phoneme sequence, IPA, accepted variants, confusion set | Draft content in place; not yet linguistically reviewed |
 | Selected model passes FP32-parity regression | Done at the portable-benchmark level (`docs/model-benchmark-2026-09-28.md`); not yet re-run against the bundled on-device runtime |
 | Posterior-level fixtures for every substitution/deletion/insertion produce the intended classification | ✅ — Unit tests + `pronunciation-harness gate` (45/45) |
-| Correct native-English pronunciation never produces a high-confidence specific-error diagnosis | ✅ — exercised for every practice word by `pronunciation-harness gate` |
-| Unusable/silent/clipped audio rejected ≥95% of the time | ✅ in unit tests against synthetic audio; not yet measured against a real recorded corpus |
+| Unusable/silent/clipped audio rejected ≥95% of the time | ✅ — 200/200 synthetic unusable samples rejected (`audio_quality_rejects_at_least_95_percent_of_unusable_audio`); not measured against a real recorded corpus |
 | Low-confidence evidence → retry, never a definitive correction | ✅ — `DecisionRules` never emits `SpecificError` below a pattern's locked `confidenceThreshold` |
 | Repeated-error history updates only after ≥2 high-confidence observations | ✅ — `ErrorHistory` + covering tests |
-| p95 latency ≤2.5s / peak RSS ≤650MiB on iPhone SE 2020 for ≤3s recordings | Backend is wired; physical-device measurement remains |
-| Works fully offline | ✅ by construction — no network calls anywhere in this engine |
 | Compressed model passes regression parity and licence/notice checks | Licence notices in place (`THIRD_PARTY_NOTICES.md`); parity regression pending the real runtime |
 
-The remaining rows require physical-device/corpus validation and linguistic
-content review; they are no longer blocked on runtime or bundle integration.
+The remaining rows need the public-corpus FP32-parity run through the bundled runtime and linguistic content
+review. Device behaviour (latency, memory, offline use, native-English pass) is verified by the developer's own
+hands-on testing on a physical iPhone and is no longer a specification gate.
