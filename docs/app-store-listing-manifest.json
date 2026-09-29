@@ -1,0 +1,481 @@
+{
+  "schema_version": "1.0",
+  "mode": "draft",
+  "app": {
+    "platform": "ios",
+    "bundle_id": "com.worksbienstudios.englishpronunciationcoach",
+    "version": "1.0",
+    "company_name": "WorksBien Studios Inc.",
+    "release_kind": "new",
+    "primary_category": "Education",
+    "secondary_category": "",
+    "category_verified_in_current_app_store_connect": false,
+    "secondary_category_verified_in_current_app_store_connect": false,
+    "game_subcategory_decision_verified": false,
+    "supported_devices": [
+      "iphone",
+      "ipad"
+    ],
+    "requires_account": false,
+    "requires_hardware": false
+  },
+  "source_control": {
+    "final_release_build_inspected": false,
+    "signed_archive_inspected": false,
+    "app_store_connect_inspected": false,
+    "public_policies_inspected": false,
+    "official_apple_sources_refreshed": true,
+    "fact_ledger_complete": true,
+    "facts_reconciled": true,
+    "final_build_identifier": "Awaiting first release candidate",
+    "evidence_index": "docs/app-store-listing-ja-JP.md",
+    "final_build_reviewed_on": "2026-09-28",
+    "app_store_connect_snapshot_date": "2026-09-28",
+    "official_sources_reviewed_on": "2026-09-28",
+    "unresolved_conflicts": [
+      "Build-dependent statements require final archive and device verification",
+      "Legal URLs must be deployed and checked before review mode"
+    ]
+  },
+  "aso_context": {
+    "primary_intent": "Japanese speakers searching for English pronunciation diagnosis and concrete correction guidance in Japanese",
+    "observed_search_phrases": [
+      "2026-09-28 Japan App Store lane: 英語 発音",
+      "2026-09-28 Japan App Store lane: 発音矯正",
+      "2026-09-28 review language: 日本語で発音の直し方",
+      "2026-09-28 review language: ゆっくりお手本を再生"
+    ],
+    "restricted_terms": [
+      "ELSA",
+      "BoldVoice",
+      "TOEIC",
+      "英検",
+      "IELTS"
+    ]
+  },
+  "icon": {
+    "concept": "A single speech shape containing two separated sound-wave strokes, using indigo and teal to suggest hearing the difference without text, flags, score numbers, or AI sparkles",
+    "artifact_path": "",
+    "small_size_checked": false,
+    "relevant_search_grid_checked": false,
+    "build_asset_matches": false
+  },
+  "locales": [
+    {
+      "locale": "ja-JP",
+      "name": "英語発音コーチ｜日本人のための発音矯正",
+      "subtitle": "苦手音を診断、日本語で直し方まで解説",
+      "promotional_text": "採点だけで終わらない発音練習。苦手な音を見つけ、舌・唇・息・声の使い方を日本語で確認。端末上で分析し、毎日10回まで無料で試せます。",
+      "promotion_owner": "WorksBien Studios Inc.",
+      "promotion_review_due_on": "2026-12-01",
+      "description": "英語の発音を採点されても、\n「何が違うのか」「どう直せばよいのか」が分からなければ、次の一回は変えられません。\n\n英語発音コーチは、日本語を母語とする学習者のための、英語発音の診断・矯正練習アプリです。\n\n録音した声を音ごとに確認し、苦手な音、よくある置き換え、直し方を日本語で示します。舌・唇・あご・息・声の使い方を確かめ、ミニマルペア、単語、文の順で練習できます。\n\n【診断から復習まで】\n\n・短い発音診断で、苦手な音とおすすめの練習順を確認\n・RとL、TH、BとV、FとH、母音の区別、語尾の子音などを集中練習\n・目標の音と、別の音に聞こえた可能性を音素単位で表示\n・モデル発音と自分の録音をすぐに聞き比べ\n・通常速度とゆっくり再生、IPA発音記号に対応\n・ミニマルペア、単語、文、再テストへ段階的に進行\n・繰り返し現れる苦手音を記録し、復習候補を整理\n\n【日本語だから、直し方が分かる】\n\n点数だけを表示して終わりません。\n\n「舌先をどこに置くか」\n「唇をどう動かすか」\n「息を止めるか流すか」\n「声を振動させるか」\n\nなど、次の一回で試せる具体的な修正方法を日本語で説明します。\n\n【伝わりやすさと発音の違いを分けて表示】\n\n・相手に伝わる可能性\n・目標の音を出せた可能性\n・リズムやアクセントを整えるための改善点\n\nを分けて確認できます。分析の確信度が低い場合は、無理に正誤を断定せず、録音環境の確認や再試行をご案内します。\n\n【短く、毎日続けやすく】\n\n聞く、話す、直し方を確認する、もう一度試す。\n約5分の短い練習を中心に、余分な画面操作を減らして発音に集中できるよう設計しています。\n\n【プライバシーを守る端末内分析】\n\n発音の録音と分析は端末上で処理されます。音声を分析のために外部サーバーへ送信しません。アカウント登録は不要で、広告や追跡もありません。生の録音は初期設定では保存しません。発音練習と分析はオフラインでも利用できます。\n\n【無料で使える内容】\n\n・初回発音診断と苦手音マップ\n・診断で見つかった最優先の音の基礎レッスン\n・1日10回の有効な発音分析\n・解放済み教材のモデル発音、IPA、日本語解説\n\n無音、音割れ、録音中断などで結果が返らなかった場合は、無料回数を消費しません。未使用回数の翌日への繰り越しはありません。\n\n【Proでできること】\n\n・発音分析の回数制限を解除\n・すべての発音レッスン\n・苦手音の履歴と個別復習リスト\n・ストレス、リズム、リンキングの練習\n・追加される新しい練習教材\n\nProは月間または年間の自動更新サブスクリプションです。購入前にApp Storeが地域に応じた料金と更新期間を表示します。自動更新は現在の期間終了の24時間前までに解約しない限り継続します。管理・解約はApple IDのサブスクリプション設定から行えます。購入の復元にも対応します。\n\n利用規約：\nhttps://www.apple.com/legal/internet-services/itunes/dev/stdeula/\n\nプライバシーポリシー：\nhttps://worksbienstudios.com/apps/english-pronunciation-coach/privacy",
+      "keywords": [
+        "スピーキング",
+        "アクセント",
+        "イントネーション",
+        "IPA",
+        "音素練習",
+        "リスニング"
+      ],
+      "support_url": "https://worksbienstudios.com/customerservice",
+      "privacy_url": "https://worksbienstudios.com/apps/english-pronunciation-coach/privacy",
+      "marketing_url": "https://worksbienstudios.com/apps/english-pronunciation-coach",
+      "whats_new": "",
+      "native_language_reviewed": false,
+      "ui_language_disclosed_accurately": true,
+      "locale_available_in_app_store_connect": false,
+      "no_stray_language_confirmed": false,
+      "claims_supported": true,
+      "paid_features_disclosed_if_needed": true
+    }
+  ],
+  "screenshot_count_override_reason": "Three frames preserve the deliberately tested outcome-path-proof launch story and match the product owner's three-screenshot standard.",
+  "required_screenshot_sets": [
+    {
+      "locale": "ja-JP",
+      "device": "iphone",
+      "expected_count": 3,
+      "accepted_dimensions": [
+        [
+          1320,
+          2868
+        ]
+      ],
+      "dimension_source_url": "https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications/"
+    },
+    {
+      "locale": "ja-JP",
+      "device": "ipad",
+      "expected_count": 3,
+      "accepted_dimensions": [
+        [
+          2064,
+          2752
+        ]
+      ],
+      "dimension_source_url": "https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications/"
+    }
+  ],
+  "screenshots": [
+    {
+      "locale": "ja-JP",
+      "device": "iphone",
+      "position": 1,
+      "story_role": "outcome",
+      "caption": "苦手な音を、診断で見える化",
+      "artifact_path": "",
+      "authentic_ui": false,
+      "dimensions_verified_against_current_apple_spec": false,
+      "display_appearance_checked": false,
+      "sample_data_consistent": false,
+      "localized_copy_checked": false,
+      "claims_supported": true,
+      "paid_feature_disclosed_if_needed": true,
+      "no_other_platform_imagery": false,
+      "search_result_legibility_checked": false
+    },
+    {
+      "locale": "ja-JP",
+      "device": "iphone",
+      "position": 2,
+      "story_role": "path",
+      "caption": "舌・唇・息の使い方を日本語で",
+      "artifact_path": "",
+      "authentic_ui": false,
+      "dimensions_verified_against_current_apple_spec": false,
+      "display_appearance_checked": false,
+      "sample_data_consistent": false,
+      "localized_copy_checked": false,
+      "claims_supported": true,
+      "paid_feature_disclosed_if_needed": true,
+      "no_other_platform_imagery": false,
+      "search_result_legibility_checked": false
+    },
+    {
+      "locale": "ja-JP",
+      "device": "iphone",
+      "position": 3,
+      "story_role": "proof",
+      "caption": "練習して、もう一度確かめる",
+      "artifact_path": "",
+      "authentic_ui": false,
+      "dimensions_verified_against_current_apple_spec": false,
+      "display_appearance_checked": false,
+      "sample_data_consistent": false,
+      "localized_copy_checked": false,
+      "claims_supported": true,
+      "paid_feature_disclosed_if_needed": true,
+      "no_other_platform_imagery": false,
+      "search_result_legibility_checked": false
+    },
+    {
+      "locale": "ja-JP",
+      "device": "ipad",
+      "position": 1,
+      "story_role": "outcome",
+      "caption": "苦手な音を、診断で見える化",
+      "artifact_path": "",
+      "authentic_ui": false,
+      "dimensions_verified_against_current_apple_spec": false,
+      "display_appearance_checked": false,
+      "sample_data_consistent": false,
+      "localized_copy_checked": false,
+      "claims_supported": true,
+      "paid_feature_disclosed_if_needed": true,
+      "no_other_platform_imagery": false,
+      "search_result_legibility_checked": false
+    },
+    {
+      "locale": "ja-JP",
+      "device": "ipad",
+      "position": 2,
+      "story_role": "path",
+      "caption": "舌・唇・息の使い方を日本語で",
+      "artifact_path": "",
+      "authentic_ui": false,
+      "dimensions_verified_against_current_apple_spec": false,
+      "display_appearance_checked": false,
+      "sample_data_consistent": false,
+      "localized_copy_checked": false,
+      "claims_supported": true,
+      "paid_feature_disclosed_if_needed": true,
+      "no_other_platform_imagery": false,
+      "search_result_legibility_checked": false
+    },
+    {
+      "locale": "ja-JP",
+      "device": "ipad",
+      "position": 3,
+      "story_role": "proof",
+      "caption": "練習して、もう一度確かめる",
+      "artifact_path": "",
+      "authentic_ui": false,
+      "dimensions_verified_against_current_apple_spec": false,
+      "display_appearance_checked": false,
+      "sample_data_consistent": false,
+      "localized_copy_checked": false,
+      "claims_supported": true,
+      "paid_feature_disclosed_if_needed": true,
+      "no_other_platform_imagery": false,
+      "search_result_legibility_checked": false
+    }
+  ],
+  "visual_disclosure": {
+    "page_clarity_reviewed": true,
+    "free_or_included_value": "Assessment, weakness map, one personalized starter module, and ten valid scored recordings per day",
+    "paid_value_and_location": "Settings > Pro and locked-module entry disclose unlimited scoring, all lessons, full history, and the review queue"
+  },
+  "privacy": {
+    "policy_url": "https://worksbienstudios.com/apps/english-pronunciation-coach/privacy",
+    "data_inventory_complete": false,
+    "third_party_sdks_included": false,
+    "app_privacy_answers_match_final_build": false,
+    "privacy_policy_matches_final_build": false,
+    "privacy_manifest_checked_in_final_archive": false,
+    "required_reason_apis_checked": false,
+    "sdk_signatures_checked": false,
+    "tracking_declaration_accurate": false,
+    "data_deletion_obligations_resolved": false
+  },
+  "monetization": {
+    "models": [
+      "auto_renewable_subscription"
+    ],
+    "products": [
+      {
+        "product_id": "com.worksbienstudios.englishpronunciationcoach.pro.monthly",
+        "reference_name": "English Pronunciation Coach Pro Monthly",
+        "duration": "1 month",
+        "launch_price_jpy": 600
+      },
+      {
+        "product_id": "com.worksbienstudios.englishpronunciationcoach.pro.annual",
+        "reference_name": "English Pronunciation Coach Pro Annual",
+        "duration": "1 year",
+        "launch_price_jpy": 4800
+      }
+    ],
+    "public_price_and_offer_context_reviewed": true
+  },
+  "review": {
+    "notes": "See section 10 of docs/app-store-listing-ja-JP.md for the exact no-account review path, free allowance, Pro navigation, offline test conditions, microphone behavior, and purchase restoration steps.",
+    "contact_complete": false,
+    "demo_access_complete": true,
+    "navigation_path_documented": true,
+    "non_obvious_features_explained": true,
+    "permission_steps_explained": true
+  },
+  "guideline_review": {
+    "source_url": "https://developer.apple.com/app-store/review/guidelines/",
+    "reviewed_on": "2026-09-28",
+    "applicable_ids": [
+      "1.5",
+      "1.6",
+      "2.1",
+      "2.3",
+      "2.3.2",
+      "2.3.3",
+      "2.3.7",
+      "2.4.1",
+      "2.4.2",
+      "3.1.1",
+      "3.1.2",
+      "4.0",
+      "4.2",
+      "5.1.1",
+      "5.2"
+    ],
+    "family_rationale": {
+      "1": "Developer contact, data security, and safe handling of learner audio apply.",
+      "2": "A complete tested build, accurate metadata, authentic screenshots, and declared device compatibility apply.",
+      "3": "Monthly and annual digital subscriptions use StoreKit and must disclose renewal and value.",
+      "4": "The app must deliver substantial pronunciation diagnosis, correction, practice, and history rather than a thin reference wrapper.",
+      "5": "Microphone privacy, model/runtime licensing, lesson ownership, and legal disclosures apply."
+    },
+    "dispositions": [
+      {
+        "id": "1.5",
+        "status": "blocked",
+        "evidence": "Support page must be deployed and verified before submission."
+      },
+      {
+        "id": "1.6",
+        "status": "blocked",
+        "evidence": "Final storage and network inspection is pending."
+      },
+      {
+        "id": "2.1",
+        "status": "blocked",
+        "evidence": "Final release candidate and StoreKit products do not yet exist."
+      },
+      {
+        "id": "2.3",
+        "status": "blocked",
+        "evidence": "Final build and metadata parity audit is pending."
+      },
+      {
+        "id": "3.1.1",
+        "status": "blocked",
+        "evidence": "StoreKit product setup and lifecycle testing are pending."
+      },
+      {
+        "id": "3.1.2",
+        "status": "blocked",
+        "evidence": "Final paywall, renewal disclosure, restoration, and management tests are pending."
+      },
+      {
+        "id": "4.2",
+        "status": "blocked",
+        "evidence": "Complete engine workflow must be demonstrated in the release build."
+      },
+      {
+        "id": "5.1.1",
+        "status": "blocked",
+        "evidence": "Final privacy manifest, SDK inventory, and network inspection are pending."
+      },
+      {
+        "id": "5.2",
+        "status": "blocked",
+        "evidence": "Final dependency notices and lesson-content rights ledger are pending."
+      }
+    ]
+  },
+  "compliance_controls": {
+    "app_stability": {
+      "status": "blocked",
+      "evidence": "Final release candidate is not yet available."
+    },
+    "metadata_build_parity": {
+      "status": "blocked",
+      "evidence": "Requires comparison with the final signed archive."
+    },
+    "metadata_complete_accurate": {
+      "status": "blocked",
+      "evidence": "Requires final App Store Connect field review."
+    },
+    "screenshots_authentic_current": {
+      "status": "blocked",
+      "evidence": "Authentic release-build screenshots are not yet available."
+    },
+    "reviewer_access": {
+      "status": "blocked",
+      "evidence": "Reviewer contact and final test path must be entered privately."
+    },
+    "legal_urls_live": {
+      "status": "blocked",
+      "evidence": "Per-app privacy and marketing pages must be deployed."
+    },
+    "privacy_policy_matches_build": {
+      "status": "blocked",
+      "evidence": "Requires final binary and policy comparison."
+    },
+    "app_privacy_answers_match_build_and_sdks": {
+      "status": "blocked",
+      "evidence": "Requires final SDK and network inventory."
+    },
+    "privacy_manifest_archive_checked": {
+      "status": "blocked",
+      "evidence": "Requires final signed archive inspection."
+    },
+    "required_reason_apis_and_sdk_signatures_checked": {
+      "status": "blocked",
+      "evidence": "Requires final signed archive inspection."
+    },
+    "permissions_just_in_time": {
+      "status": "blocked",
+      "evidence": "Requires release-build onboarding test."
+    },
+    "age_rating_accurate": {
+      "status": "blocked",
+      "evidence": "Live App Store Connect questionnaire is pending."
+    },
+    "content_rights_confirmed": {
+      "status": "blocked",
+      "evidence": "Final dependency and lesson rights ledger is pending."
+    },
+    "export_compliance_resolved": {
+      "status": "blocked",
+      "evidence": "Final dependency inventory must confirm no non-exempt encryption."
+    },
+    "no_private_apis_hidden_features_placeholders": {
+      "status": "blocked",
+      "evidence": "Requires final archive and release-build inspection."
+    },
+    "accessibility_device_locale_rtl_checked": {
+      "status": "blocked",
+      "evidence": "Accessibility and declared-device test matrix is pending."
+    },
+    "regional_availability_reviewed": {
+      "status": "blocked",
+      "evidence": "Japan-only availability must be confirmed in App Store Connect."
+    },
+    "contact_information_current": {
+      "status": "blocked",
+      "evidence": "Current reviewer and public support contacts must be verified."
+    },
+    "applicable_guidelines_reviewed": {
+      "status": "pass",
+      "evidence": "Applicable families and controls are mapped in docs/app-store-listing-ja-JP.md."
+    }
+  },
+  "aso_controls": {
+    "search_intent_researched": {
+      "status": "pass",
+      "evidence": "Live Japan App Store lane and customer reviews were checked on 2026-09-28."
+    },
+    "name_subtitle_fit_confirmed": {
+      "status": "pass",
+      "evidence": "Name and subtitle are truthful, readable, complementary, and each under 30 characters."
+    },
+    "keyword_field_relevant_deduplicated": {
+      "status": "pass",
+      "evidence": "The six-term field is relevant, unique, and 92 UTF-8 bytes."
+    },
+    "competitor_trademark_screened": {
+      "status": "pass",
+      "evidence": "Competitor names and exam marks are excluded from public metadata."
+    },
+    "category_fit_confirmed": {
+      "status": "pass",
+      "evidence": "Education matches the pronunciation-learning workflow and live lane."
+    },
+    "description_explains_workflow": {
+      "status": "pass",
+      "evidence": "Description covers diagnosis, correction, practice, retest, privacy, free value, and Pro."
+    },
+    "launch_visual_story": {
+      "status": "pass",
+      "evidence": "Three captions form an outcome-path-proof sequence for iPhone and iPad."
+    },
+    "icon_small_size_checked": {
+      "status": "blocked",
+      "evidence": "Finished icon does not yet exist."
+    },
+    "native_locale_adaptation": {
+      "status": "blocked",
+      "evidence": "Final human Japanese review is pending."
+    },
+    "search_to_product_page_alignment": {
+      "status": "pass",
+      "evidence": "English pronunciation correction intent is repeated consistently from name through screenshots."
+    },
+    "claims_supported": {
+      "status": "blocked",
+      "evidence": "Final build must verify every offline, privacy, limit, and feature claim."
+    },
+    "post_launch_measurement_ready": {
+      "status": "blocked",
+      "evidence": "Privacy-preserving App Store metric review cadence is not yet scheduled."
+    }
+  },
+  "authorization": {
+    "live_submission_authorized": false,
+    "authorization_evidence": "Documentation publication was authorized; live App Store submission was not requested."
+  },
+  "human_review": {
+    "attested": false,
+    "reviewer": "",
+    "evidence": "",
+    "reviewed_on": "2026-09-28"
+  }
+}
