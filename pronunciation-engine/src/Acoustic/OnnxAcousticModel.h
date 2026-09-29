@@ -1,38 +1,45 @@
 #pragma once
 
+#include <memory>
 #include <string>
 
 #include "AcousticModel.h"
 
 namespace pronunciation {
 
-// Production backend wiring point for the locked model
-// (onnx-community/wav2vec2-lv-60-espeak-cv-ft-ONNX, model_q4f16.onnx —
-// see model/model-manifest.json) run through ONNX Runtime Mobile with the
-// Core ML execution provider (docs/product-specification.md#runtime-inference).
+// Production acoustic backend for the frozen
+// onnx-community/wav2vec2-lv-60-espeak-cv-ft-ONNX model.
 //
-// This class is intentionally NOT implemented yet: it requires linking
-// ONNX Runtime and bundling the ~197 MB model artifact, both of which
-// belong to the iOS target build (pronunciation-ios/EngineBridge), not to
-// engine development in this environment. Every other module in this
-// engine (AudioQuality, CTCAlignment, PhonemeScoring, Prosody,
-// DecisionRules, ContentValidation) only depends on the AcousticModel
-// interface, so wiring this in later does not require touching them.
+// The backend accepts the recorder's mono PCM at its native sample rate,
+// resamples to the model's required 16 kHz, applies the same zero-mean /
+// unit-variance normalization as Wav2Vec2FeatureExtractor, runs ONNX Runtime,
+// then conservatively collapses the model's 392 multilingual IPA labels into
+// the engine inventory using Resources/acoustic-token-map.json.
 //
-// Build with -DPRONUNCIATION_ENGINE_WITH_ONNXRUNTIME=ON and provide
-// onnxruntime's headers/libs to enable the real implementation; otherwise
-// infer() throws so the mistake is loud rather than silently mis-scoring.
+// Unsupported model labels are folded into CTC blank rather than into a
+// guessed English phoneme. Core ML is requested on Apple platforms and ONNX
+// Runtime's CPU provider remains the fallback.
 class OnnxAcousticModel : public AcousticModel {
 public:
-    explicit OnnxAcousticModel(std::string modelPath);
+    OnnxAcousticModel(std::string modelPath, std::string resourcesDir);
     ~OnnxAcousticModel() override;
+
+    OnnxAcousticModel(const OnnxAcousticModel&) = delete;
+    OnnxAcousticModel& operator=(const OnnxAcousticModel&) = delete;
+    OnnxAcousticModel(OnnxAcousticModel&&) noexcept;
+    OnnxAcousticModel& operator=(OnnxAcousticModel&&) noexcept;
 
     FrameLogProbs infer(const PcmBuffer& audio) override;
     int vocabularySize() const override;
     int blankColumn() const override;
 
 private:
+    struct Impl;
+    std::unique_ptr<Impl> impl_;
     std::string modelPath_;
+    std::string resourcesDir_;
+    int vocabularySize_ = 0;
+    int blankColumn_ = 0;
 };
 
 } // namespace pronunciation
