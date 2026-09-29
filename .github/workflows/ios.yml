@@ -4,14 +4,24 @@ on:
   pull_request:
     paths:
       - "ios/**"
+      - "pronunciation-engine/**"
       - "scripts/generate_xcodeproj.py"
+      - "scripts/fetch_pronunciation_model.py"
+      - "scripts/validate_stage_engine_content.py"
+      - "scripts/bundle_pronunciation_engine.sh"
+      - "scripts/fix_onnxruntime_minimum_os.sh"
       - ".github/workflows/ios.yml"
   push:
     branches:
       - main
     paths:
       - "ios/**"
+      - "pronunciation-engine/**"
       - "scripts/generate_xcodeproj.py"
+      - "scripts/fetch_pronunciation_model.py"
+      - "scripts/validate_stage_engine_content.py"
+      - "scripts/bundle_pronunciation_engine.sh"
+      - "scripts/fix_onnxruntime_minimum_os.sh"
       - ".github/workflows/ios.yml"
 
 concurrency:
@@ -26,8 +36,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Xcode project matches the source tree
-        run: python3 scripts/generate_xcodeproj.py --check
+      - name: Validate stage and engine content agree
+        run: python3 scripts/validate_stage_engine_content.py
+
+      - name: Cache locked pronunciation model
+        uses: actions/cache@v4
+        with:
+          path: pronunciation-engine/model/model_q4f16.onnx
+          key: pronunciation-model-q4f16-9978e7cba1bf7216
+
+      - name: Fetch and verify locked pronunciation model
+        run: python3 scripts/fetch_pronunciation_model.py
+
+      - name: Generate Xcode project
+        run: python3 scripts/generate_xcodeproj.py
 
       - name: Toolchain
         run: |
@@ -88,6 +110,10 @@ jobs:
           app="$(find "$RUNNER_TEMP/DerivedDataRelease/Build/Products" -maxdepth 2 -type d -name 'EnglishPronunciationCoach.app' -print -quit)"
           test -n "$app"
           test -f "$app/PrivacyInfo.xcprivacy"
+          test -f "$app/PronunciationEngineResources/phonemes.json"
+          test -f "$app/PronunciationEngineResources/practice-words.json"
+          python3 scripts/fetch_pronunciation_model.py \
+            --destination "$app/PronunciationEngineResources/model_q4f16.onnx" --verify-only
           /usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$app/Info.plist"
           /usr/libexec/PlistBuddy -c 'Print :ITSAppUsesNonExemptEncryption' "$app/Info.plist"
           /usr/libexec/PlistBuddy -c 'Print :NSMicrophoneUsageDescription' "$app/Info.plist"
