@@ -48,11 +48,11 @@ TEST(c_api_round_trips_a_correct_pronunciation) {
     pe_engine_destroy(engine);
 }
 
-TEST(c_api_reports_unwired_onnx_backend_as_an_error_not_a_crash) {
+TEST(c_api_engine_only_build_reports_missing_onnx_runtime_without_crashing) {
     const char* resourcesDir = PRONUNCIATION_ENGINE_RESOURCES_DIR;
     char* error = nullptr;
     pe_engine* engine = pe_engine_create(resourcesDir, "/tmp/does-not-matter.onnx", &error);
-    REQUIRE(engine != nullptr); // construction succeeds; only inference is unwired
+    REQUIRE(engine != nullptr); // token/content mapping still validates without ORT
     REQUIRE(error == nullptr);
 
     std::vector<float> pcm = makeSpeechLikeTone(1.0);
@@ -62,4 +62,18 @@ TEST(c_api_reports_unwired_onnx_backend_as_an_error_not_a_crash) {
     REQUIRE(error != nullptr);
     pe_free_error_message(error);
     pe_engine_destroy(engine);
+}
+
+TEST(c_api_audio_quality_gate_does_not_require_model_construction) {
+    std::vector<float> silence(16000, 0.0f);
+    pe_audio_quality_result silent = pe_audio_quality_evaluate(
+        silence.data(), static_cast<int>(silence.size()), 16000);
+    REQUIRE(silent.passes_gate == 0);
+    REQUIRE(silent.reason == PE_AUDIO_SILENCE);
+
+    std::vector<float> shortClip(100, 0.2f);
+    pe_audio_quality_result tooShort = pe_audio_quality_evaluate(
+        shortClip.data(), static_cast<int>(shortClip.size()), 16000);
+    REQUIRE(tooShort.passes_gate == 0);
+    REQUIRE(tooShort.reason == PE_AUDIO_TOO_SHORT);
 }
