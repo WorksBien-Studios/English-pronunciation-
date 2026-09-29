@@ -218,8 +218,11 @@ def render():
         f"\t\t{app_phases['resources']} /* Resources */ = {{isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = ({', '.join(app_res_ids)}); runOnlyForDeploymentPostprocessing = 0; }};"]))
     model_sign_script = (
         'if [ "${CODE_SIGNING_ALLOWED}" = YES ] && [ "${EFFECTIVE_PLATFORM_NAME}" = -iphonesimulator ]; then '
-        'model="${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/model_q4f16.onnx"; '
-        'if [ -f "$model" ]; then /usr/bin/codesign --force --sign - --timestamp=none "$model"; fi; '
+        'resource_root="${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"; '
+        'for name in model_q4f16.onnx PrivacyInfo.xcprivacy stages.json Assets.car; do '
+        'file="$resource_root/$name"; if [ -f "$file" ]; then /usr/bin/codesign --force --sign - --timestamp=none "$file"; fi; '
+        'done; '
+        'if [ -d "$resource_root/Resources" ]; then find "$resource_root/Resources" -type f -exec /usr/bin/codesign --force --sign - --timestamp=none {} \\; ; fi; '
         'fi'
     )
     out.append(section("PBXShellScriptBuildPhase", [
