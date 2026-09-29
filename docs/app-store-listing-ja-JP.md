@@ -5,7 +5,7 @@
 **Platform:** iOS / iPadOS 18+  
 **Primary locale:** Japanese (`ja-JP`)  
 **Release:** Version 1.0, new app  
-**Research and Apple-source review date:** 2026-09-28  
+**Research and Apple-source review date:** 2026-09-29  
 **Canonical product specification:** `docs/product-specification.md`
 
 This is the complete launch-copy and App Store Connect decision pack. It is not a submission authorization. Build-dependent controls are explicitly marked pending.
@@ -22,7 +22,7 @@ The listing deliberately avoids the crowded generic promises “AI英会話,” 
 
 | Field | Final Japanese copy | Limit | Count |
 |---|---|---:|---:|
-| Name | **英語発音コーチ｜日本人のための発音矯正** | 30 characters | 19 |
+| Name | **英語発音コーチ｜日本人向け発音矯正・練習** | 30 characters | 20 |
 | Subtitle | **RとL・THなど苦手な音を診断、直し方まで日本語で** | 30 characters | 25 |
 | Promotional text | **採点だけで終わらない発音練習。苦手な音を見つけ、舌・唇・息・声の使い方を日本語で確認。端末内で分析し、1日10回まで無料で試せます。** | 170 characters | 66 |
 | Keywords | `カタカナ英語,発音記号,アクセント,スピーキング,リンキング,子音,母音` | 100 UTF-8 bytes | 96 bytes |
@@ -31,13 +31,19 @@ Keyword-field changes in the 2026-09-29 copy review: removed `音素練習` (not
 
 Do not add competitor names, `AI英会話`, `TOEIC`, `英検`, `IELTS`, `無料`, or `オフライン` to the keyword field merely to chase traffic. The first four are either misleading for this narrow product or unsupported at launch; the latter terms belong in readable copy when truthful.
 
+### ASO and web-SEO status — 2026-09-29
+
+The indexed App Store fields now cover the primary intent (`英語発音`), correction intent (`発音矯正`), practice intent (`練習`), Japanese-speaker focus, diagnostic differentiation, and supported secondary vocabulary without duplicating title or subtitle terms in the keyword field. The added `練習` term is supported by the high-traction `英語発音トレーニング` lane already recorded below. This is the strongest evidence-backed launch hypothesis available without private Apple Search Popularity data; validate it after launch using App Store Connect search impressions and conversion data.
+
+Search-result conversion ASO remains pending until the finished icon and authentic screenshots are checked at small/search-result size. Public-web SEO for the marketing URL is a separate HTML audit—page title, meta description, headings, canonical URL, indexability and structured data are not attested by this App Store listing file.
+
 ### Name status: `LOCKED`
 
 The full title is descriptive, truthful, within Apple's 30-character limit, and was not found as an exact App Store title during the 2026-09-28 check. This is a naming collision screen, not trademark clearance.
 
 | Candidate | Decision | Reason |
 |---|---|---|
-| 英語発音コーチ｜日本人のための発音矯正 | **Selected** | Captures `英語発音`, `コーチ`, and `発音矯正`; immediately identifies the Japanese-speaker focus. |
+| 英語発音コーチ｜日本人向け発音矯正・練習 | **Selected** | Captures `英語発音`, `コーチ`, `発音矯正`, and `練習`; immediately identifies the Japanese-speaker focus while covering the validated practice intent. |
 | 英語発音矯正｜日本語コーチ | Rejected | Shorter, but “日本語コーチ” can imply Japanese-language tutoring. |
 | 日本人の英語発音トレーナー | Rejected | Clear but loses the stronger correction intent `発音矯正`. |
 | 発音フィックス | Rejected | Brand-like, lower search pull, and requires explanation. |
@@ -304,7 +310,7 @@ Reviewer contact must be populated with the current App Store Connect contact im
 
 ## 11. Applicable App Review controls
 
-Current Apple sources reviewed on 2026-09-28:
+Current Apple sources reviewed on 2026-09-29:
 
 - [App Review Guidelines](https://developer.apple.com/app-store/review/guidelines/)
 - [App information fields](https://developer.apple.com/help/app-store-connect/reference/app-information/app-information/)
