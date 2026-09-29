@@ -168,7 +168,7 @@ Production rules:
 
 - use current app UI only—no conceptual mockup presented as the product;
 - portrait iPhone master at an accepted 6.9-inch size, preferably 1320 × 2868;
-- portrait iPad master at 2064 × 2752;
+- portrait iPad master at 2064 × 2752, captured in the **regular-width two-column NavigationSplitView state**; do not use the compact/single-column iPhone-like presentation for the iPad store set;
 - JPEG or PNG with no alpha channel;
 - large Japanese caption readable at search-result size;
 - no competitor names, platform logos, hardware frames copied without rights, prices or unverifiable scores;
@@ -190,7 +190,7 @@ The editable launch shell masters live in `assets/screenshots/shells/` and cover
 - `ipad-02-correction.svg` — **直し方が、日本語でわかる**
 - `ipad-03-progress.svg` — **発音を練習して、すぐ再チェック**
 
-`shell-spec.json` contains deterministic canvas sizes and replacement-slot coordinates for both device classes.
+`shell-spec.json` contains deterministic canvas sizes, replacement-slot coordinates, and capture-layout requirements for both device classes. The iPad set must visibly demonstrate the app's native two-column layout.
 
 ### Icon brief
 
