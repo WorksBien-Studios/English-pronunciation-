@@ -29,9 +29,9 @@ Decision (product owner): creature names are generic sound labels, not brand-lik
 - [Kirby (character)](https://simple.wikipedia.com/wiki/Kirby_(character)) — small pink sphere with cheek blushes and oval eyes.
 - [English Monsters (イーモン)](https://englishhub.jp/app/english-monsters.html) — existing English-learning app with monsters on "Eimon Island".
 
-## Still required before the art ships
+## Owner decisions and reminders
 
-1. A trademark search for the app name and 音の島 (see [`trademark-search-worksheet.md`](trademark-search-worksheet.md)); the creature names are now generic sound labels. The guide (コーチ) is a generic role word.
-2. An illustrator's original final artwork; the current SVG art is a mockup and should not be treated as final.
-3. A repeat similarity review of the final art, since the screen above compares the mockup only.
-4. Keep the exclusions in Apple guideline 5.2 in mind: do not use any third-party character, name or likeness, including "inspired by" work that is recognisably the same.
+- **Clearance is not a gate.** The owner handles trademark and naming clearance and relies on App Store Connect's own name checks; no further search is required by these documents.
+- Creature names are generic sound labels and the guide is a common role word.
+- The current SVG art is a mockup; final illustrator artwork replaces it.
+- Apple guideline 5.2 still applies: do not use any third-party character, name or likeness, including "inspired by" work that is recognisably the same.

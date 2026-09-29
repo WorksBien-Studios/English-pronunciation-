@@ -32,7 +32,7 @@ These are design hypotheses, not evidence of market fit. Validate with Japanese-
 - **おみくじ:** once-daily free fortune containing a short pronunciation tip.
 - **Free/Pro:** the 10 valid analyses per day appear as マイクパワー 7/10. Paywall lists exactly the Pro benefits in the listing pack.
 
-**Creature names** are generic sound labels (Rくん, Lくん, THくん, Vくん, Fくん, Bくん); the guide is コーチ. This avoids brand-name collisions (see [`trademark-search-worksheet.md`](trademark-search-worksheet.md)).
+**Creature names** are generic sound labels (Rくん, Lくん, THくん, Vくん, Fくん, Bくん); the guide is コーチ. This avoids brand-name collisions (trademark and naming clearance is handled by the owner and is not a gate for this concept).
 
 ## 3. Screens in the mockup
 
@@ -75,7 +75,7 @@ No third-party UI, animation or game libraries are required.
 - **Model audio** is labelled as iOS speech synthesis, not a native-speaker recording.
 - **No social feed, leaderboards or accounts** (spec V1 exclusions). Game Center is not used.
 - **Age rating:** re-answer the questionnaire against the final build; cartoon creatures with no violence are expected to stay 4+.
-- **Assets:** all characters, patterns and diagrams in the mockup are original. Do not copy an existing game's or pronunciation app's creature, UI or diagram. A web-based similarity screen was done on 2026-09-29 (see [`character-similarity-screen.md`](character-similarity-screen.md)); it led to design and name changes but is not legal clearance. A formal trademark search is still required before the assets ship.
+- **Assets:** all characters, patterns and diagrams in the mockup are original. Do not copy an existing game's or pronunciation app's creature, UI or diagram. A web-based similarity screen was done on 2026-09-29 (see [`character-similarity-screen.md`](character-similarity-screen.md)); it led to design and name changes but is not legal clearance. Trademark clearance is the owner's responsibility and is not a gate in these docs.
 
 ## 6a. Character expression rules (Japanese conventions)
 
@@ -107,7 +107,6 @@ Reviewed 2026-09-29 against common Japanese character-design and emoticon conven
 ## 8. Open items
 
 1. Final names and polished art for the mascot and creatures (illustrator pass; current SVG art is a mockup).
-2. Formal trademark/design search for the final names and art (the mockup screen is done; see the similarity screen).
 3. Japanese-language TestFlight validation of tone, difficulty and reward pacing.
 4. Decide the launch creature count (mockup shows 6) and stage count against the launch curriculum.
 5. Sound design (optional): short native `AVAudioPlayer` effects for tap, clear and stamp; respect the silent switch.
