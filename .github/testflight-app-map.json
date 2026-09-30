@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
-  "state": "awaiting_ios_source_and_credential_route",
+  "state": "ready",
   "repository": "lrodeveloperr/English-pronunciation-",
   "bundle_id": "com.worksbienstudios.englishpronunciationcoach",
   "team_id": "49SQ3XQ68Q",
   "asc_app_id": "6817376615",
   "credential_alias": "worksbien-primary",
-  "asc_key_id": "",
-  "asc_issuer_id": "",
+  "asc_key_id": "NLN6393565",
+  "asc_issuer_id": "9f49640c-f575-42b4-b0c7-8e3194aef419",
   "private_key_secret_name": "ASC_PRIVATE_KEY",
   "runtime_env": {
     "key_id": "ASC_KEY_ID",
@@ -20,7 +20,7 @@
   "xcode_container_type": "project",
   "xcode_container": "ios/EnglishPronunciationCoach.xcodeproj",
   "scheme": "EnglishPronunciationCoach",
-  "required_check_name": "English Engine Stress",
+  "required_check_name": "iOS build and test",
   "signing_style": "automatic",
   "export_method": "app-store-connect",
   "signing_certificate": "Apple Distribution"
