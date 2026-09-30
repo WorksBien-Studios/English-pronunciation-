@@ -1,83 +1,163 @@
 import SwiftData
 import SwiftUI
 
-/// 図鑑 tab: collected sound creatures. The grid adapts its column count to the available width.
+/// 図鑑 tab: every launch sound as a card. A sound is added when its stage is cleared.
+/// Wide windows show the grid beside the selected sound; narrow ones push the detail.
 struct ZukanView: View {
     @Query private var progress: [StageProgress]
 
+    private enum Filter: String, CaseIterable, Identifiable {
+        case all = "すべて"
+        case collected = "集めた音"
+        case remaining = "まだの音"
+        var id: String { rawValue }
+    }
+
+    @State private var filter = Filter.all
+    @State private var selected: Sound = .r
+    @State private var pushed: Sound?
+
     private let catalog = StageCatalog.shared
 
-    private var unlocked: Set<Sound> {
-        var result = Set<Sound>()
-        for stage in catalog.stages {
-            let earned = progress.first(where: { $0.stageID == stage.id })?.stars ?? 0
-            if earned > 0 { result.formUnion(stage.sounds) }
+    private func stage(of sound: Sound) -> Stage? {
+        catalog.stages.first { $0.sounds.contains(sound) }
+    }
+
+    private func stars(of stage: Stage?) -> Int {
+        guard let stage else { return 0 }
+        return progress.first { $0.stageID == stage.id }?.stars ?? 0
+    }
+
+    private func isCollected(_ sound: Sound) -> Bool {
+        stars(of: stage(of: sound)) > 0
+    }
+
+    private var collectedCount: Int {
+        Sound.allCases.filter(isCollected).count
+    }
+
+    private var shown: [Sound] {
+        Sound.allCases.filter { sound in
+            switch filter {
+            case .all: true
+            case .collected: isCollected(sound)
+            case .remaining: !isCollected(sound)
+            }
         }
-        return result
     }
 
     var body: some View {
-        let collected = unlocked
-        ScrollView {
-            VStack(alignment: .leading, spacing: 14) {
-                HStack {
-                    Text("仲間を集めよう")
-                        .font(.game(14, relativeTo: .subheadline))
-                        .foregroundStyle(Palette.secondaryText)
-                    Spacer()
-                    Text("\(collected.count) / \(Sound.allCases.count)")
-                        .font(.game(16, relativeTo: .headline))
-                        .foregroundStyle(Palette.ink)
-                }
-                ProgressBar(fraction: Double(collected.count) / Double(Sound.allCases.count), fill: Palette.sun)
-                    .frame(height: 14)
-
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 130), spacing: 12)], spacing: 12) {
-                    ForEach(Array(Sound.allCases.enumerated()), id: \.element.id) { index, sound in
-                        ZukanCard(number: index + 1, sound: sound, isCollected: collected.contains(sound))
-                    }
-                }
-                Text("ステージをクリアすると、図鑑に仲間が増えます。")
-                    .font(.game(12, relativeTo: .caption))
-                    .foregroundStyle(Palette.secondaryText)
+        WidthAdaptive {
+            HStack(spacing: 0) {
+                ScrollView { grid(wide: true).padding(16) }
+                    .frame(width: 460)
+                Divider()
+                SoundDetailView(sound: selected, stage: stage(of: selected), isCollected: isCollected(selected))
+                    .id(selected)
             }
-            .padding(16)
+        } compact: {
+            ScrollView { grid(wide: false).padding(16).readableColumn() }
         }
-        .background(SkyBackground())
-        .navigationTitle("音の図鑑")
+        .background(Color(.systemGroupedBackground))
+        .navigationTitle("図鑑")
+        .navigationDestination(item: $pushed) { sound in
+            SoundDetailView(sound: sound, stage: stage(of: sound), isCollected: isCollected(sound))
+        }
+    }
+
+    private func grid(wide: Bool) -> some View {
+        VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Text("集めた音").font(.headline)
+                    Spacer()
+                    Text("\(collectedCount) / \(Sound.allCases.count)")
+                        .font(.body.monospacedDigit())
+                        .foregroundStyle(.secondary)
+                }
+                ProgressView(value: Double(collectedCount), total: Double(Sound.allCases.count))
+                Text("ステージをクリアすると、その音が図鑑に加わります。")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .card()
+
+            Picker("表示", selection: $filter) {
+                ForEach(Filter.allCases) { Text($0.rawValue).tag($0) }
+            }
+            .pickerStyle(.segmented)
+
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 140), spacing: 12)], spacing: 12) {
+                ForEach(shown) { sound in
+                    Button {
+                        if wide { selected = sound } else { pushed = sound }
+                    } label: {
+                        SoundCard(
+                            number: (Sound.allCases.firstIndex(of: sound) ?? 0) + 1,
+                            sound: sound,
+                            stage: stage(of: sound),
+                            stars: stars(of: stage(of: sound)),
+                            isSelected: wide && sound == selected
+                        )
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
     }
 }
 
-private struct ZukanCard: View {
+private struct SoundCard: View {
     let number: Int
     let sound: Sound
-    let isCollected: Bool
+    let stage: Stage?
+    let stars: Int
+    let isSelected: Bool
+
+    private var collected: Bool { stars > 0 }
+
+    private var example: PracticeWord? {
+        stage?.words.first { $0.target == sound }
+    }
 
     var body: some View {
-        VStack(spacing: 2) {
+        VStack(spacing: 4) {
             Text(String(format: "No.%02d", number))
-                .font(.game(11, relativeTo: .caption2))
-                .foregroundStyle(Palette.secondaryText)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            CreatureView(sound: sound, isLocked: !isCollected)
-                .frame(maxWidth: 96, maxHeight: 96)
-            Text(isCollected ? sound.displayName : "？？？")
-                .font(.game(15, relativeTo: .headline))
-            Text(isCollected ? sound.ipa : "まだ出会っていない")
-                .font(.game(12, relativeTo: .caption))
-                .foregroundStyle(Palette.secondaryText)
+                .font(.caption2.monospacedDigit())
+                .foregroundStyle(.secondary)
+            Text(sound.symbol)
+                .font(.system(size: 44, weight: .semibold, design: .serif))
+                .foregroundStyle(collected ? Color.brand : Color.secondary.opacity(0.4))
+            Text(sound.label).font(.subheadline.weight(.semibold))
+            if let example {
+                Text("\(example.text) \(example.ipa)")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+            }
+            if collected {
+                StarsView(count: stars, size: 13)
+            } else if let stage {
+                Label("ステージ\(stage.number)で解放", systemImage: "lock.fill")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .labelStyle(.titleAndIcon)
+            }
         }
-        .foregroundStyle(isCollected ? Palette.ink : Palette.secondaryText)
-        .padding(10)
         .frame(maxWidth: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(isCollected ? Color.white : Color(hex: 0xF1F3FA))
+        .padding(.vertical, 14)
+        .padding(.horizontal, 8)
+        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .stroke(isSelected ? Color.brand : Color.clear, lineWidth: 2)
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(
+            collected
+                ? "\(sound.label)、\(sound.ipa)、集めた音、星\(stars)つ"
+                : "\(sound.label)、\(sound.ipa)、まだ集めていない音"
         )
-        .overlay(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .stroke(Palette.ink.opacity(isCollected ? 1 : 0.4), style: StrokeStyle(lineWidth: 3, dash: isCollected ? [] : [6, 4]))
-        )
-        .accessibilityElement(children: .combine)
     }
 }

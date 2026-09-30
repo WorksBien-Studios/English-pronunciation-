@@ -1,5 +1,7 @@
 # Character similarity screen — 音の島
 
+> **Obsolete (2026-09-30):** the characters this screen covered were removed when the app moved to the native UI ([`native-ui.md`](native-ui.md)).
+
 **Date:** 2026-09-29  
 **Scope:** the guide character (コーチ) and the six sound creatures in [`game-ui-concept.md`](game-ui-concept.md)  
 **Method:** visual comparison against well-known Japanese characters plus targeted web searches (Dragon Quest Slime, Kirby, existing English-learning creature apps, chat-bubble mascots).  

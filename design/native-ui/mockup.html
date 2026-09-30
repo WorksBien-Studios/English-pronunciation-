@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>
+<title>音の島 ネイティブUI</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+/* Layout: sticky control bar, one stage that scales real-point device frames uniformly, then spec + kit tables. */
+:root{
+  --bg:#EDF0F4; --fg:#161B26; --sub:#5B6474; --line:#D5DAE3; --panel:#fff; --accent:#2C4DAE; --accent-fg:#fff; --chip:#E2E7F0;
+  --font:"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+  /* mock (iOS 18 system colours) */
+  --m-bg:#F2F2F7; --m-card:#fff; --m-fg:#000; --m-sub:rgba(60,60,67,.6); --m-ter:rgba(60,60,67,.3); --m-sep:rgba(60,60,67,.18);
+  --m-fill:rgba(120,120,128,.12); --m-tint:#2C4DAE; --m-tintbg:rgba(44,77,174,.12); --m-green:#34C759; --m-orange:#FF9500; --m-red:#FF3B30; --m-yellow:#FFB800;
+  --m-bar:rgba(249,249,249,.86); --m-bezel:#1b1c20;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0F1218; --fg:#E7EAF1; --sub:#98A1B3; --line:#262C39; --panel:#171B24; --accent:#8AA4FF; --accent-fg:#0F1218; --chip:#232938; color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1218; --fg:#E7EAF1; --sub:#98A1B3; --line:#262C39; --panel:#171B24; --accent:#8AA4FF; --accent-fg:#0F1218; --chip:#232938; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);line-height:1.7;padding-inline:16px;padding-block:0 64px}
+*{box-sizing:border-box}
+.wrap{max-width:1240px;margin-inline:auto}
+header.top{padding-block:28px 12px}
+h1{font-size:clamp(24px,4vw,34px);margin:0;line-height:1.3;text-wrap:balance}
+.lead{color:var(--sub);max-width:62ch;margin:8px 0 0}
+h2{font-size:22px;margin:56px 0 8px;line-height:1.4;text-wrap:balance}
+h3{font-size:16px;margin:0 0 4px}
+p{margin:0}
+.ctl{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);padding-block:10px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center}
+.seg{display:inline-flex;background:var(--chip);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{font:inherit;font-size:13px;border:0;background:none;color:var(--fg);padding:6px 12px;border-radius:8px;cursor:pointer;min-height:32px}
+.seg button[aria-pressed="true"]{background:var(--panel);box-shadow:0 1px 3px rgba(0,0,0,.18);font-weight:700;color:var(--accent)}
+.seg button:focus-visible,.tog:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tog{font:inherit;font-size:13px;display:inline-flex;align-items:center;gap:6px;color:var(--fg);cursor:pointer;min-height:32px}
+.stage{padding-block:24px 8px}
+.readout{font-family:var(--mono);font-size:12px;color:var(--sub);margin-bottom:14px;display:flex;flex-wrap:wrap;gap:4px 18px}
+.fit{position:relative;margin-inline:auto}
+.compare{display:flex;gap:28px;align-items:flex-start;justify-content:center}
+.caption{font-family:var(--mono);font-size:11px;color:var(--sub);margin-top:8px;text-align:center}
+.slot{position:relative}
+.scaled{position:absolute;left:0;top:0;transform-origin:0 0}
+
+/* ---------- device frame (1 CSS px = 1 pt inside .dev) ---------- */
+.dev{position:relative;background:var(--m-bezel);box-shadow:0 0 0 2px #3a3c44 inset,0 20px 50px rgba(0,0,0,.28)}
+.scr{position:absolute;overflow:hidden;background:var(--m-bg);color:var(--m-fg);font-family:var(--font);font-size:17px;line-height:1.3;-webkit-font-smoothing:antialiased}
+.mock-dark{--m-bg:#000;--m-card:#1C1C1E;--m-fg:#fff;--m-sub:rgba(235,235,245,.6);--m-ter:rgba(235,235,245,.3);--m-sep:rgba(84,84,88,.6);--m-fill:rgba(120,120,128,.24);--m-tint:#7C9BFF;--m-tintbg:rgba(124,155,255,.18);--m-bar:rgba(30,30,30,.86);--m-green:#30D158;--m-orange:#FF9F0A;--m-red:#FF453A;--m-yellow:#FFD60A}
+.scr *{box-sizing:border-box}
+.island{position:absolute;left:50%;top:11px;width:126px;height:37px;margin-left:-63px;background:#000;border-radius:20px;z-index:60}
+.sb{position:absolute;left:0;right:0;top:0;display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:16px;z-index:45}
+.sb i{font-style:normal;font-size:13px;letter-spacing:1px}
+.home{position:absolute;left:50%;bottom:8px;width:139px;height:5px;margin-left:-70px;background:var(--m-fg);border-radius:3px;z-index:20}
+.home.pad{width:150px}
+.body{position:absolute;left:0;right:0;overflow:hidden}
+.scroll{padding:0}
+.navlarge{padding:0 20px 8px;font-size:34px;font-weight:700;letter-spacing:.2px;line-height:1.2}
+.navinline{position:absolute;left:0;right:0;height:44px;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:17px;background:var(--m-bar);backdrop-filter:blur(20px);border-bottom:.5px solid var(--m-sep);z-index:5}
+.navinline .l,.navinline .r{position:absolute;top:0;height:44px;display:flex;align-items:center;gap:2px;color:var(--m-tint);font-weight:400}
+.navinline .l{left:8px}.navinline .r{right:16px}
+.tabbar{position:absolute;left:0;right:0;bottom:0;height:83px;background:var(--m-bar);backdrop-filter:blur(20px);border-top:.5px solid var(--m-sep);display:flex;justify-content:space-around;padding:6px 6px 0;z-index:6}
+.tab{width:25%;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:var(--m-sub);font-weight:500}
+.tab svg{width:26px;height:26px}
+.tab.on{color:var(--m-tint)}
+.toptabs{position:absolute;left:0;right:0;top:24px;height:50px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:6}
+.toptabs .t{font-size:17px;font-weight:700}
+.capsule{display:flex;background:var(--m-fill);border-radius:22px;padding:3px;gap:2px;position:absolute;left:50%;transform:translateX(-50%)}
+.capsule .ct{display:flex;align-items:center;gap:6px;padding:0 16px;height:38px;border-radius:19px;font-size:15px;font-weight:500;color:var(--m-fg)}
+.capsule .ct svg{width:20px;height:20px}
+.capsule .ct.on{background:var(--m-card);box-shadow:0 1px 4px rgba(0,0,0,.18);color:var(--m-tint);font-weight:700}
+svg{display:block}
+.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ic.f{fill:currentColor;stroke:none}
+
+/* system components */
+.grp{background:var(--m-card);border-radius:12px;overflow:hidden;position:relative}
+.grp+.grp,.stack>*+*{margin-top:16px}
+.gh{font-size:13px;color:var(--m-sub);text-transform:none;padding:0 16px 6px;margin-top:22px;letter-spacing:.2px}
+.row{min-height:44px;display:flex;align-items:center;gap:12px;padding:10px 16px;position:relative}
+.row+.row::before{content:"";position:absolute;left:16px;right:0;top:0;border-top:.5px solid var(--m-sep)}
+.row.sel{background:var(--m-tintbg)}
+.row .t{font-size:17px;font-weight:500}.row .s{font-size:13px;color:var(--m-sub);line-height:1.35}
+.grow{flex:1;min-width:0}
+.badge{width:36px;height:36px;border-radius:9px;background:var(--m-tint);color:#fff;display:grid;place-items:center;font-weight:700;font-size:17px;flex:none}
+.badge.lock{background:var(--m-fill);color:var(--m-sub)}
+.chev{width:14px;height:14px;color:var(--m-ter);stroke-width:2.6;flex:none}
+.pro{font-size:11px;font-weight:700;background:var(--m-fill);color:var(--m-sub);padding:2px 8px;border-radius:9px;letter-spacing:.4px}
+.stars{display:flex;gap:1px;color:var(--m-yellow)}.stars svg{width:15px;height:15px}.stars .off{color:var(--m-ter)}
+.ipa{font-family:"Charis SIL","Gentium Plus","Noto Serif",serif;font-style:normal}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:14px;padding:3px 10px;font-size:13px;font-weight:600}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:50px;border-radius:14px;background:var(--m-tint);color:#fff;font-weight:600;font-size:17px;padding:0 20px}
+.btn.sec{background:var(--m-tintbg);color:var(--m-tint)}
+.btn.sm{min-height:44px;font-size:15px}
+.seg2{display:flex;background:var(--m-fill);border-radius:9px;padding:2px;height:36px}
+.seg2 div{flex:1;display:grid;place-items:center;font-size:15px;border-radius:7px;font-weight:500}
+.seg2 .on{background:var(--m-card);box-shadow:0 1px 3px rgba(0,0,0,.2);font-weight:600}
+.pad-in{padding:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cap13{font-size:13px;color:var(--m-sub)}
+.cap12{font-size:12px;color:var(--m-sub)}
+.big{font-size:56px;font-weight:700;letter-spacing:.5px;line-height:1.1}
+.strip{display:flex;justify-content:space-between}
+.day{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;color:var(--m-sub)}
+.dot{width:32px;height:32px;border-radius:50%;background:var(--m-fill);display:grid;place-items:center;color:#fff}
+.dot.on{background:var(--m-tint)}.dot.today{box-shadow:0 0 0 2px var(--m-bg),0 0 0 4px var(--m-tint)}
+.dot svg{width:16px;height:16px;stroke-width:3}
+.phon{display:flex;gap:8px;flex-wrap:wrap}
+.pc{flex:1;min-width:88px;border-radius:12px;padding:10px 12px;background:var(--m-fill)}
+.pc b{font-size:24px;font-weight:600;display:block;line-height:1.2}
+.pc.ok{background:color-mix(in srgb,var(--m-green) 16%,transparent)}
+.pc.bad{background:color-mix(in srgb,var(--m-orange) 20%,transparent)}
+.meter{height:4px;border-radius:2px;background:var(--m-fill);margin-top:8px;overflow:hidden}.meter i{display:block;height:100%;background:var(--m-tint)}
+.pc.ok .meter i{background:var(--m-green)}.pc.bad .meter i{background:var(--m-orange)}
+.tile{aspect-ratio:1;border-radius:14px;background:var(--m-card);display:grid;place-items:center;font-size:30px;position:relative}
+.tile.off{color:var(--m-ter)}.tile small{position:absolute;bottom:6px;font-size:10px;color:var(--m-sub);font-family:var(--font)}
+.rec{width:72px;height:72px;border-radius:50%;border:4px solid var(--m-ter);display:grid;place-items:center;margin-inline:auto}
+.rec i{width:28px;height:28px;border-radius:7px;background:var(--m-red);display:block}
+.live{display:inline-flex;align-items:center;gap:6px;color:var(--m-red);font-weight:600;font-size:15px}
+.live i{width:9px;height:9px;border-radius:50%;background:var(--m-red)}
+.sheet{position:absolute;background:var(--m-bg);z-index:41;overflow:hidden;display:flex;flex-direction:column}
+.dim{position:absolute;inset:0;background:rgba(0,0,0,.42);z-index:40}
+.plan{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;background:var(--m-card);border:2px solid transparent;min-height:60px}
+.plan.on{border-color:var(--m-tint)}
+.radio{width:22px;height:22px;border-radius:50%;border:2px solid var(--m-ter);flex:none;display:grid;place-items:center}
+.plan.on .radio{border-color:var(--m-tint)}.plan.on .radio::after{content:"";width:12px;height:12px;border-radius:50%;background:var(--m-tint)}
+.zt{background:var(--m-card);border-radius:14px;padding:14px 12px 12px;text-align:center;position:relative;border:2px solid transparent}
+.zt.sel{border-color:var(--m-tint)}
+.zt .g{font-size:44px;line-height:1.1;color:var(--m-tint)}
+.zt.off .g{color:var(--m-ter)}
+.zt .no{font-size:11px;color:var(--m-sub);font-variant-numeric:tabular-nums}
+.zt .st{margin-top:6px;display:flex;justify-content:center;min-height:15px}
+.link{color:var(--m-tint);font-size:13px}
+/* annotation tags */
+body.tags [data-k]:not(.tabbar):not(.toptabs){position:relative}
+body.tags [data-k]::after{content:attr(data-k);position:absolute;right:6px;top:-9px;z-index:30;font:500 10px/1 var(--mono);background:#111;color:#fff;padding:3px 6px;border-radius:5px;white-space:nowrap;box-shadow:0 0 0 1px rgba(255,255,255,.4)}
+body.tags [data-k]{outline:1.5px dashed #ff8a00;outline-offset:1px}
+
+/* ---------- spec + kit ---------- */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:720px}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-size:12px;color:var(--sub);font-weight:500;letter-spacing:.4px}
+tr:last-child td{border-bottom:0}
+td.n{font-family:var(--mono);font-size:12.5px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tag{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:5px;background:var(--chip);white-space:nowrap;display:inline-block}
+.tag.ok{background:color-mix(in srgb,#2a9d5c 20%,transparent);color:var(--fg)}
+.tag.wait{background:color-mix(in srgb,#d98a00 24%,transparent);color:var(--fg)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.card p{color:var(--sub);font-size:14px}
+.cap{font-size:12px;color:var(--sub)}
+.note{color:var(--sub);font-size:13px;margin-top:10px;max-width:80ch}
+@media (prefers-reduced-motion:no-preference){.scaled{transition:none}}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <h1>音の島 ネイティブUI 案</h1>
+  <p class="lead">iOS 18 標準部品だけで組んだ画面案です。iPhone、iPad 一列（mini・縦向き）、iPad 二列（11インチ以上）を同じ縮尺で並べられます。ポイント単位の実寸で描いているので、iPad の余白や文字サイズもそのまま確認できます。</p>
+</header>
+
+<div class="ctl" role="group" aria-label="表示設定">
+  <div class="seg" id="devSeg" aria-label="端末"></div>
+  <div class="seg" id="scrSeg" aria-label="画面"></div>
+  <label class="tog"><input type="checkbox" id="tagTog"> 使用部品ラベル</label>
+  <label class="tog"><input type="checkbox" id="darkTog"> ダーク</label>
+</div>
+
+<section class="stage" aria-live="polite">
+  <div class="readout" id="readout"></div>
+  <div class="fit" id="fit"></div>
+</section>
+
+<h2>端末とスケール</h2>
+<p class="lead">すべて論理ポイント（pt）で作図しています。表示上の縮小率は全端末で共通なので、並べて比べても実際の大きさの比になります。</p>
+<div class="tbl-wrap" style="margin-top:14px"><table>
+<thead><tr><th>案</th><th>想定端末</th><th>画面（pt）</th><th>ピクセル</th><th>レイアウト</th></tr></thead>
+<tbody>
+<tr><td>iPhone</td><td>iPhone 16（6.1")</td><td class="n">393 × 852</td><td class="n">1179 × 2556 @3x</td><td>下部タブバー。一列。</td></tr>
+<tr><td>iPad 一列</td><td>iPad mini（8.3"）縦、iPad 10.9" 縦、Split View の 1/2 以下</td><td class="n">744 × 1133</td><td class="n">1488 × 2266 @2x</td><td>上部タブ。中身は最大幅 620pt に制限して中央寄せ。</td></tr>
+<tr><td>iPad 二列</td><td>iPad Pro 11" 横（13" は同じ構成で余白が増える）</td><td class="n">1210 × 834</td><td class="n">2420 × 1668 @2x</td><td>上部タブ＋サイドバー 340pt＋詳細。</td></tr>
+</tbody></table></div>
+<div class="cols" style="margin-top:14px">
+  <div class="card"><h3>切り替えは幅で決める</h3><p>端末名ではなくコンテナ幅で判定します。900pt 未満は一列、900pt 以上は二列です。iPad mini や 11 インチ縦向きは一列、11 インチ横向きと 13 インチは二列になります。<span class="tag">GeometryReader</span> <span class="tag">ViewThatFits</span> <span class="tag">NavigationSplitView</span></p></div>
+  <div class="card"><h3>寸法はシステム値のまま</h3><p>行の高さ 44pt 以上、本文 17pt、ラージタイトル 34pt、注記 13pt、カード角丸 12pt、サイドバー 340pt、iPad の上部タブ領域 50pt。Dynamic Type で拡大した場合も、固定高にせず行が伸びる作りにします。</p></div>
+  <div class="card"><h3>iPad の一列は引き伸ばさない</h3><p>744pt 幅で全幅の行を出すと 1 行が長くなりすぎます。読みやすい幅（約 620pt）で止め、IPA のカードと 4 つのコツは横並びにします。<span class="tag">.frame(maxWidth: 620)</span></p></div>
+</div>
+
+<h2>日本のユーザーの好みをどう反映したか</h2>
+<p class="lead">既存のコンセプト文書と同じく、次は仮説です。日本語話者の TestFlight で確かめてから確定します。</p>
+<div class="cols" style="margin-top:14px">
+  <div class="card"><h3>ゆるキャラ → 標準の見た目</h3><p>キャラクターは外し、IPA の文字と SF Symbols を主役にしました。可愛さは丸みのあるカードと、やさしい文言で残します。</p></div>
+  <div class="card"><h3>コレクション → 図鑑</h3><p>集める楽しさは、IPA のカード一覧（図鑑タブ）に置き換えました。未解放の音は薄く表示し、解放されるステージを書きます。</p></div>
+  <div class="card"><h3>小さな毎日の習慣</h3><p>今日の目標のリングと、1 週間のスタンプ。おみくじは無料・装飾のみの「今日のひとこと」に縮小できます。</p></div>
+  <div class="card"><h3>情報量と安心感</h3><p>結果画面は「通じるか」「目標音が出たか」「安定したか」を 3 段階で明示し、日本語で直し方を書きます。低信頼度のときは星を出さず「もう一度」にします。</p></div>
+  <div class="card"><h3>丁寧で中立な文言</h3><p>です・ます調、分かち書きなし、恥をかかせない表現（おしい！あと少し）。下向きの表情や「失敗」は使いません。</p></div>
+  <div class="card"><h3>課金の透明性</h3><p>無料枠（マイクパワー 7/10）を常に表示。購読画面は <code>SubscriptionStoreView</code> をそのまま使い、価格と期間は StoreKit の値です（モックの「¥●,●●●」は仮の表示）。Pro の中身は、回数制限の解除とすべてのステージの 2 つだけを載せています。閉じるボタン、購入の復元、利用規約、プライバシー、自動更新の説明を常に出します。</p></div>
+  <div class="card"><h3>図鑑</h3><p>キャラクターの代わりに、IPA の文字・番号・例の単語・星で 1 音を 1 枚のカードにしています。未解放の音は薄く表示し、解放されるステージを書きます。iPad の二列では、左が一覧、右が選んだ音の詳しい説明（例の単語と 4 つのコツ）です。</p></div>
+</div>
+
+<h2>エンジン機能ごとの部品と、商用無料のテンプレート</h2>
+<p class="lead">標準部品で足りるものは標準を使い、足りない箇所だけ商用利用できる OSS を候補にしました。「ネイティブのみ」を守るなら、外部依存はゼロでも成立します。</p>
+<div class="tbl-wrap" style="margin-top:14px"><table>
+<thead><tr><th>エンジンの機能</th><th>UI で必要なもの</th><th>標準（第一候補）</th><th>外部候補</th><th>ライセンス</th></tr></thead>
+<tbody>
+<tr><td>アプリ全体の構造</td><td>タブ、サイドバー、二列、インスペクタ</td><td><span class="tag">TabView .sidebarAdaptable</span> <span class="tag">NavigationSplitView</span> <span class="tag">.inspector</span></td><td>なし（自社の ios-18-shell を土台にする）</td><td>自社 / Apple</td></tr>
+<tr><td>音質ゲート<br><span class="cap">AudioQuality</span></td><td>無音・音割れ・短すぎ・雑音の案内</td><td><span class="tag">ContentUnavailableView</span> <span class="tag">Label</span> <span class="tag">.sensoryFeedback</span></td><td>なし</td><td>Apple</td></tr>
+<tr><td>録音の波形<br><span class="cap">録音・音量メーター</span></td><td>ライブ波形、録音中の明確な状態</td><td><span class="tag">Canvas</span> + <span class="tag">TimelineView</span></td><td><b>DSWaveformImage</b>（<code>WaveformLiveCanvas</code>）</td><td><span class="tag ok">MIT・確認済み</span></td></tr>
+<tr><td>CTC アラインメント<br><span class="cap">CTCAlignment</span></td><td>音素ごとの時間軸</td><td><span class="tag">Layout</span> / <span class="tag">Canvas</span> で音素チップを並べる</td><td>該当する既製品は見つからず。自作が現実的</td><td>自社</td></tr>
+<tr><td>音素スコア<br><span class="cap">PhonemeScoring</span></td><td>音素ごとの判定と確信度</td><td><span class="tag">Gauge</span> <span class="tag">ProgressView</span></td><td>なし</td><td>Apple</td></tr>
+<tr><td>抑揚・強勢<br><span class="cap">Prosody</span></td><td>音の高さ、強さの曲線</td><td><span class="tag">Swift Charts</span> <span class="tag">LineMark</span> <span class="tag">AreaMark</span></td><td>なし</td><td>Apple</td></tr>
+<tr><td>判定ルール・履歴<br><span class="cap">DecisionRules</span></td><td>結果カード、苦手な音の推移、スタンプ</td><td><span class="tag">Swift Charts</span> <span class="tag">BarMark</span> <span class="tag">RectangleMark</span> <span class="tag">SwiftData</span></td><td>なし</td><td>Apple</td></tr>
+<tr><td>コンテンツ<br><span class="cap">IPA・4つのコツ</span></td><td>IPA 表記、舌・唇・息・声の説明</td><td>システムフォント（IPA 基本字形に対応）＋ <span class="tag">Label</span> <span class="tag">LabeledContent</span></td><td>IPA 字形が欠ける場合のみ Charis SIL。口の断面図は作らず、日本語の文章で説明する</td><td><span class="tag ok">OFL・確認済み</span></td></tr>
+<tr><td>クリア演出</td><td>紙吹雪、星の弾み</td><td><span class="tag">KeyframeAnimator</span> <span class="tag">PhaseAnimator</span> <span class="tag">SpriteView</span></td><td>ConfettiSwiftUI、Vortex（どちらか 1 つ）</td><td><span class="tag ok">MIT・確認済み</span></td></tr>
+<tr><td>Pro 案内</td><td>購読画面、復元、利用規約リンク</td><td><span class="tag">SubscriptionStoreView</span></td><td>なし</td><td>Apple</td></tr>
+<tr><td>アイコン・文字</td><td>タブ・ボタン、日本語表示</td><td>SF Symbols、ヒラギノ（システム）</td><td>丸ゴシックにしたい場合のみ Zen Maru Gothic</td><td><span class="tag ok">OFL・確認済み</span></td></tr>
+</tbody></table></div>
+<p class="note">推奨は、外部依存なしで始め、波形の質に不満が出たら DSWaveformImage だけを追加する構成です。ライセンスは各リポジトリの LICENSE ファイル、または OFL の公開情報で確認しました（Vortex は Paul Hudson、ConfettiSwiftUI は Simon Bachmann、DSWaveformImage は Dennis Schmidt の MIT）。Pow（EmergeTools）は検索結果上で MIT と確認しましたが、LICENSE 本文は未取得です。SF Symbols はアプリ内の UI では使えますが、アプリアイコンやロゴには使えません。追加する場合は各ライセンス全文を THIRD_PARTY_NOTICES.md に載せてください。</p>
+
+<h2>このあと決めたいこと</h2>
+<div class="cols" style="margin-top:14px">
+  <div class="card"><h3>1. キャラクターを完全に外すか</h3><p>既存の「音の島」はキャラクター中心で確定済みです。この案は置き換えを前提にしています。一部だけ残す折衷案（例：コーチだけ残す）も作れます。</p></div>
+  <div class="card"><h3>2. iPad 一列の対象範囲</h3><p>iPad mini と 11 インチ縦を一列にしています。11 インチ縦も二列にしたい場合は、切り替え幅を 900pt から 800pt に下げます。</p></div>
+  <div class="card"><h3>3. アイコンの見え方</h3><p>この画面案の記号は SF Symbols に近い形の自前 SVG です。実機では本物の SF Symbols になります。</p></div>
+</div>
+</div>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const IC={
+flag:'<path d="M5 21V4M5 4h11l-2.5 4L16 12H5"/>',book:'<path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2zM5 18a2 2 0 0 1 2-2h12"/>',
+chart:'<path d="M5 20v-7M12 20V5M19 20v-10"/>',gear:'<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>',
+mic:'<rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/>',
+play:'<path class="f" d="M8 5l11 7-11 7z" style="fill:currentColor;stroke:none"/>',spk:'<path d="M4 9v6h4l5 4V5L8 9zM16.5 9a4.5 4.5 0 0 1 0 6"/>',
+lock:'<rect x="6" y="11" width="12" height="9" rx="2"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/>',check:'<path d="M5 12.5l4.5 4.5L19 7"/>',
+chev:'<path d="M9 5l7 7-7 7"/>',back:'<path d="M15 5l-7 7 7 7"/>',retry:'<path d="M20 12a8 8 0 1 1-2.7-6M20 4v5h-5"/>',flame:'<path d="M12 3c.8 4 5 5.2 5 10a5 5 0 0 1-10 0c0-2 1-3.2 2.2-4.2.1 1.8.9 2.8 1.9 2.8-.5-3 .2-5.4.9-8.6z"/>',
+mag:'<circle cx="11" cy="11" r="6"/><path d="M16 16l4 4"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>'};
+const ic=(n,c='')=>`<svg class="ic ${c}" viewBox="0 0 24 24">${IC[n]}</svg>`;
+const star=on=>`<svg viewBox="0 0 24 24" class="${on?'':'off'}"><path fill="currentColor" d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3 6.1 20.6l1.3-6.6L2.5 9.4l6.6-.8z"/></svg>`;
+const stars=n=>`<div class="stars">${[1,2,3].map(i=>star(i<=n)).join('')}</div>`;
+
+
+function wave(w,h,live){let s='',n=Math.floor(w/6);for(let i=0;i<n;i++){const a=live?(Math.sin(i*.55)*.45+Math.sin(i*.19+1)*.35+.2):.18;const e=Math.max(.06,Math.abs(a)*Math.exp(-Math.pow((i-n*.55)/(n*.38),2)*.4));const bh=Math.max(3,e*h*.95);s+=`<rect x="${i*6}" y="${(h-bh)/2}" width="3" height="${bh}" rx="1.5"/>`}return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" fill="var(--m-tint)">${s}</svg>`}
+function chartBars(w,h){const v=[4,6,3,8,5,7,3],d='月火水木金土日';let s='';const bw=(w-24)/7;v.forEach((x,i)=>{const bh=x/10*(h-30);s+=`<rect x="${12+i*bw+bw*.2}" y="${h-22-bh}" width="${bw*.6}" height="${bh}" rx="5" fill="${i==6?'var(--m-tint)':'var(--m-tintbg)'}"/><text x="${12+i*bw+bw/2}" y="${h-6}" text-anchor="middle" font-size="11" fill="var(--m-sub)" font-family="sans-serif">${d[i]}</text><text x="${12+i*bw+bw/2}" y="${h-26-bh}" text-anchor="middle" font-size="11" fill="var(--m-fg)" font-family="sans-serif">${x}</text>`});return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}"><line x1="8" x2="${w-8}" y1="${h-22}" y2="${h-22}" stroke="var(--m-sep)"/>${s}</svg>`}
+function pitch(w,h){return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}"><path d="M0 ${h*.7} C ${w*.2} ${h*.3}, ${w*.35} ${h*.25}, ${w*.5} ${h*.5} S ${w*.8} ${h*.8}, ${w} ${h*.6} L ${w} ${h} L 0 ${h}Z" fill="var(--m-tintbg)"/><path d="M0 ${h*.7} C ${w*.2} ${h*.3}, ${w*.35} ${h*.25}, ${w*.5} ${h*.5} S ${w*.8} ${h*.8}, ${w} ${h*.6}" fill="none" stroke="var(--m-tint)" stroke-width="2.5"/><path d="M0 ${h*.6} C ${w*.25} ${h*.28}, ${w*.4} ${h*.3}, ${w*.55} ${h*.55} S ${w*.85} ${h*.7}, ${w} ${h*.55}" fill="none" stroke="var(--m-ter)" stroke-width="2" stroke-dasharray="4 5"/></svg>`}
+function ring(v,max,size,label,sub){const r=size/2-7,c=2*Math.PI*r;return `<div style="position:relative;width:${size}px;height:${size}px;flex:none"><svg width="${size}" height="${size}" style="transform:rotate(-90deg)"><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--m-fill)" stroke-width="9"/><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--m-tint)" stroke-width="9" stroke-linecap="round" stroke-dasharray="${c*v/max} ${c}"/></svg><div style="position:absolute;inset:0;display:grid;place-content:center;text-align:center"><b style="font-size:${size/3.2}px;line-height:1">${label}</b><span class="cap12" style="margin-top:2px">${sub}</span></div></div>`}
+
+/* ---------- pieces ---------- */
+const stageRow=(n,t,s,st,lock,sel)=>`<div class="row ${sel?'sel':''}"><div class="badge ${lock?'lock':''}">${lock?ic('lock'):n}</div><div class="grow"><div class="t">${t}</div><div class="s">${s}</div></div>${lock?'<span class="pro">Pro</span>':stars(st)}${ic('chev','chev')}</div>`;
+const STAGES=[[1,'Rの森','RとLを聞き分けて、言い分けよう。',2,0],[2,'THの湖','舌を歯の間にはさむTHの音。',0,1],[3,'BとVの入り江','上の歯を下唇に当てるVの音。',0,1],[4,'FとHの野原','Fは歯と唇、Hはのどから息を出す。',0,1]];
+const stageList=(sel)=>`<div class="grp" data-k="List / insetGrouped">${STAGES.map(s=>stageRow(...s,sel&&s[0]==1)).join('')}</div>`;
+const goal=(wide)=>`<div class="grp pad-in" data-k="Gauge + Label"><div style="display:flex;align-items:center;gap:${wide?24:16}px">${ring(3,5,wide?96:84,'3/5','今日')}<div class="grow"><div style="display:flex;align-items:center;gap:6px;font-weight:600;font-size:17px"><span style="color:var(--m-orange)">${ic('flame','f')}</span>12日連続</div><div class="cap13" style="margin-top:2px">あと2回で今日の目標です。</div><div style="margin-top:10px;display:flex;align-items:center;gap:8px"><span class="pill" style="background:var(--m-tintbg);color:var(--m-tint)">${ic('mic')}マイクパワー 7/10</span></div></div></div>
+<div class="strip" style="margin-top:16px">${'月火水木金土日'.split('').map((d,i)=>`<div class="day"><div class="dot ${i<5?'on':''} ${i==5?'today':''}">${i<5?ic('check'):''}</div>${d}</div>`).join('')}</div></div>`;
+const CUES=[['舌','舌の位置','少し奥に引き、上あごにつけない'],['唇','唇の形','軽く丸めて前に出す'],['息','息の出し方','止めずに、続けて流す'],['声','声','のどを震わせる（有声音）']];
+const cues=()=>`<div class="grp" data-k="Label / LabeledContent"><div class="gh" style="margin:0;padding:14px 16px 4px;font-weight:600;font-size:15px;color:var(--m-fg)">4つのコツ</div>${CUES.map(c=>`<div class="row" style="padding:12px 16px"><div class="badge" style="border-radius:10px;font-size:18px">${c[0]}</div><div class="grow"><div class="cap12">${c[1]}</div><div style="font-size:16px;font-weight:500;line-height:1.35">${c[2]}</div></div></div>`).join('')}</div>`;
+const pairCard=()=>`<div class="grp pad-in"><div style="display:flex;align-items:center;justify-content:center;gap:18px;padding:4px 0 12px"><div style="text-align:center"><div class="big ipa" style="color:var(--m-tint)">r</div><div class="cap12">英語 R</div></div><div style="font-size:24px;color:var(--m-ter)">↔</div><div style="text-align:center"><div class="big ipa" style="color:var(--m-orange)">l</div><div class="cap12">英語 L</div></div></div><div class="seg2" data-k="Picker(.segmented)"><div class="on">right</div><div>light</div></div><div class="btn sm sec" style="margin-top:12px">${ic('spk')}お手本を聞く</div><div class="cap12" style="text-align:center;margin-top:6px">iOSの音声合成によるお手本です。ネイティブの録音ではありません。</div></div>`;
+const quests=()=>`<div class="grp" data-k="List">${[['お手本を聞く',1],['口の形をまねる',1],['録音チャレンジ',0]].map(q=>`<div class="row"><span style="color:${q[1]?'var(--m-green)':'var(--m-tint)'}">${q[1]?ic('check'):ic('mic')}</span><div class="grow t" style="font-weight:400">${q[0]}</div>${q[1]?'':ic('chev','chev')}</div>`).join('')}<div class="row" style="opacity:.55"><span style="color:var(--m-sub)">${ic('lock')}</span><div class="grow"><div class="t" style="font-weight:400">仕上げテスト</div><div class="s">録音チャレンジのあとに開きます</div></div></div></div>`;
+const wordsCard=()=>`<div class="grp pad-in" data-k="Layout (flow)"><div style="font-weight:600;margin-bottom:10px">練習する単語</div><div style="display:flex;flex-wrap:wrap;gap:8px">${[['right','/raɪt/'],['light','/laɪt/'],['rock','/rɑːk/'],['lock','/lɑːk/'],['read','/riːd/'],['road','/roʊd/'],['load','/loʊd/'],['grass','/ɡræs/']].map(w=>`<div style="background:var(--m-fill);border-radius:10px;padding:6px 12px"><b style="font-weight:600">${w[0]}</b> <span class="cap13 ipa">${w[1]}</span></div>`).join('')}</div></div>`;
+const startBtn=()=>`<div class="btn" data-k="Button(.borderedProminent)">${ic('mic')}録音チャレンジをはじめる</div>`;
+const wordSide=(mode)=>{const W=[['right','/raɪt/',mode=='r'?'':'★'],['light','/laɪt/',''],['rock','/rɑːk/',''],['lock','/lɑːk/',''],['read','/riːd/',''],['road','/roʊd/','']];return `<div class="grp" data-k="List(selection:)">${W.map((w,i)=>`<div class="row ${i==0?'sel':''}"><div class="grow"><div class="t">${w[0]}</div><div class="cap13 ipa">${w[1]}</div></div>${mode=='res'&&i==0?stars(1):(i>0&&i<3&&mode=='res'?stars(i==1?2:3):'')}${mode!='res'?ic('chev','chev'):''}</div>`).join('')}</div>`};
+
+/* record */
+const recordMain=(wide)=>`<div class="stack"><div style="text-align:center;padding:${wide?'24px 0 0':'8px 0 0'}"><div class="cap13" style="margin-bottom:4px">単語 1 / 8</div><div class="big" style="font-size:${wide?72:60}px">right</div><div class="ipa" style="font-size:26px;color:var(--m-sub);margin-top:2px">/<b style="color:var(--m-tint)">r</b>aɪt/</div></div>
+<div class="grp pad-in" style="text-align:center" data-k="hint / Label"><span style="font-weight:600">ヒント</span><span style="margin-left:8px;font-size:15px">舌を少し奥に引いて、唇を軽く丸めます。</span></div>
+<div class="grp pad-in" data-k="DSWaveformImage / Canvas"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span class="live"><i></i>録音中</span><span class="cap13" style="font-variant-numeric:tabular-nums">0:01.8</span></div><div style="display:flex;justify-content:center">${wave(wide?520:300,wide?90:72,true)}</div><div class="cap13" style="margin-top:8px;display:flex;align-items:center;gap:6px"><span style="color:var(--m-green)">${ic('check')}</span>声がはっきり入っています</div></div>
+<div data-k="Button + sensoryFeedback"><div class="rec"><i></i></div><div class="cap13" style="text-align:center;margin-top:8px">タップして止める</div></div>
+<div class="cap12" style="text-align:center">音声は端末の中だけで処理し、保存しません。</div></div>`;
+
+/* result */
+const resultVerdict=()=>`<div class="grp pad-in" style="text-align:center" data-k="Label + star"><div style="font-size:22px;font-weight:700">おしい！あと少し</div><div style="display:flex;justify-content:center;margin:8px 0"><div class="stars" style="gap:4px">${[1,0,0].map(o=>`<span style="width:34px;height:34px;display:block">${star(o).replace('<svg','<svg style="width:34px;height:34px"')}</span>`).join('')}</div></div><div class="cap13">通じそうです。Rの音は、Lに近く聞こえました。</div></div>
+<div class="grp" data-k="List">${[['通じそう',1],['目標の音が出せた',0],['くり返しても安定',0]].map(r=>`<div class="row" style="min-height:40px"><span style="color:${r[1]?'var(--m-green)':'var(--m-ter)'}">${ic('check')}</span><div class="grow" style="font-size:15px;${r[1]?'':'color:var(--m-sub)'}">★ ${r[0]}</div></div>`).join('')}</div>`;
+const resultAlign=()=>`<div class="grp pad-in" data-k="Layout + Gauge"><div style="font-weight:600;margin-bottom:10px">音ごとの判定</div><div class="phon"><div class="pc bad"><b class="ipa">r</b><div class="cap12">l に近い</div><div class="meter"><i style="width:34%"></i></div></div><div class="pc ok"><b class="ipa">aɪ</b><div class="cap12">出せています</div><div class="meter"><i style="width:92%"></i></div></div><div class="pc ok"><b class="ipa">t</b><div class="cap12">出せています</div><div class="meter"><i style="width:88%"></i></div></div></div><div class="cap12" style="margin-top:8px">確信度が低いときは、ここに判定を出さず「もう一度」をすすめます。</div></div>`;
+const resultFix=()=>`<div class="grp" data-k="Label"><div class="gh" style="margin:0;padding:14px 16px 4px;font-weight:600;font-size:15px;color:var(--m-fg)">直し方</div>${CUES.slice(0,2).map(c=>`<div class="row" style="padding:12px 16px"><div class="badge" style="border-radius:10px;font-size:18px">${c[0]}</div><div class="grow"><div class="cap12">${c[1]}</div><div style="font-size:16px;font-weight:500;line-height:1.35">${c[2]}</div></div></div>`).join('')}</div>`;
+const resultPros=(w)=>`<div class="grp pad-in" data-k="Swift Charts"><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-weight:600">音の高さ</span><span class="cap12">実線：あなた　点線：お手本</span></div>${pitch(w,84)}</div>`;
+const resultBtns=()=>`<div class="stack"><div class="btn" data-k="Button">${ic('retry')}もう一度</div><div class="btn sec">${ic('spk')}お手本を聞く</div></div>`;
+
+/* progress */
+const errHist=()=>`<div class="gh">苦手な音の推移</div><div class="grp" data-k="List + sparkline">${[['R → L に近い','8回・改善中',[9,8,8,6,5,4,3]],['L → R に近い','3回',[2,3,2,2,3,2,1]],['語末の子音が消える','2回・確認中',[1,2,1,2,2,1,2]]].map(e=>`<div class="row"><div class="grow"><div class="t" style="font-size:16px">${e[0]}</div><div class="s">${e[1]}</div></div><svg width="72" height="28" viewBox="0 0 72 28"><polyline fill="none" stroke="var(--m-tint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" points="${e[2].map((v,i)=>`${i*12},${26-v*2.6}`).join(' ')}"/></svg></div>`).join('')}</div>`;
+const SND=[['r','R','right','/raɪt/',1,2,'ラ行に聞こえやすい音'],['l','L','light','/laɪt/',1,1,'ラ行そのままになりやすい音'],['θ','TH（無声）','think','/θɪŋk/',2,0,'サ行になりやすい音'],['b','B','boat','/boʊt/',3,0,'Vと混ざりやすい音'],['v','V','very','/ˈvɛri/',3,0,'Bになりやすい音'],['f','F','fan','/fæn/',4,0,'ハ行になりやすい音']];
+const zTile=(t,i,sel)=>{const on=t[5]>0;return `<div class="zt ${on?'':'off'} ${sel?'sel':''}"><div class="no">No.${String(i+1).padStart(2,'0')}</div><div class="g ipa">${t[0]}</div><div style="font-weight:600;font-size:15px">${t[1]}</div><div class="cap12 ipa">${t[2]} ${t[3]}</div><div class="st">${on?stars(t[5]):`<span class="cap12" style="display:flex;align-items:center;gap:3px">${ic('lock').replace('class="ic "','class="ic" style="width:12px;height:12px"')}ステージ${t[4]}で解放</span>`}</div></div>`};
+const zGrid=(cols,sel)=>`<div style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:12px" data-k="LazyVGrid(adaptive)">${SND.map((t,i)=>zTile(t,i,sel&&i==0)).join('')}</div>`;
+const zHead=()=>`<div class="grp pad-in" data-k="ProgressView"><div style="display:flex;justify-content:space-between;align-items:baseline"><b>集めた音</b><span class="cap13" style="font-variant-numeric:tabular-nums">2 / 6</span></div><div class="meter" style="height:8px;border-radius:4px;margin-top:10px"><i style="width:33%"></i></div><div class="cap12" style="margin-top:8px">ステージをクリアすると、その音が図鑑に加わります。</div></div><div class="seg2" style="margin-top:16px" data-k="Picker(.segmented)"><div class="on">すべて</div><div>集めた音</div><div>まだの音</div></div>`;
+const zDetail=(w)=>`<div class="two" style="align-items:start"><div class="stack"><div class="grp pad-in" style="text-align:center"><div class="cap13">No.01</div><div class="big ipa" style="color:var(--m-tint)">r</div><div style="font-size:20px;font-weight:700">R（アール）</div><div class="cap13" style="margin-top:2px">ラ行に聞こえやすい音</div><div style="display:flex;justify-content:center;margin-top:8px">${stars(2)}</div></div>
+<div class="grp" data-k="LabeledContent"><div class="row"><b style="width:84px;flex:none;font-size:15px;color:var(--m-tint)">例</b><div class="grow"><b style="font-weight:600">right</b> <span class="cap13 ipa">/raɪt/</span></div>${ic('spk','')}</div><div class="row"><b style="width:84px;flex:none;font-size:15px;color:var(--m-tint)">対になる音</b><div class="grow"><b style="font-weight:600">light</b> <span class="cap13 ipa">/laɪt/</span></div>${ic('spk','')}</div></div>
+<div class="btn">${ic('mic')}ステージ1で練習する</div></div><div class="stack">${cues()}</div></div>`;
+
+/* ---- paywall (StoreKit SubscriptionStoreView) ---- */
+const payBody=(w)=>`<div style="flex:1;overflow:hidden;padding:0 ${w>500?32:20}px">
+<div style="text-align:center;padding-top:8px" data-k="SubscriptionStoreView { marketing }"><div style="width:72px;height:72px;border-radius:17px;background:var(--m-tint);color:#fff;display:grid;place-items:center;margin:0 auto 14px"><span class="ipa" style="font-size:40px;font-weight:700">r</span></div><div style="font-size:28px;font-weight:700;line-height:1.25">Proで、すべての音へ</div><div class="cap13" style="margin-top:6px;font-size:15px">1日10回の無料枠をこえて、じっくり練習できます。</div></div>
+<div class="grp" style="margin-top:18px" data-k="Label">${[['infinity','発音分析の回数制限を解除'],['flag','すべてのステージ（TH、BとV、F）を練習']].map(b=>`<div class="row"><span style="color:var(--m-tint);width:24px">${b[0]=='flag'?ic('flag'):`<svg class="ic" viewBox="0 0 24 24"><path d="M7 15.5c-2.2 0-3.5-1.5-3.5-3.5S4.8 8.5 7 8.5c3.5 0 6 7 10 7 2.2 0 3.5-1.5 3.5-3.5s-1.3-3.5-3.5-3.5c-4 0-6.500 7-10 7z"/></svg>`}</span><div class="grow" style="font-size:15px">${b[1]}</div></div>`).join('')}</div>
+<div class="cap12" style="margin-top:10px;text-align:center">Proでなくても、ステージ1「Rの森」を1日10回まで無料で練習できます。結果が返らなかった回は数えません。</div>
+<div style="margin-top:16px;display:flex;flex-direction:column;gap:10px" data-k="SubscriptionStoreView(groupID:)"><div class="plan on"><span class="radio"></span><div class="grow"><div style="font-weight:600">Pro（年額）</div><div class="cap12">価格と更新期間は App Store の表示に従います</div></div><b style="font-variant-numeric:tabular-nums">¥●,●●●<span class="cap12" style="font-weight:400">/年</span></b></div><div class="plan"><span class="radio"></span><div class="grow"><div style="font-weight:600">Pro（月額）</div><div class="cap12">いつでも解約できます</div></div><b style="font-variant-numeric:tabular-nums">¥●,●●●<span class="cap12" style="font-weight:400">/月</span></b></div></div>
+<div class="btn" style="margin-top:16px">Proを始める</div>
+<div style="display:flex;justify-content:center;gap:18px;margin-top:14px;flex-wrap:wrap"><span class="link">購入を復元</span><span class="link">利用規約</span><span class="link">プライバシーポリシー</span></div>
+<div class="cap12" style="margin-top:12px;text-align:center;line-height:1.5">購入確定時にApple IDアカウントに請求されます。自動更新は、現在の期間の終了24時間前までに解約しない限り続きます。管理・解約はApple IDの設定から行えます。</div></div>`;
+const paySheet=(dev)=>{const D=DEVS[dev];const phone=dev=='phone';const w=phone?D.w:540,h=phone?D.h-52:(dev=='pad1'?690:670);const left=phone?0:(D.w-w)/2,top=phone?52:(D.h-h)/2;
+ return `<div class="dim"></div><div class="sheet" style="left:${left}px;top:${top}px;width:${w}px;height:${h}px;border-radius:${phone?'38px 38px 0 0':'24px'}"><div style="height:${phone?56:52}px;flex:none;display:flex;align-items:center;justify-content:flex-end;padding:0 16px;color:var(--m-sub)"><span style="width:30px;height:30px;border-radius:50%;background:var(--m-fill);display:grid;place-items:center" data-k="dismiss"><svg class="ic" style="width:14px;height:14px;stroke-width:3" viewBox="0 0 24 24">${IC.x}</svg></span></div>${payBody(w)}</div>`};
+const colls=(cols)=>`<div class="gh">音のコレクション</div><div style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:10px" data-k="LazyVGrid(adaptive)">${[['r',1,1],['l',1,1],['θ',0,2],['b',0,3],['v',0,3],['f',0,4]].map(t=>`<div class="tile ${t[1]?'':'off'} ipa" style="${t[1]?'color:var(--m-tint)':''}">${t[1]?t[0]:ic('lock')}<small>${t[1]?'解放済み':'ステージ '+t[2]}</small></div>`).join('')}</div>`;
+const weekChart=(w)=>`<div class="grp pad-in" data-k="Swift Charts / BarMark"><div style="display:flex;justify-content:space-between;align-items:baseline"><b>今週の練習</b><span class="cap13">36 回</span></div>${chartBars(w,150)}</div>`;
+
+/* ---------- screen compositions ---------- */
+const S={
+ stage:{phone:{title:'冒険',big:1,body:()=>goal()+`<div class="gh">ステージ</div>`+stageList(),tab:0},
+        pad1:{title:'冒険',big:1,body:()=>goal(1)+`<div class="gh">ステージ</div>`+stageList(),tab:0}},
+ detail:{phone:{inline:'Rの森',back:'冒険',body:()=>`<div class="stack">${pairCard()}${cues()}${wordsCard()}${quests()}${startBtn()}</div>`,tab:0},
+         pad1:{inline:'Rの森',back:'冒険',body:()=>`<div class="stack"><div class="two" style="align-items:start">${pairCard()}${cues()}</div>${wordsCard()}<div class="two">${quests()}<div style="display:flex;flex-direction:column;justify-content:flex-end">${startBtn()}</div></div></div>`,tab:0}},
+ record:{phone:{inline:'録音チャレンジ',back:'Rの森',body:()=>recordMain(0),tab:0},pad1:{inline:'録音チャレンジ',back:'Rの森',body:()=>recordMain(1),tab:0}},
+ result:{phone:{inline:'結果',back:'',body:()=>`<div class="stack">${resultVerdict()}${resultAlign()}${resultFix()}${resultPros(329)}${resultBtns()}</div>`,tab:0},
+         pad1:{inline:'結果',back:'',body:()=>`<div class="stack">${resultVerdict()}${resultAlign()}<div class="two">${resultFix()}${resultPros(280)}</div>${resultBtns()}</div>`,tab:0}},
+ zukan:{phone:{title:'図鑑',big:1,body:()=>zHead()+`<div style="height:16px"></div>`+zGrid(2,0),tab:1},pad1:{title:'図鑑',big:1,body:()=>zHead()+`<div style="height:16px"></div>`+zGrid(3,0),tab:1}},
+ progress:{phone:{title:'進捗',big:1,body:()=>weekChart(353)+errHist(),tab:2},pad1:{title:'進捗',big:1,body:()=>`<div class="two"><div>${goal(0)}</div>${weekChart(280)}</div>`+errHist(),tab:2}}
+};
+const SCR={phone:['stage','detail','record','result','zukan','progress','paywall'],pad1:['stage','detail','record','result','zukan','progress','paywall'],pad2:['stage','record','result','zukan','progress','paywall']};
+const SNAME={stage:'冒険',detail:'ステージ',record:'録音',result:'結果',zukan:'図鑑',progress:'進捗',paywall:'Pro（購読）'};
+
+const TABS=[['flag','冒険'],['book','図鑑'],['chart','進捗'],['gear','設定']];
+const DEVS={
+ phone:{name:'iPhone',w:393,h:852,pad:14,r:55,sr:41,desc:'iPhone 16 · 393 × 852 pt · 一列'},
+ pad1:{name:'iPad 一列',w:744,h:1133,pad:16,r:34,sr:20,desc:'iPad mini · 744 × 1133 pt 縦 · 一列'},
+ pad2:{name:'iPad 二列',w:1210,h:834,pad:16,r:34,sr:20,desc:'iPad Pro 11" · 1210 × 834 pt 横 · 二列'}
+};
+const status=(pad)=>pad?`<div class="sb" style="height:24px;padding:0 24px;font-size:13px"><span>9:41　9月30日(水)</span><i>Wi-Fi 100%</i></div>`:`<div class="island"></div><div class="sb" style="height:54px;padding:0 34px 0 44px;align-items:flex-end;padding-bottom:12px"><span>9:41</span><i>5G 100</i></div>`;
+const topTabs=(on)=>`<div class="toptabs" data-k="TabView(.sidebarAdaptable)"><span class="t">音の島</span><div class="capsule">${TABS.map((t,i)=>`<div class="ct ${i==on?'on':''}">${ic(t[0])}${t[1]}</div>`).join('')}</div><span style="color:var(--m-tint)">${ic('mag')}</span></div>`;
+const tabbar=(on)=>`<div class="tabbar" data-k="TabView">${TABS.map((t,i)=>`<div class="tab ${i==on?'on':''}">${ic(t[0])}${t[1]}</div>`).join('')}<div class="home"></div></div>`;
+
+function render(dev,scr){
+ const D=DEVS[dev],dark=$('#darkTog').checked;
+ const isPay=scr=='paywall';if(isPay)scr='stage';
+ let inner='';
+ if(dev=='phone'){
+  const c=S[scr].phone;const top=59;
+  inner=status(0)+`<div class="body" style="top:0;bottom:83px"><div class="scroll" style="padding:${c.inline?top+44+16:top+8}px 16px 24px">${c.big?`<div class="navlarge" style="padding:0 4px 12px">${c.title}</div>`:''}${c.body()}</div></div>`+(c.inline?`<div class="navinline" style="top:${top}px"><div class="l">${ic('back')}<span>${c.back||'戻る'}</span></div>${c.inline}</div>`:'')+tabbar(c.tab);
+ } else if(dev=='pad1'){
+  const c=S[scr].pad1;
+  inner=status(1)+topTabs(c.tab)+`<div class="body" style="top:74px;bottom:0"><div class="scroll" style="padding:${c.inline?56:8}px 0 40px"><div style="max-width:620px;margin:0 auto">${c.inline?`<div style="display:none"></div>`:''}${c.big?`<div class="navlarge" style="padding:0 0 12px">${c.title}</div>`:''}${c.body()}</div></div>${c.inline?`<div class="navinline" style="top:0;position:absolute"><div class="l" style="left:20px">${ic('back')}<span>${c.back||'戻る'}</span></div>${c.inline}</div>`:''}</div><div class="home pad"></div>`;
+ } else {
+  const side=340,W=D.w-side;let sideH='',main='',title='',t=0;
+  if(scr=='stage'){title='Rの森';sideH=`<div class="navlarge" style="padding:0 0 10px;font-size:28px">冒険</div>`+goal(0).replace('pad-in','pad-in')+`<div class="gh">ステージ</div>`+stageList(1);
+   main=`<div class="two" style="align-items:start"><div class="stack">${pairCard()}${wordsCard()}</div><div class="stack">${cues()}${quests()}${startBtn()}</div></div>`}
+  else if(scr=='record'){title='録音チャレンジ';sideH=`<div class="navlarge" style="padding:0 0 10px;font-size:28px">Rの森</div><div class="cap13" style="padding:0 4px 8px">単語 1 / 8</div>`+wordSide('r');main=`<div style="max-width:560px;margin:0 auto">${recordMain(1)}</div>`}
+  else if(scr=='result'){title='結果';sideH=`<div class="navlarge" style="padding:0 0 10px;font-size:28px">Rの森</div><div class="cap13" style="padding:0 4px 8px">今日の結果</div>`+wordSide('res');
+   main=`<div class="two" style="align-items:start"><div class="stack">${resultVerdict()}${resultAlign()}${resultBtns()}</div><div class="stack">${resultFix()}${resultPros(W/2-24-16-16)}</div></div>`}
+  else if(scr=='zukan'){t=1;title='No.01 R';sideH=`<div class="navlarge" style="padding:0 0 10px;font-size:28px">図鑑</div>`+zHead()+`<div style="height:14px"></div>`+`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">${SND.map((x,i)=>zTile(x,i,i==0)).join('')}</div>`;main=zDetail(W/2-24-16-16)}
+  else {t=2;title='進捗';sideH=`<div class="navlarge" style="padding:0 0 10px;font-size:28px">進捗</div>`+goal(0)+errHist();main=`<div class="stack">${weekChart(W-64)}</div>`}
+  inner=status(1)+topTabs(t)+`<div class="body" style="top:74px;bottom:0;display:flex"><div style="width:${side}px;border-right:.5px solid var(--m-sep);padding:8px 16px 24px;overflow:hidden;background:var(--m-bg)" data-k="NavigationSplitView sidebar">${sideH}</div><div style="flex:1;padding:16px 28px 24px;overflow:hidden"><div style="font-size:22px;font-weight:700;margin-bottom:12px;padding-left:4px">${title}</div>${main}</div></div><div class="home pad"></div>`;
+ }
+ return `<div class="dev" style="width:${D.w+D.pad*2}px;height:${D.h+D.pad*2}px;border-radius:${D.r}px"><div class="scr ${dark?'mock-dark':''}" style="left:${D.pad}px;top:${D.pad}px;width:${D.w}px;height:${D.h}px;border-radius:${D.sr+(dev=='phone'?14:0)}px">${inner}${isPay?paySheet(dev):''}</div></div>`;
+}
+
+/* ---------- controls + scaling ---------- */
+let dev='phone',scr='stage',mode='one';
+const devs=[['phone','iPhone'],['pad1','iPad 一列'],['pad2','iPad 二列'],['all','3台を並べる']];
+function seg(el,items,cur,fn){el.innerHTML=items.map(i=>`<button type="button" aria-pressed="${i[0]==cur}" data-v="${i[0]}">${i[1]}</button>`).join('');el.querySelectorAll('button').forEach(b=>b.onclick=()=>fn(b.dataset.v))}
+function draw(){
+ seg($('#devSeg'),devs,dev,v=>{dev=v;fixScr();draw()});
+ const list=dev=='all'?SCR.pad2.filter(x=>x!='detail'):SCR[dev];
+ seg($('#scrSeg'),list.map(k=>[k,SNAME[k]]),scr,v=>{scr=v;draw()});
+ const fit=$('#fit');const avail=Math.min(document.documentElement.clientWidth-32,1240);
+ const one=(d,s)=>{const D=DEVS[d],w=D.w+D.pad*2,h=D.h+D.pad*2;return {w,h,html:render(d,s)}};
+ let items=dev=='all'?[['phone',scr],['pad1',scr],['pad2',scr]]:[[dev,scr]];
+ items=items.map(([d,s])=>{const ok=SCR[d].includes(s)?s:'stage';return {d,...one(d,ok)}});
+ const gap=28,sum=items.reduce((a,b)=>a+b.w,0);
+ let k=Math.min(1,(avail-gap*(items.length-1))/sum);
+ if(dev!='all')k=Math.min(k,dev=='phone'?0.85:1);
+ fit.innerHTML='';fit.className='compare';fit.style.flexWrap='nowrap';
+ items.forEach(it=>{const slot=document.createElement('div');slot.className='slot';slot.style.width=it.w*k+'px';slot.style.height=it.h*k+'px';
+  slot.innerHTML=`<div class="scaled" style="transform:scale(${k});width:${it.w}px;height:${it.h}px">${it.html}</div>`;
+  if(dev=='all'){const c=document.createElement('div');c.className='caption';c.textContent=DEVS[it.d].name;const wrap=document.createElement('div');wrap.append(slot,c);fit.append(wrap)}else fit.append(slot)});
+ $('#readout').innerHTML=(dev=='all'?`<span>3台とも同じ縮尺</span>`:`<span>${DEVS[dev].desc}</span>`)+`<span>1pt = ${k.toFixed(3)} px</span>`+(dev=='all'?'':`<span>画面を実寸の ${Math.round(k*100)}% で表示</span>`);
+}
+function fixScr(){const list=dev=='all'?SCR.pad2:SCR[dev];if(!list.includes(scr))scr='stage'}
+$('#tagTog').onchange=e=>document.body.classList.toggle('tags',e.target.checked);
+$('#darkTog').onchange=draw;
+let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(draw,80)});
+draw();
+})();
+</script>
+
+</body></html>

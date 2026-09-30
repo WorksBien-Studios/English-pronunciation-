@@ -19,12 +19,6 @@ struct ArticulationCue: Codable, Hashable, Identifiable {
     var id: String { part }
 }
 
-/// Normalised (0...1) position of a stage on the adventure map.
-struct MapPosition: Codable, Hashable {
-    let x: Double
-    let y: Double
-}
-
 struct Stage: Codable, Hashable, Identifiable {
     let id: String
     let number: Int
@@ -33,11 +27,8 @@ struct Stage: Codable, Hashable, Identifiable {
     let sounds: [Sound]
     /// Free-tier stage. Everything else needs Pro.
     let isFree: Bool
-    /// Shows the tongue-position diagram (only authored for /r/ vs /l/ so far).
-    let showsRLDiagram: Bool
     let words: [PracticeWord]
     let cues: [ArticulationCue]
-    let mapPosition: MapPosition
 
     var primarySound: Sound { sounds.first ?? .r }
 }

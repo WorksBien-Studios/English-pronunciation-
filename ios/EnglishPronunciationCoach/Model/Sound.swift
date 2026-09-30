@@ -1,44 +1,47 @@
 import Foundation
 
-/// The six launch sounds. Names are deliberately generic sound labels
-/// (see docs/game-ui-concept.md), so they carry no brand risk.
+/// The six launch sounds.
 enum Sound: String, CaseIterable, Identifiable, Codable, Hashable {
     case r, l, th, v, f, b
 
     var id: String { rawValue }
 
-    var ipa: String {
+    /// The IPA symbol on its own, e.g. "θ".
+    var symbol: String {
         switch self {
-        case .r: "/r/"
-        case .l: "/l/"
-        case .th: "/θ/"
-        case .v: "/v/"
-        case .f: "/f/"
-        case .b: "/b/"
+        case .r: "r"
+        case .l: "l"
+        case .th: "θ"
+        case .v: "v"
+        case .f: "f"
+        case .b: "b"
         }
     }
 
-    /// Creature name shown in the 図鑑 and on cards.
-    var displayName: String {
+    /// IPA in slashes, e.g. "/θ/".
+    var ipa: String { "/\(symbol)/" }
+
+    /// Short Latin label used in lists and headings.
+    var label: String {
         switch self {
-        case .r: "Rくん"
-        case .l: "Lくん"
-        case .th: "THくん"
-        case .v: "Vくん"
-        case .f: "Fくん"
-        case .b: "Bくん"
+        case .r: "R"
+        case .l: "L"
+        case .th: "TH"
+        case .v: "V"
+        case .f: "F"
+        case .b: "B"
         }
     }
 
-    /// Body colour of the creature as 0xRRGGBB.
-    var bodyHex: UInt32 {
+    /// The Japanese sound learners usually replace it with.
+    var japaneseNote: String {
         switch self {
-        case .r: 0xFF7A59
-        case .l: 0x54C2F0
-        case .th: 0xC79BFF
-        case .v: 0xFFB020
-        case .f: 0x3DDBB3
-        case .b: 0xFFF1D0
+        case .r: "日本語のラ行に聞こえやすい音"
+        case .l: "日本語のラ行になりやすい音"
+        case .th: "サ行やザ行になりやすい音"
+        case .v: "バ行になりやすい音"
+        case .f: "ハ行になりやすい音"
+        case .b: "Vと混ざりやすい音"
         }
     }
 }
