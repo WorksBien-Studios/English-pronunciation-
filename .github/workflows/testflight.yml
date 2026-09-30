@@ -257,8 +257,19 @@ jobs:
           # not repair an entirely unsigned embedded framework. Stage every
           # framework with a temporary ad-hoc signature; post-export checks
           # below require Apple Distribution and reject any surviving ad-hoc.
+          app_minimum_os="$(/usr/libexec/PlistBuddy -c 'Print :MinimumOSVersion' "$plist")"
+          [[ -n "$app_minimum_os" ]] || { echo "Application MinimumOSVersion is missing." >&2; exit 1; }
+
           staged_frameworks=0
           while IFS= read -r -d '' framework; do
+            framework_plist="$framework/Info.plist"
+            [[ -f "$framework_plist" ]] || { echo "Embedded framework Info.plist is missing: $framework" >&2; exit 1; }
+            /usr/libexec/PlistBuddy -c 'Delete :MinimumOSVersion' "$framework_plist" 2>/dev/null || true
+            /usr/libexec/PlistBuddy -c "Add :MinimumOSVersion string $app_minimum_os" "$framework_plist"
+            [[ "$(/usr/libexec/PlistBuddy -c 'Print :MinimumOSVersion' "$framework_plist")" == "$app_minimum_os" ]] || {
+              echo "Embedded framework MinimumOSVersion normalization failed: $framework" >&2
+              exit 1
+            }
             codesign --force --sign - --timestamp=none "$framework"
             codesign --verify --strict --verbose=2 "$framework"
             framework_signature="$(codesign -dvv "$framework" 2>&1)"
@@ -311,6 +322,8 @@ jobs:
           [[ "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$plist")" == "$MARKETING_VERSION" ]]
           [[ "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$plist")" == "$BUILD_NUMBER" ]]
           [[ -f "$app/PrivacyInfo.xcprivacy" ]]
+          app_minimum_os="$(/usr/libexec/PlistBuddy -c 'Print :MinimumOSVersion' "$plist")"
+          [[ -n "$app_minimum_os" ]]
           codesign --verify --deep --strict --verbose=2 "$app"
           signature="$(codesign -dvv "$app" 2>&1)"
           [[ "$signature" == *'Authority=Apple Distribution'* ]]
@@ -318,6 +331,12 @@ jobs:
 
           framework_count=0
           while IFS= read -r framework; do
+            framework_plist="$framework/Info.plist"
+            [[ -f "$framework_plist" ]] || { echo "Exported framework Info.plist is missing: $framework" >&2; exit 1; }
+            [[ "$(/usr/libexec/PlistBuddy -c 'Print :MinimumOSVersion' "$framework_plist")" == "$app_minimum_os" ]] || {
+              echo "Exported framework MinimumOSVersion does not match the application: $framework" >&2
+              exit 1
+            }
             codesign --verify --strict --verbose=2 "$framework"
             framework_signature="$(codesign -dvv "$framework" 2>&1)"
             [[ "$framework_signature" != *'Signature=adhoc'* ]] || { echo "Exported framework is ad hoc signed: $framework" >&2; exit 1; }
