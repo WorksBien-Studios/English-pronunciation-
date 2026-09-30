@@ -20,36 +20,53 @@ struct PaywallView: View {
                     ContentUnavailableView(
                         "Proは準備中です",
                         systemImage: "hourglass",
-                        description: Text("サブスクリプションの設定が完了すると、ここから購入できます。")
+                        description: Text("購読の設定が完了すると、ここから購入できます。")
                     )
                 }
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("あとで") { dismiss() }
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .symbolRenderingMode(.hierarchical)
+                            .foregroundStyle(.secondary)
+                    }
+                    .accessibilityLabel("閉じる")
                 }
             }
         }
     }
 
     private var marketing: some View {
-        VStack(spacing: 14) {
-            CoachView(mood: .cheer).frame(width: 96, height: 96)
-            OutlinedText(text: "Proで冒険を広げよう", size: 22, fill: .white)
-            VStack(alignment: .leading, spacing: 10) {
-                benefit("発音分析の回数制限をなくす", symbol: "infinity")
-                benefit("すべてのステージ・発音レッスン", symbol: "flag.fill")
+        VStack(spacing: 16) {
+            Text("r")
+                .font(.system(size: 40, weight: .bold, design: .serif))
+                .foregroundStyle(.white)
+                .frame(width: 72, height: 72)
+                .background(Color.brand, in: RoundedRectangle(cornerRadius: 17, style: .continuous))
+                .accessibilityHidden(true)
+            Text("Proで、すべてのステージを")
+                .font(.title.bold())
+                .multilineTextAlignment(.center)
+            Text("無料の1日10回をこえて、じっくり練習できます。")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+            VStack(alignment: .leading, spacing: 12) {
+                Label("発音分析の回数制限をなくす", systemImage: "infinity")
+                Label("すべてのステージを練習（TH、BとV、F）", systemImage: "flag.fill")
             }
-            Text("Proでなくても、1日10回まで無料でチャレンジできます。")
+            .font(.subheadline)
+            .padding(16)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+            Text("Proでなくても、ステージ1「Rの森」は1日10回まで無料で練習できます。結果が返らなかった録音は回数に数えません。")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
         }
         .padding()
-    }
-
-    private func benefit(_ text: String, symbol: String) -> some View {
-        Label(text, systemImage: symbol)
-            .font(.game(15, relativeTo: .body))
-            .foregroundStyle(Palette.ink)
     }
 }

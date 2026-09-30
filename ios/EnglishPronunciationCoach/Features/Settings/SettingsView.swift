@@ -18,8 +18,8 @@ struct SettingsView: View {
                 if entitlements.isPro {
                     Label("Proをご利用中です", systemImage: "checkmark.seal.fill")
                 } else {
-                    Button("Proを見る") { showsPaywall = true }
-                    Text("Proでなくても、1日10回まで無料でチャレンジできます。")
+                    Button("Proの内容を見る") { showsPaywall = true }
+                    Text("Proでなくても、ステージ1は1日10回まで無料で練習できます。")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
@@ -28,7 +28,7 @@ struct SettingsView: View {
             }
 
             Section("プライバシー") {
-                Text("発音の録音と分析は端末内で処理されます。音声を外部サーバーへ送信しません。アカウント登録は不要で、広告や追跡もありません。録音データは保存しません。")
+                Text("発音の録音と分析は端末の中だけで行います。音声を外部のサーバーへ送ることはありません。アカウント登録は不要で、広告や追跡もありません。録音データは保存しません。")
                     .font(.footnote)
             }
 
@@ -58,7 +58,7 @@ struct SettingsView: View {
             await entitlements.refresh()
             message = "購入情報を更新しました。"
         } catch {
-            message = "購入の復元に失敗しました。時間をおいてもう一度お試しください。"
+            message = "購入を復元できませんでした。しばらくしてから、もう一度お試しください。"
         }
     }
 }

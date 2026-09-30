@@ -10,7 +10,7 @@
 
 This is the complete launch-copy and App Store Connect decision pack. It is not a submission authorization. Build-dependent controls are explicitly marked pending.
 
-> **Revision 2 (2026-09-29, owner decision):** the initial assessment and weakness map are deferred beyond release 1.0. All copy, screenshots and review notes below describe only what the 1.0 build does: a stage map, per-word recording with sound-level Japanese feedback and retry, stars and a creature collection, a progress tab, and a free Stage 1 with ten valid recordings a day. Promises the binary does not keep were removed: assessment, minimal-pair/sentence practice, own-recording playback, review lists, accent/rhythm/linking practice and vowel or final-consonant modules.
+> **Revision 2 (2026-09-29, owner decision):** the initial assessment and weakness map are deferred beyond release 1.0. All copy, screenshots and review notes below describe only what the 1.0 build does: a stage list, per-word recording with sound-level Japanese feedback and retry, stars and a creature collection, a progress tab, and a free Stage 1 with ten valid recordings a day. Promises the binary does not keep were removed: assessment, minimal-pair/sentence practice, own-recording playback, review lists, accent/rhythm/linking practice and vowel or final-consonant modules.
 
 ## 1. Listing decision
 
@@ -155,7 +155,7 @@ Create three authentic Japanese screenshots for both iPhone and iPad. Use the sa
 
 | Position | Role | Caption | Required real screen | Free/paid clarity |
 |---:|---|---|---|---|
-| 1 | Path | **ゲーム感覚で、苦手な音を練習** | Stage map (冒険 tab) showing Stage 1 available and later stages marked Pro; on iPad the two-column layout with the stage detail. | Stage 1 is free; later stages carry a visible `Pro` label. |
+| 1 | Path | **ゲーム感覚で、苦手な音を練習** | Stage list (冒険 tab) showing Stage 1 available and later stages marked Pro; on iPad the two-column layout with the stage detail. | Stage 1 is free; later stages carry a visible `Pro` label. |
 | 2 | Path | **直し方が、日本語でわかる** | Correction screen showing IPA, target/likely substitution and one concise articulatory instruction. | Use the free Stage 1 (R/L) module. |
 | 3 | Proof | **発音を練習して、すぐ再チェック** | Retest screen showing listen → record → feedback → retry, with intelligibility and target sound separated. | Use a free-module example; do not imply every module is free. |
 
@@ -291,7 +291,7 @@ Use English for operational clarity:
 This is a Japanese-language, offline English-pronunciation training app for Japanese speakers. No account is required.
 
 Core review path:
-1. Launch the app. The stage map (冒険 tab) opens with Stage 1 “Rの森” available; later stages are marked Pro.
+1. Launch the app. The stage list (冒険 tab) opens with Stage 1 “Rの森” available; later stages are marked Pro.
 2. Open Stage 1 and start a recording. Grant microphone access when prompted.
 3. Say the shown word. The result screen gives sound-level feedback in Japanese (whether the target sound was produced, a likely substituted sound, and one articulation tip) and offers a retry.
 4. Continue through the stage's words to earn stars; a cleared stage unlocks the next one.

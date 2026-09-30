@@ -7,11 +7,12 @@ struct ClearSummary: Identifiable {
     let id = UUID()
     let stars: Int
     let outcome: PracticeOutcome
-    /// Set the first time a stage is cleared: the new creature the learner collected.
+    /// Set the first time a stage is cleared: the sound added to the 図鑑.
     let newSound: Sound?
 }
 
-/// Full-screen recording challenge for one stage.
+/// Full-screen recording challenge for one stage: word → record → result → next.
+/// On wide windows the word list sits beside the recording area.
 @MainActor
 struct ChallengeView: View {
     let stage: Stage
@@ -41,12 +42,35 @@ struct ChallengeView: View {
     }
 
     var body: some View {
-        ZStack {
-            Palette.paleSky.ignoresSafeArea()
-            if stage.words.isEmpty {
-                ContentUnavailableView("単語がありません", systemImage: "text.badge.xmark")
-            } else {
-                content
+        NavigationStack {
+            Group {
+                if stage.words.isEmpty {
+                    ContentUnavailableView("単語がありません", systemImage: "text.badge.xmark")
+                } else {
+                    WidthAdaptive {
+                        HStack(spacing: 0) {
+                            wordList.frame(width: 320)
+                            Divider()
+                            practiceArea
+                        }
+                    } compact: {
+                        practiceArea
+                    }
+                }
+            }
+            .background(Color(.systemGroupedBackground))
+            .navigationTitle("録音チャレンジ")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("やめる", action: onClose)
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Text(model.progressText)
+                        .font(.body.monospacedDigit())
+                        .foregroundStyle(.secondary)
+                        .accessibilityLabel("\(model.index + 1)語目、全\(stage.words.count)語")
+                }
             }
         }
         .onChange(of: model.phase) { _, newPhase in
@@ -64,44 +88,63 @@ struct ChallengeView: View {
         .sheet(isPresented: $showsPaywall) { PaywallView() }
     }
 
-    // MARK: Layout
+    // MARK: Word list (wide layout)
 
-    private var content: some View {
-        VStack(spacing: 14) {
-            topBar
-            wordCard
-            creatureArea
-            Spacer(minLength: 0)
-            statusArea
+    private var wordList: some View {
+        List {
+            Section("\(stage.title)の単語") {
+                ForEach(Array(stage.words.enumerated()), id: \.element.id) { index, word in
+                    HStack {
+                        VStack(alignment: .leading, spacing: 0) {
+                            Text(word.text).font(.headline)
+                            Text(word.ipa).font(.footnote).foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        if index < model.index {
+                            Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
+                        }
+                    }
+                    .frame(minHeight: 44)
+                    .listRowBackground(index == model.index ? Color.brand.opacity(0.12) : Color(.secondarySystemGroupedBackground))
+                }
+            }
+        }
+        .listStyle(.insetGrouped)
+    }
+
+    // MARK: Practice area
+
+    private var practiceArea: some View {
+        VStack(spacing: 16) {
+            ScrollView {
+                VStack(spacing: 16) {
+                    wordHeader
+                    statusArea
+                }
+                .padding(16)
+                .readableColumn()
+            }
             controls
-        }
-        .padding(16)
-    }
-
-    private var topBar: some View {
-        HStack(spacing: 12) {
-            Button("やめる", action: onClose)
-                .buttonStyle(.bordered)
-                .tint(Palette.ink)
-            ProgressBar(fraction: Double(model.index) / Double(max(1, stage.words.count)), fill: Palette.sun)
-                .frame(height: 14)
-            Text(model.progressText)
-                .font(.game(14, relativeTo: .subheadline))
-                .foregroundStyle(Palette.ink)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 10)
+                .frame(maxWidth: Layout.readableWidth + 32)
+                .frame(maxWidth: .infinity)
+                .background(.bar)
         }
     }
 
-    private var wordCard: some View {
-        VStack(spacing: 2) {
-            Text("この単語を言ってみよう")
-                .font(.game(13, relativeTo: .footnote))
-                .foregroundStyle(Palette.secondaryText)
+    private var wordHeader: some View {
+        VStack(spacing: 4) {
+            Text("この単語を言ってみましょう")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
             Text(model.word.text)
-                .font(.game(56, relativeTo: .largeTitle))
-                .minimumScaleFactor(0.6)
+                .font(.system(size: 60, weight: .bold))
+                .minimumScaleFactor(0.5)
+                .lineLimit(1)
             Text(model.word.ipa)
-                .font(.game(18, relativeTo: .title3))
-                .foregroundStyle(Palette.secondaryText)
+                .font(.system(.title2, design: .serif))
+                .foregroundStyle(.secondary)
             HStack {
                 Button { model.playModel(slow: false) } label: {
                     Label("お手本", systemImage: "speaker.wave.2.fill")
@@ -111,56 +154,41 @@ struct ChallengeView: View {
                 }
             }
             .buttonStyle(.bordered)
-            .tint(Palette.indigo)
-            .font(.game(13, relativeTo: .footnote))
-            .padding(.top, 4)
+            .controlSize(.small)
+            .padding(.top, 6)
         }
-        .foregroundStyle(Palette.ink)
-        .padding(14)
-        .frame(maxWidth: .infinity)
-        .gameCard(radius: 26)
-    }
-
-    private var creatureArea: some View {
-        VStack(spacing: 6) {
-            if let cue = stage.cues.first {
-                Text("\(cue.part)：\(cue.instruction)")
-                    .font(.game(15, relativeTo: .subheadline))
-                    .foregroundStyle(Palette.ink)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(Capsule().fill(Color.white))
-                    .overlay(Capsule().stroke(Palette.ink, lineWidth: 3))
-            }
-            CreatureView(
-                sound: model.word.target,
-                mouth: (model.phase == .ready || model.phase == .recording) ? .show : .rest
-            )
-            .frame(maxWidth: 200, maxHeight: 200)
-        }
+        .padding(.top, 8)
+        .accessibilityElement(children: .contain)
     }
 
     @ViewBuilder
     private var statusArea: some View {
         switch model.phase {
         case .ready:
-            permissionMessage
-        case .recording:
-            VStack(spacing: 6) {
-                HStack(spacing: 8) {
-                    Circle().fill(Palette.coral).frame(width: 11, height: 11)
-                    Text("録音中").font(.game(15, relativeTo: .subheadline)).foregroundStyle(Palette.coralEdge)
+            VStack(spacing: 12) {
+                if let cue = stage.cues.first {
+                    Label("\(cue.part)：\(cue.instruction)", systemImage: "lightbulb")
+                        .font(.subheadline)
+                        .card()
                 }
-                waveform
+                permissionMessage
             }
+        case .recording:
+            VStack(spacing: 10) {
+                Label("録音中", systemImage: "circle.fill")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(.red)
+                LiveWaveform(level: model.recorder.level)
+            }
+            .card()
         case .analyzing:
             HStack(spacing: 8) {
                 ProgressView()
-                Text("分析中…").font(.game(15, relativeTo: .subheadline)).foregroundStyle(Palette.ink)
+                Text("分析しています…").font(.subheadline)
             }
+            .padding(.top, 24)
         case .feedback(let decision):
-            feedbackCard(decision)
+            ResultCard(stage: stage, word: model.word, decision: decision)
         case .finished:
             EmptyView()
         }
@@ -171,10 +199,9 @@ struct ChallengeView: View {
         switch model.recorder.state {
         case .denied:
             VStack(spacing: 8) {
-                Text("マイクの使用が許可されていません。設定で許可すると録音できます。")
-                    .font(.game(13, relativeTo: .footnote))
+                Text("マイクの使用が許可されていません。設定アプリで許可すると録音できます。")
+                    .font(.footnote)
                     .multilineTextAlignment(.center)
-                    .foregroundStyle(Palette.ink)
                 Button("設定を開く") {
                     if let url = URL(string: UIApplication.openSettingsURLString) {
                         UIApplication.shared.open(url)
@@ -184,93 +211,18 @@ struct ChallengeView: View {
             }
         case .failed:
             Text("録音を始められませんでした。もう一度お試しください。")
-                .font(.game(13, relativeTo: .footnote))
-                .foregroundStyle(Palette.ink)
+                .font(.footnote)
         default:
-            if let remaining {
-                Text("今日の無料チャレンジ 残り\(remaining)回")
-                    .font(.game(12, relativeTo: .caption))
-                    .foregroundStyle(Palette.secondaryText)
-            }
-        }
-    }
-
-    private var waveform: some View {
-        HStack(spacing: 5) {
-            ForEach(0..<16, id: \.self) { index in
-                let base = 0.25 + 0.75 * abs(sin(Double(index) * 0.9))
-                let height = 8 + CGFloat(base) * CGFloat(model.recorder.level) * 56
-                Capsule()
-                    .fill(index % 3 == 0 ? Palette.indigo : Palette.teal)
-                    .frame(width: 7, height: max(8, height))
-            }
-        }
-        .frame(height: 64)
-        .animation(.easeOut(duration: 0.1), value: model.recorder.level)
-        .accessibilityHidden(true)
-    }
-
-    // MARK: Feedback
-
-    @ViewBuilder
-    private func feedbackCard(_ decision: EngineDecision) -> some View {
-        switch decision {
-        case .retry(let reason):
-            VStack(spacing: 6) {
-                Text(retryMessage(for: reason))
-                    .font(.game(14, relativeTo: .subheadline))
-                    .multilineTextAlignment(.center)
-                Text("この録音は無料回数に数えません。")
-                    .font(.game(11, relativeTo: .caption2))
-                    .foregroundStyle(Palette.secondaryText)
-            }
-            .foregroundStyle(Palette.ink)
-            .padding(14)
-            .frame(maxWidth: .infinity)
-            .gameCard()
-        case .result(let result):
-            VStack(alignment: .leading, spacing: 8) {
-                Text(result.targetSoundProduced ? "いいね！" : "おしい！あと少し")
-                    .font(.game(17, relativeTo: .headline))
-                    .foregroundStyle(Palette.indigo)
-                resultRow(title: "相手に伝わりそうか", good: result.intelligible, goodText: "伝わりそう", otherText: "もう少し")
-                resultRow(title: "目標の音 \(model.word.target.ipa)", good: result.targetSoundProduced, goodText: "出せた", otherText: "もう少し")
-                if !result.targetSoundProduced {
-                    if let substitution = result.likelySubstitution {
-                        Text("\(substitution.ipa) に近く聞こえた可能性があります。分析には限りがあり、断定はできません。")
-                            .font(.game(12, relativeTo: .caption))
-                            .foregroundStyle(Palette.secondaryText)
-                    }
-                    if let cue = stage.cues.first {
-                        Text("次の1回で試すこと：\(cue.instruction)")
-                            .font(.game(14, relativeTo: .subheadline))
-                    }
+            VStack(spacing: 4) {
+                if let remaining {
+                    Text("今日の無料分析 残り\(remaining)回")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
                 }
+                Text("音声は端末の中だけで処理し、保存しません。")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
-            .foregroundStyle(Palette.ink)
-            .padding(14)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .gameCard()
-        }
-    }
-
-    private func resultRow(title: String, good: Bool, goodText: String, otherText: String) -> some View {
-        HStack {
-            Text(title).font(.game(14, relativeTo: .subheadline))
-            Spacer()
-            Label(good ? goodText : otherText, systemImage: good ? "checkmark.circle.fill" : "minus.circle.fill")
-                .font(.game(14, relativeTo: .subheadline))
-                .foregroundStyle(good ? Palette.teal : Color(hex: 0xC77700))
-        }
-    }
-
-    private func retryMessage(for reason: RetryReason) -> String {
-        switch reason {
-        case .silence: "声がうまく聞き取れませんでした。静かな場所でもう一度。"
-        case .clipped: "音が大きすぎたようです。少し離れてもう一度。"
-        case .tooShort: "録音が短すぎました。最後まで言ってみましょう。"
-        case .lowConfidence: "はっきり判定できませんでした。もう一度言ってみましょう。"
-        case .engineUnavailable: "この端末では判定の準備がまだできていません。"
         }
     }
 
@@ -283,25 +235,39 @@ struct ChallengeView: View {
             Button {
                 startTapped()
             } label: {
-                Label("録音する", systemImage: "mic.fill")
+                Label("録音する", systemImage: "mic.fill").frame(maxWidth: .infinity)
             }
-            .buttonStyle(.chunky)
+            .buttonStyle(.borderedProminent)
+            .controlSize(.large)
         case .recording:
             Button {
                 Task { await model.stopAndAnalyze(onValid: handleValid) }
             } label: {
-                Label("録音を終える", systemImage: "stop.fill")
+                Label("録音を終える", systemImage: "stop.fill").frame(maxWidth: .infinity)
             }
-            .buttonStyle(ChunkyButtonStyle(tone: .danger))
+            .buttonStyle(.borderedProminent)
+            .controlSize(.large)
+            .tint(.red)
+            .sensoryFeedback(.impact, trigger: model.phase == .recording)
         case .analyzing, .finished:
-            EmptyView()
+            Color.clear.frame(height: 0)
         case .feedback(let decision):
             HStack(spacing: 12) {
-                Button("もう一度") { model.retry() }
-                    .buttonStyle(ChunkyButtonStyle(tone: .secondary))
+                Button {
+                    model.retry()
+                } label: {
+                    Label("もう一度", systemImage: "arrow.counterclockwise").frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.large)
                 if case .result = decision {
-                    Button(model.isLastWord ? "結果を見る" : "つぎへ") { model.advance() }
-                        .buttonStyle(.chunky)
+                    Button {
+                        model.advance()
+                    } label: {
+                        Text(model.isLastWord ? "結果を見る" : "つぎへ").frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
                 }
             }
         }
@@ -347,5 +313,69 @@ struct ChallengeView: View {
             outcome: outcome,
             newSound: (!wasCleared && earned > 0) ? stage.primarySound : nil
         )
+    }
+}
+
+/// The result of one recording. A retry never shows a definitive judgement.
+struct ResultCard: View {
+    let stage: Stage
+    let word: PracticeWord
+    let decision: EngineDecision
+
+    var body: some View {
+        switch decision {
+        case .retry(let reason):
+            VStack(spacing: 6) {
+                Label(retryMessage(for: reason), systemImage: "arrow.counterclockwise.circle")
+                    .font(.subheadline)
+                Text("この録音は無料回数に数えません。")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .card()
+        case .result(let result):
+            VStack(alignment: .leading, spacing: 12) {
+                Text(result.targetSoundProduced ? "目標の音が出せました" : "おしい！あと少し")
+                    .font(.title3.bold())
+                VStack(spacing: 0) {
+                    row("相手に伝わりそうか", good: result.intelligible, goodText: "伝わりそう", otherText: "もう少し")
+                    Divider()
+                    row("目標の音 \(word.target.ipa)", good: result.targetSoundProduced, goodText: "出せた", otherText: "もう少し")
+                }
+                if !result.targetSoundProduced {
+                    if let substitution = result.likelySubstitution {
+                        Text("\(substitution.ipa) に近く聞こえた可能性があります。分析には限りがあるため、断定はできません。")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                    }
+                    if let cue = stage.cues.first {
+                        Label("次の1回で試すこと：\(cue.instruction)", systemImage: "arrow.turn.down.right")
+                            .font(.subheadline)
+                    }
+                }
+            }
+            .card()
+        }
+    }
+
+    private func row(_ title: String, good: Bool, goodText: String, otherText: String) -> some View {
+        HStack {
+            Text(title).font(.subheadline)
+            Spacer()
+            Label(good ? goodText : otherText, systemImage: good ? "checkmark.circle.fill" : "minus.circle.fill")
+                .font(.subheadline)
+                .foregroundStyle(good ? Color.green : Color.orange)
+        }
+        .padding(.vertical, 10)
+    }
+
+    private func retryMessage(for reason: RetryReason) -> String {
+        switch reason {
+        case .silence: "声がうまく聞き取れませんでした。静かな場所で、もう一度お試しください。"
+        case .clipped: "音が大きすぎたようです。マイクから少し離れて、もう一度お試しください。"
+        case .tooShort: "録音が短すぎました。単語を最後まで言ってください。"
+        case .lowConfidence: "はっきり判定できませんでした。もう一度お試しください。"
+        case .engineUnavailable: "この端末では判定の準備がまだできていません。"
+        }
     }
 }

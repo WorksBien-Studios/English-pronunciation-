@@ -1,3 +1,5 @@
+> **Superseded (2026-09-30):** the app now ships the native UI; see [`../native-ui/`](../native-ui/).
+
 # UI mockup source
 
 Design-canvas artboards (`*.dc.html`) and layout (`canvas.json`) for the 音の島 concept described in

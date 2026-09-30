@@ -2,12 +2,14 @@ import XCTest
 @testable import EnglishPronunciationCoach
 
 final class SoundTests: XCTestCase {
-    func testSixUniqueSoundsWithGenericNames() {
+    func testSixUniqueSounds() {
         XCTAssertEqual(Sound.allCases.count, 6)
-        XCTAssertEqual(Set(Sound.allCases.map { $0.displayName }).count, 6)
+        XCTAssertEqual(Set(Sound.allCases.map { $0.label }).count, 6)
         XCTAssertEqual(Set(Sound.allCases.map { $0.ipa }).count, 6)
-        XCTAssertEqual(Sound.r.displayName, "Rくん")
+        XCTAssertEqual(Sound.r.label, "R")
+        XCTAssertEqual(Sound.th.symbol, "θ")
         XCTAssertEqual(Sound.th.ipa, "/θ/")
+        XCTAssertTrue(Sound.allCases.allSatisfy { !$0.japaneseNote.isEmpty })
     }
 }
 
@@ -33,12 +35,6 @@ final class StarRatingTests: XCTestCase {
             PracticeOutcome(intelligible: true, targetSoundProduced: true, stable: true)
         )
         XCTAssertFalse(OutcomeCalculator.outcome(from: [result(target: true), result(target: false)]).stable)
-    }
-
-    func testPlayerLevelProgression() {
-        XCTAssertEqual(PlayerLevel.level(totalStars: 0), 1)
-        XCTAssertEqual(PlayerLevel.level(totalStars: 3), 2)
-        XCTAssertEqual(PlayerLevel.expToNextLevel(totalStars: 0), PlayerLevel.expPerLevel)
     }
 }
 
@@ -71,6 +67,41 @@ final class DailyAllowanceTests: XCTestCase {
     }
 }
 
+final class PracticeStatsTests: XCTestCase {
+    private var calendar: Calendar {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = Locale(identifier: "ja_JP")
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        return calendar
+    }
+
+    func testWeekStripCoversSevenDaysEndingToday() {
+        let calendar = calendar
+        let today = calendar.date(from: DateComponents(year: 2026, month: 9, day: 30))! // Wednesday
+        let days = WeekStrip.days(practiceDays: ["2026-09-30", "2026-09-27"], today: today, calendar: calendar)
+        XCTAssertEqual(days.count, 7)
+        XCTAssertEqual(days.first?.id, "2026-09-24")
+        XCTAssertEqual(days.last?.id, "2026-09-30")
+        XCTAssertEqual(days.last?.weekday, "水")
+        XCTAssertEqual(days.filter { $0.isToday }.count, 1)
+        XCTAssertEqual(days.filter { $0.practiced }.map { $0.id }, ["2026-09-27", "2026-09-30"])
+    }
+
+    func testStageAvailabilityFollowsProgressAndEntitlement() throws {
+        let stages = try StageCatalog.load().stages.sorted { $0.number < $1.number }
+        let first = try XCTUnwrap(stages.first)
+        let second = try XCTUnwrap(stages.dropFirst().first)
+        func state(_ stage: Stage, stars: [String: Int], isPro: Bool) -> StageAvailability {
+            StageAvailability.of(stage, in: stages, stars: { stars[$0.id] ?? 0 }, isPro: isPro)
+        }
+        XCTAssertEqual(state(first, stars: [:], isPro: false), .current)
+        XCTAssertEqual(state(first, stars: [first.id: 2], isPro: false), .cleared(2))
+        XCTAssertEqual(state(second, stars: [first.id: 2], isPro: false), .proOnly)
+        XCTAssertEqual(state(second, stars: [:], isPro: true), .locked)
+        XCTAssertEqual(state(second, stars: [first.id: 1], isPro: true), .current)
+    }
+}
+
 final class ErrorHistoryTests: XCTestCase {
     func testKeyRoundTrip() {
         let key = ErrorHistory.key(target: .r, substitution: .l)
@@ -92,7 +123,6 @@ final class StageCatalogTests: XCTestCase {
         for stage in catalog.stages {
             XCTAssertFalse(stage.words.isEmpty, stage.id)
             XCTAssertFalse(stage.cues.isEmpty, stage.id)
-            XCTAssertTrue((0...1).contains(stage.mapPosition.x) && (0...1).contains(stage.mapPosition.y), stage.id)
             for word in stage.words {
                 XCTAssertTrue(stage.sounds.contains(word.target), "\(word.text) target not in stage sounds")
             }

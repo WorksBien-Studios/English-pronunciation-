@@ -33,17 +33,3 @@ enum OutcomeCalculator {
         return PracticeOutcome(intelligible: intelligible, targetSoundProduced: target, stable: stable)
     }
 }
-
-enum PlayerLevel {
-    static let expPerStar = 40
-    static let expPerLevel = 120
-
-    static func exp(totalStars: Int) -> Int { max(0, totalStars) * expPerStar }
-    static func level(totalStars: Int) -> Int { exp(totalStars: totalStars) / expPerLevel + 1 }
-    static func expToNextLevel(totalStars: Int) -> Int {
-        expPerLevel - exp(totalStars: totalStars) % expPerLevel
-    }
-    static func fractionToNextLevel(totalStars: Int) -> Double {
-        Double(exp(totalStars: totalStars) % expPerLevel) / Double(expPerLevel)
-    }
-}

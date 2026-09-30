@@ -1,6 +1,6 @@
 # UI Concept — 音の島 (Sound Islands)
 
-**Status:** `LOCKED` (design concept) — not an implementation authorization  
+**Status:** `SUPERSEDED` on 2026-09-30 by [`native-ui.md`](native-ui.md). The creature and game-skin concept below is kept for history; the app now ships the native UI.  
 **Decided:** 2026-09-29  
 **Applies to:** iPhone and iPad, iOS/iPadOS 18+, Japanese UI  
 **Mockup source:** [`design/ui-mockup/`](../design/ui-mockup/) (Design-canvas `.dc.html` artboards + `canvas.json`)
