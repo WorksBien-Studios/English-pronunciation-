@@ -72,7 +72,7 @@ abort "Build #{BUILD_NUMBER} did not finish processing within 30 minutes." unles
 build_id = build.fetch("id")
 
 relationship = { data: [{ type: "builds", id: build_id }] }
-request(:post, "/v1/betaGroups/#{BETA_GROUP_ID}/relationships/builds", body: relationship, allow: [409])
+# Auto-distributed internal groups can return 422 even when the build is already assigned.\n# The relationship verification below remains authoritative.\nrequest(:post, "/v1/betaGroups/#{BETA_GROUP_ID}/relationships/builds", body: relationship, allow: [409, 422])
 
 query = URI.encode_www_form("filter[platform]" => PLATFORM, "filter[versionString]" => VERSION, "limit" => "20")
 versions = json_get("/v1/apps/#{APP_ID}/appStoreVersions?#{query}").fetch("data")
