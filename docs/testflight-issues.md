@@ -1,19 +1,30 @@
 # TestFlight issue ledger
 
-No TestFlight session has run for this app yet.
+Record every failed, cancelled, degraded, or unexpectedly expensive TestFlight run. A `fixed` entry must cite a later successful verifying run.
 
-## Provisioning pending
+## TF-A6B1E3C9C1 — automatic-archive-requested-development-profile
+<!-- testflight-issue-json: {"first_observed":"2026-09-30T00:16:17+00:00","fix":"","id":"TF-A6B1E3C9C1","last_updated":"2026-09-30T00:16:17+00:00","minutes_wasted":2.0,"notes":"","prevention":"","productivity_minutes_lost":0.0,"repo":"lrodeveloperr/English-pronunciation-","root_cause":"","runs":["https://github.com/lrodeveloperr/English-pronunciation-/actions/runs/36649176916"],"signature":"automatic-archive-requested-development-profile","stage":"archive","status":"open","symptom":"Archive failed before IPA creation because Xcode requested an iOS App Development profile and a registered device","verified_run":"","workflow":"English Pronunciation Coach TestFlight","xcode_version":"26.6"} -->
 
 - Status: `open`
-- Stage: `preflight`
-- Signature: `ios-source-and-credential-route-missing`
-- Resolved: Explicit bundle ID `com.worksbienstudios.englishpronunciationcoach`, App Store Connect app record `6817376615`, and internal beta group `Internal QA` (`5199a6ce-ee5a-4f2d-91ce-992dbe15e3bf`) are created and mapped.
-- Symptom: The default branch does not yet contain the app's Xcode project or shared scheme, and the App Store Connect API credential route is not configured.
-- Prevention: The workflow is fail-closed and performs these checks on Linux before allocating macOS.
-- Next action: Add the real iOS project, fill the Xcode fields in the non-secret app map, configure the App Store Connect credential route, then switch the map state to `ready`.
+- Repository / workflow: `lrodeveloperr/English-pronunciation-` / `English Pronunciation Coach TestFlight`
+- Xcode / stage: `26.6` / `archive`
+- First observed: 2026-09-30T00:16:17+00:00
+- Last updated: 2026-09-30T00:16:17+00:00
+- Occurrences: 1
+- Runner minutes wasted: 2.0
+- Productivity minutes lost: 0.0
+- Runs:
+  - https://github.com/lrodeveloperr/English-pronunciation-/actions/runs/36649176916
 
-## Tester target
+**Symptom:** Archive failed before IPA creation because Xcode requested an iOS App Development profile and a registered device
 
-- Status: `resolved`
-- `Internal QA` contains both designated internal tester accounts.
-- The delivery helper assigns the exact processed build to that group and attaches the same build to the editable App Store version for later review without re-signing.
+**Root cause:** Unknown
+
+**Fix:** Not yet verified
+
+**Verified by:** Not yet verified
+
+**Prevention:** Not yet recorded
+
+**Notes:** None
+
