@@ -1,0 +1,75 @@
+name: Verify Existing TestFlight Delivery
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: Type VERIFY ENGLISH PRONUNCIATION TESTFLIGHT
+        required: true
+        type: string
+      build_number:
+        description: Existing processed TestFlight build number
+        required: true
+        default: "1"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  verify-delivery:
+    name: Verify tester delivery and listing attachment
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_PRIVATE_KEY: ${{ secrets.ASC_PRIVATE_KEY }}
+      BUILD_NUMBER: ${{ inputs.build_number }}
+    steps:
+      - name: Check out delivery helper
+        uses: actions/checkout@v4
+
+      - name: Load locked app route
+        shell: bash
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          set -euo pipefail
+          [[ "$CONFIRMATION" == "VERIFY ENGLISH PRONUNCIATION TESTFLIGHT" ]] || {
+            echo "Confirmation phrase is incorrect." >&2
+            exit 1
+          }
+          [[ "$BUILD_NUMBER" =~ ^[0-9]+$ ]] || {
+            echo "build_number must be numeric." >&2
+            exit 1
+          }
+          python3 - <<'PY'
+          import json, os, pathlib
+          data = json.loads(pathlib.Path(".github/testflight-app-map.json").read_text())
+          if data.get("state") != "ready":
+              raise SystemExit("TestFlight app map is not ready.")
+          values = {
+              "ASC_APP_ID": data["asc_app_id"],
+              "BETA_GROUP_ID": data["beta_group_id"],
+              "IOS_BUNDLE_ID": data["bundle_id"],
+              "LISTING_PLATFORM": data["listing_platform"],
+              "MARKETING_VERSION": data["marketing_version"],
+          }
+          with open(os.environ["GITHUB_ENV"], "a") as handle:
+              for key, value in values.items():
+                  handle.write(f"{key}={value}\n")
+          PY
+
+      - name: Prepare short-lived App Store Connect key file
+        shell: bash
+        run: |
+          set -euo pipefail
+          key_path="$RUNNER_TEMP/AuthKey_${ASC_KEY_ID}.p8"
+          umask 077
+          printf '%s' "$ASC_PRIVATE_KEY" > "$key_path"
+          echo "ASC_KEY_PATH=$key_path" >> "$GITHUB_ENV"
+
+      - name: Verify delivery without rebuilding or uploading
+        shell: bash
+        run: ruby scripts/asc_delivery.rb
