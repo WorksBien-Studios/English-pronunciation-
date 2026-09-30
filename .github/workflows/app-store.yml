@@ -31,7 +31,7 @@ permissions:
 
 jobs:
   app-store:
-    uses: WorksBien-Studios/.github/.github/workflows/ios-app-store.yml@e066b8a3987fa35df0257261450c38b236bf7ba5
+    uses: WorksBien-Studios/.github/.github/workflows/ios-app-store.yml@main
     with:
       validated_sha: ${{ github.sha }}
       operation: ${{ inputs.operation }}
