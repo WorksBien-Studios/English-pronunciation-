@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "fingerprint_method_version": "git-blob-sha-v1",
+  "generated_from_commit_sha": "e03e5c4b4049819787fe2e6c8cd960cad2f4b7fd",
+  "accepted_upload_run_url": "https://github.com/lrodeveloperr/English-pronunciation-/actions/runs/36654215951",
+  "delivery_verification_run_url": "https://github.com/lrodeveloperr/English-pronunciation-/actions/runs/36655305723",
+  "created_at": "2026-09-30T01:28:59Z",
+  "app_store_connect": {
+    "app_id": "6817376615",
+    "bundle_id": "com.worksbienstudios.englishpronunciationcoach",
+    "team_id": "49SQ3XQ68Q",
+    "platform": "IOS",
+    "marketing_version": "1.0",
+    "build_number": "1",
+    "build_id": "e07ba959-1ef5-4cd7-bc20-a32028768ea0",
+    "beta_group_id": "5199a6ce-ee5a-4f2d-91ce-992dbe15e3bf",
+    "listing_version_id": "375d05a4-429c-4eb7-84f1-a520c348dc57"
+  },
+  "xcode": {
+    "version": "26.6",
+    "container_type": "project",
+    "container": "ios/EnglishPronunciationCoach.xcodeproj",
+    "shared_scheme": "EnglishPronunciationCoach",
+    "configuration": "Release",
+    "destination": "generic/platform=iOS",
+    "deployment_target": "18.0"
+  },
+  "signing": {
+    "style": "automatic",
+    "archive_signing": "disabled",
+    "export_method": "app-store-connect",
+    "signing_certificate": "Apple Distribution",
+    "credential_alias": "WorksBien TestFlight Admin",
+    "credential_key_id": "7ZJN3LKQSD",
+    "embedded_framework_policy": "normalize MinimumOSVersion; stage ad-hoc before authenticated export; require Apple Distribution after export"
+  },
+  "dependencies": {
+    "onnxruntime_binary_version": "1.30.0",
+    "onnxruntime_archive_checksum": "e6f1670c14406fd9f082bb400ab197a9b0a9646058ca6366e440642e2b54a2ea",
+    "ios_18_shell_revision": "c082e90f9fc92970ef127792dfba2dd9cdffd710"
+  },
+  "protected_release_contract": {
+    "app_map": {
+      "path": ".github/testflight-app-map.json",
+      "git_blob_sha": "3735be9cb02a6037fa9b27b3a14d8696f747d62b"
+    },
+    "project": {
+      "path": "ios/EnglishPronunciationCoach.xcodeproj/project.pbxproj",
+      "git_blob_sha": "89f8a360f56195aba5efb4934654163c8775c18c"
+    },
+    "app_info_plist": {
+      "path": "ios/EnglishPronunciationCoach/Resources/Info.plist",
+      "git_blob_sha": "bd185a188458c2fbef667a5bcde9f192a71d4bae"
+    },
+    "privacy_manifest": {
+      "path": "ios/EnglishPronunciationCoach/Resources/PrivacyInfo.xcprivacy",
+      "git_blob_sha": "5704beda8f6061dddefc74c325dba37bc5fdce4f"
+    },
+    "onnxruntime_package": {
+      "path": "ios/Packages/OnnxRuntimeBinary/Package.swift",
+      "git_blob_sha": "e0d0701ce65d594f629e03ddeb2cdb108d280907"
+    },
+    "entitlements": [],
+    "embedded_targets": [
+      "onnxruntime.framework"
+    ]
+  },
+  "verified_outcomes": {
+    "upload": "accepted",
+    "processing": "processed",
+    "beta_delivery": "assigned",
+    "listing_attachment": "attached",
+    "app_review_submission": "not_performed"
+  }
+}
