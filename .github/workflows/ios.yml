@@ -9,6 +9,7 @@ on:
       - "scripts/fetch_pronunciation_model.sh"
       - "scripts/validate_stage_engine_content.py"
       - ".github/workflows/ios.yml"
+      - ".github/testflight-app-map.json"
   push:
     branches:
       - main
@@ -19,6 +20,7 @@ on:
       - "scripts/fetch_pronunciation_model.sh"
       - "scripts/validate_stage_engine_content.py"
       - ".github/workflows/ios.yml"
+      - ".github/testflight-app-map.json"
 
 concurrency:
   group: ios-${{ github.ref }}
