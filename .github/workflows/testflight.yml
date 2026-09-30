@@ -253,6 +253,20 @@ jobs:
           [[ "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$plist")" == "$BUILD_NUMBER" ]]
           [[ -f "$app/PrivacyInfo.xcprivacy" ]] || { echo "PrivacyInfo.xcprivacy is missing." >&2; exit 1; }
 
+          # Authenticated cloud export replaces valid nested signatures but does
+          # not repair an entirely unsigned embedded framework. Stage every
+          # framework with a temporary ad-hoc signature; post-export checks
+          # below require Apple Distribution and reject any surviving ad-hoc.
+          staged_frameworks=0
+          while IFS= read -r -d '' framework; do
+            codesign --force --sign - --timestamp=none "$framework"
+            codesign --verify --strict --verbose=2 "$framework"
+            framework_signature="$(codesign -dvv "$framework" 2>&1)"
+            [[ "$framework_signature" == *'Signature=adhoc'* ]] || { echo "Embedded framework staging signature is not ad hoc: $framework" >&2; exit 1; }
+            staged_frameworks=$((staged_frameworks + 1))
+          done < <(find "$app/Frameworks" -depth -type d -name '*.framework' -print0 2>/dev/null || true)
+          (( staged_frameworks > 0 )) || { echo "Expected at least one embedded framework to stage." >&2; exit 1; }
+
       - name: Export signed IPA once
         shell: bash
         run: |
@@ -302,10 +316,26 @@ jobs:
           [[ "$signature" == *'Authority=Apple Distribution'* ]]
           [[ "$signature" == *"TeamIdentifier=$APPLE_TEAM_ID"* ]]
 
+          framework_count=0
+          while IFS= read -r framework; do
+            codesign --verify --strict --verbose=2 "$framework"
+            framework_signature="$(codesign -dvv "$framework" 2>&1)"
+            [[ "$framework_signature" != *'Signature=adhoc'* ]] || { echo "Exported framework is ad hoc signed: $framework" >&2; exit 1; }
+            [[ "$framework_signature" == *'Authority=Apple Distribution'* ]] || { echo "Exported framework is not distribution signed: $framework" >&2; exit 1; }
+            [[ "$framework_signature" == *"TeamIdentifier=$APPLE_TEAM_ID"* ]] || { echo "Exported framework signing team mismatch: $framework" >&2; exit 1; }
+            framework_count=$((framework_count + 1))
+          done < <(find "$app/Frameworks" -maxdepth 1 -type d -name '*.framework' -print 2>/dev/null || true)
+          (( framework_count > 0 )) || { echo "Expected at least one exported framework to verify." >&2; exit 1; }
+
       - name: Upload the same IPA once
         shell: bash
         run: |
           set -euo pipefail
+          xcrun altool --validate-app \
+            --type ios \
+            --file "$IPA_PATH" \
+            --apiKey "$ASC_KEY_ID" \
+            --apiIssuer "$ASC_ISSUER_ID"
           xcrun altool --upload-app \
             --type ios \
             --file "$IPA_PATH" \
